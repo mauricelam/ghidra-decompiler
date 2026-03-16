@@ -1,4 +1,5 @@
 # Standalone Makefile for Ghidra Decompiler
+# ADDITION IN THIS FORK: This file supports native standalone builds.
 
 CXX=g++ -std=c++11
 OS = $(shell uname -s)
@@ -35,7 +36,10 @@ DECCORE=capability architecture options graph cover block cast typeop database c
 	printlanguage printc printjava memstate opbehavior paramid signature
 SLEIGH=	sleigh pcodeparse pcodecompile sleighbase slghsymbol \
 	slghpatexpress slghpattern semantics context slaformat compression filemanage
-EXTRA=callgraph ifacedecomp ifaceterm interface loadimage_xml raw_arch testfunction unify unionresolve xml_arch codedata
+
+# EXTRA includes files not in the above categories but needed for standalone decompiler
+# ADDITION IN THIS FORK: sleigh_arch and inject_sleigh added to support standalone sleigh usage.
+EXTRA=callgraph ifacedecomp ifaceterm interface loadimage_xml raw_arch testfunction unify xml_arch codedata sleigh_arch inject_sleigh
 
 LIBDECOMP_NAMES=$(CORE) $(DECCORE) $(EXTRA) $(SLEIGH) libdecomp
 COMMANDLINE_NAMES=$(LIBDECOMP_NAMES) consolemain
@@ -48,9 +52,6 @@ all: decomp_standalone libdecomp.a
 com_opt/%.o: %.cc
 	@mkdir -p com_opt
 	$(CXX) $(ARCH_TYPE) -c $(OPT_CXXFLAGS) $(ADDITIONAL_FLAGS) $< -o $@
-
-grammar.cc xml.cc pcodeparse.cc slghparse.cc slghscan.cc:
-	touch $@
 
 decomp_standalone: $(COMMANDLINE_OPT_OBJS)
 	$(CXX) $(OPT_CXXFLAGS) $(ARCH_TYPE) -o decomp_standalone $(COMMANDLINE_OPT_OBJS) $(LNK)

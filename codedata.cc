@@ -16,6 +16,11 @@
  */
 #include "codedata.hh"
 
+/*
+ * MODIFICATION IN THIS FORK:
+ * This file has been modified to remove the dependency on the GNU BFD library,
+ * which is required for the standalone and WebAssembly builds.
+ */
 
 namespace ghidra {
 
@@ -732,6 +737,8 @@ void IfcCodeDataInit::execute(istream &s)
 void IfcCodeDataTarget::execute(istream &s)
 
 {
+  // This command is disabled in this fork as it relies on the GNU BFD library,
+  // which is not included in the standalone or WebAssembly builds.
   throw IfaceExecutionError("codedata target command not supported in standalone build (requires BFD)");
 }
 
