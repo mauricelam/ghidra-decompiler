@@ -1,0 +1,29 @@
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  codedata.cc -o com_opt/codedata.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  sleigh.cc -o com_opt/sleigh.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  pcodeparse.cc -o com_opt/pcodeparse.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  pcodecompile.cc -o com_opt/pcodecompile.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  sleighbase.cc -o com_opt/sleighbase.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  slghsymbol.cc -o com_opt/slghsymbol.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  slghpatexpress.cc -o com_opt/slghpatexpress.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  slghpattern.cc -o com_opt/slghpattern.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  semantics.cc -o com_opt/semantics.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  context.cc -o com_opt/context.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  slaformat.cc -o com_opt/slaformat.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  compression.cc -o com_opt/compression.o
+mkdir -p com_opt
+g++ -std=c++11 -m64 -c -O2 -Wall -Wno-sign-compare  filemanage.cc -o com_opt/filemanage.o
+rm -f libdecomp.a
+ar qc libdecomp.a com_opt/xml.o com_opt/marshal.o com_opt/space.o com_opt/float.o com_opt/address.o com_opt/pcoderaw.o com_opt/translate.o com_opt/opcodes.o com_opt/globalcontext.o com_opt/capability.o com_opt/architecture.o com_opt/options.o com_opt/graph.o com_opt/cover.o com_opt/block.o com_opt/cast.o com_opt/typeop.o com_opt/database.o com_opt/cpool.o com_opt/comment.o com_opt/stringmanage.o com_opt/modelrules.o com_opt/fspec.o com_opt/action.o com_opt/loadimage.o com_opt/grammar.o com_opt/varnode.o com_opt/op.o com_opt/type.o com_opt/variable.o com_opt/varmap.o com_opt/jumptable.o com_opt/emulate.o com_opt/emulateutil.o com_opt/flow.o com_opt/userop.o com_opt/expression.o com_opt/multiprecision.o com_opt/funcdata.o com_opt/funcdata_block.o com_opt/funcdata_op.o com_opt/funcdata_varnode.o com_opt/unionresolve.o com_opt/pcodeinject.o com_opt/heritage.o com_opt/prefersplit.o com_opt/rangeutil.o com_opt/ruleaction.o com_opt/subflow.o com_opt/blockaction.o com_opt/merge.o com_opt/double.o com_opt/transform.o com_opt/constseq.o com_opt/bitfield.o com_opt/coreaction.o com_opt/condexe.o com_opt/override.o com_opt/dynamic.o com_opt/crc32.o com_opt/prettyprint.o com_opt/printlanguage.o com_opt/printc.o com_opt/printjava.o com_opt/memstate.o com_opt/opbehavior.o com_opt/paramid.o com_opt/signature.o com_opt/callgraph.o com_opt/ifacedecomp.o com_opt/ifaceterm.o com_opt/interface.o com_opt/loadimage_xml.o com_opt/raw_arch.o com_opt/testfunction.o com_opt/unify.o com_opt/unionresolve.o com_opt/xml_arch.o com_opt/codedata.o com_opt/sleigh.o com_opt/pcodeparse.o com_opt/pcodecompile.o com_opt/sleighbase.o com_opt/slghsymbol.o com_opt/slghpatexpress.o com_opt/slghpattern.o com_opt/semantics.o com_opt/context.o com_opt/slaformat.o com_opt/compression.o com_opt/filemanage.o
+ranlib libdecomp.a

@@ -1,0 +1,44 @@
+# WASM Makefile for Ghidra Decompiler using Emscripten
+
+CXX=em++
+OPT_CXXFLAGS=-O3 -Wall -Wno-sign-compare
+
+# No BFD, no ZLIB (unless provided as a side module, but decompiler can work without it for many tasks)
+# We define -Dghidra=ghidra to handle namespace issues if any, but better use standard.
+# We need to disable some features that might not be compatible with WASM if necessary.
+
+CORE=	xml marshal space float address pcoderaw translate opcodes globalcontext
+DECCORE=capability architecture options graph cover block cast typeop database cpool \
+	comment stringmanage modelrules fspec action loadimage grammar varnode op type \
+	variable varmap jumptable emulate emulateutil flow userop expression multiprecision \
+	funcdata funcdata_block funcdata_op funcdata_varnode unionresolve pcodeinject \
+	heritage prefersplit rangeutil ruleaction subflow blockaction merge double \
+	transform constseq bitfield coreaction condexe override dynamic crc32 prettyprint \
+	printlanguage printc printjava memstate opbehavior paramid signature
+SLEIGH=	sleigh pcodeparse pcodecompile sleighbase slghsymbol \
+	slghpatexpress slghpattern semantics context slaformat compression filemanage
+EXTRA=callgraph ifacedecomp ifaceterm interface loadimage_xml raw_arch testfunction unify unionresolve xml_arch codedata
+
+LIBDECOMP_NAMES=$(CORE) $(DECCORE) $(EXTRA) $(SLEIGH) libdecomp
+
+OBJS=$(LIBDECOMP_NAMES:%=wasm_obj/%.o) wasm_obj/wasm_wrapper.o
+
+# Emscripten export settings
+EXPORTED_FUNCTIONS=['_decompile_pcode', '_free_string', '_malloc', '_free']
+EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'allocate', 'intArrayFromString']
+
+wasm_obj/%.o: %.cc
+	@mkdir -p wasm_obj
+	$(CXX) -c $(OPT_CXXFLAGS) $< -o $@
+
+ghidra_decompiler.js: $(OBJS)
+	$(CXX) $(OPT_CXXFLAGS) $(OBJS) -o ghidra_decompiler.js \
+		-s EXPORTED_FUNCTIONS="$(EXPORTED_FUNCTIONS)" \
+		-s EXPORTED_RUNTIME_METHODS="$(EXPORTED_RUNTIME_METHODS)" \
+		-s MODULARIZE=1 -s EXPORT_NAME="GhidraDecompiler" \
+		-s ALLOW_MEMORY_GROWTH=1 -s ERROR_ON_UNDEFINED_SYMBOLS=0
+
+all: ghidra_decompiler.js
+
+clean:
+	rm -rf wasm_obj ghidra_decompiler.js ghidra_decompiler.wasm
