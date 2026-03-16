@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 #include "codedata.hh"
-#include "loadimage_bfd.hh"
+
 
 namespace ghidra {
 
@@ -732,25 +732,7 @@ void IfcCodeDataInit::execute(istream &s)
 void IfcCodeDataTarget::execute(istream &s)
 
 {
-  string token;
-
-  s >> ws;
-  if (s.eof())
-    throw IfaceParseError("Missing system call name");
-
-  s >> token;
-  vector<ImportRecord> irec;
-  LoadImageBfd *loadbfd = (LoadImageBfd *) dcp->conf->loader;
-  loadbfd->getImportTable(irec);
-  int4 i;
-  for(i=0;i<irec.size();++i) {
-    if (irec[i].funcname == token) break;
-  }
-  if (i==irec.size())
-    *status->fileoptr << "Unable to find reference to call " << token << endl;
-  else {
-    codedata->addTarget(irec[i].funcname,irec[i].thunkaddress,(uint4)1);
-  }
+  throw IfaceExecutionError("codedata target command not supported in standalone build (requires BFD)");
 }
 
 void IfcCodeDataRun::execute(istream &s)

@@ -3,10 +3,6 @@
 CXX=em++
 OPT_CXXFLAGS=-O3 -Wall -Wno-sign-compare
 
-# No BFD, no ZLIB (unless provided as a side module, but decompiler can work without it for many tasks)
-# We define -Dghidra=ghidra to handle namespace issues if any, but better use standard.
-# We need to disable some features that might not be compatible with WASM if necessary.
-
 CORE=	xml marshal space float address pcoderaw translate opcodes globalcontext
 DECCORE=capability architecture options graph cover block cast typeop database cpool \
 	comment stringmanage modelrules fspec action loadimage grammar varnode op type \
@@ -23,9 +19,8 @@ LIBDECOMP_NAMES=$(CORE) $(DECCORE) $(EXTRA) $(SLEIGH) libdecomp
 
 OBJS=$(LIBDECOMP_NAMES:%=wasm_obj/%.o) wasm_obj/wasm_wrapper.o
 
-# Emscripten export settings
 EXPORTED_FUNCTIONS=['_decompile_pcode', '_free_string', '_malloc', '_free']
-EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'allocate', 'intArrayFromString']
+EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']
 
 wasm_obj/%.o: %.cc
 	@mkdir -p wasm_obj
