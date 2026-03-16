@@ -18,9 +18,13 @@
 
 /*
  * MODIFICATION IN THIS FORK:
- * This file has been modified to remove the dependency on the GNU BFD library,
- * which is required for the standalone and WebAssembly builds.
+ * This file has been modified to use conditional compilation for BFD-related code,
+ * allowing it to be compiled out for standalone and WebAssembly builds.
  */
+
+#ifndef GHIDRA_NO_BFD
+#include "loadimage_bfd.hh"
+#endif
 
 namespace ghidra {
 
@@ -737,9 +741,32 @@ void IfcCodeDataInit::execute(istream &s)
 void IfcCodeDataTarget::execute(istream &s)
 
 {
+#ifndef GHIDRA_NO_BFD
+  string token;
+
+  s >> ws;
+  if (s.eof())
+    throw IfaceParseError("Missing system call name");
+
+  s >> token;
+  vector<ImportRecord> irec;
+  LoadImageBfd *loadbfd = (LoadImageBfd *) dcp->conf->loader;
+  loadbfd->getImportTable(irec);
+  int4 i;
+  for(i=0;i<irec.size();++i) {
+    if (irec[i].funcname == token) break;
+  }
+  if (i==irec.size())
+    *status->fileoptr << "Unable to find reference to call " << token << endl;
+  else {
+    codedata->addTarget(irec[i].funcname,irec[i].thunkaddress,(uint4)1);
+  }
+#else
+  // MODIFICATION IN THIS FORK:
   // This command is disabled in this fork as it relies on the GNU BFD library,
   // which is not included in the standalone or WebAssembly builds.
   throw IfaceExecutionError("codedata target command not supported in standalone build (requires BFD)");
+#endif
 }
 
 void IfcCodeDataRun::execute(istream &s)

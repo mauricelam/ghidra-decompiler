@@ -1,8 +1,9 @@
 # WASM Makefile for Ghidra Decompiler using Emscripten
-# ADDITION IN THIS FORK: This file supports WebAssembly builds.
+# MODIFICATION IN THIS FORK: This file supports WebAssembly builds.
 
 CXX=em++
-OPT_CXXFLAGS=-O3 -Wall -Wno-sign-compare
+# MODIFICATION IN THIS FORK: GHIDRA_NO_BFD added to support standalone/WASM builds.
+OPT_CXXFLAGS=-O3 -Wall -Wno-sign-compare -DGHIDRA_NO_BFD
 
 CORE=	xml marshal space float address pcoderaw translate opcodes globalcontext
 DECCORE=capability architecture options graph cover block cast typeop database cpool \

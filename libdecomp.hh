@@ -17,6 +17,11 @@
 // You should be able to include this header to get all functionality
 // and we put a startup and shutdown routine here
 
+/*
+ * MODIFICATION IN THIS FORK:
+ * Header modified to support library entry points for standalone/WASM builds.
+ */
+
 #ifndef __LIBDECOMP_HH__
 #define __LIBDECOMP_HH__
 

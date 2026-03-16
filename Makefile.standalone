@@ -1,5 +1,5 @@
 # Standalone Makefile for Ghidra Decompiler
-# ADDITION IN THIS FORK: This file supports native standalone builds.
+# MODIFICATION IN THIS FORK: This file supports native standalone builds.
 
 CXX=g++ -std=c++11
 OS = $(shell uname -s)
@@ -21,7 +21,8 @@ ifeq ($(OS),Darwin)
   ADDITIONAL_FLAGS=-mmacosx-version-min=10.6 -w
 endif
 
-OPT_CXXFLAGS=-O2 -Wall -Wno-sign-compare
+# MODIFICATION IN THIS FORK: GHIDRA_NO_BFD added to support standalone/WASM builds.
+OPT_CXXFLAGS=-O2 -Wall -Wno-sign-compare -DGHIDRA_NO_BFD
 BFDLIB=
 INCLUDES=
 LNK=-lz
