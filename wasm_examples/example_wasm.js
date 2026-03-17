@@ -23,7 +23,7 @@ async function init() {
     }
 }
 
-async function readFile(file) {
+async function readFileAsText(file) {
     if (!file) return "";
     return new Promise((resolve) => {
         const reader = new FileReader();
@@ -32,42 +32,65 @@ async function readFile(file) {
     });
 }
 
+async function readFileAsArrayBuffer(file) {
+    if (!file) return null;
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(new Uint8Array(e.target.result));
+        reader.readAsArrayBuffer(file);
+    });
+}
+
+function bytesToHex(bytes) {
+    return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 async function runDecompiler() {
     const output = document.getElementById('output');
     const slaFile = document.getElementById('slaInput').files[0];
     const pspecFile = document.getElementById('pspecInput').files[0];
+    const cspecFile = document.getElementById('cspecInput').files[0];
     const binFile = document.getElementById('binInput').files[0];
+    const funcName = document.getElementById('funcName').value;
 
-    if (!slaFile || !binFile) {
-        alert('Please provide at least a .sla file and a binary file.');
+    if (!slaFile || !binFile || !pspecFile || !cspecFile) {
+        alert('Please provide .sla, .pspec, .cspec and a binary file.');
         return;
     }
 
     output.textContent = 'Reading files...';
-    const slaContent = await readFile(slaFile);
-    const pspecContent = await readFile(pspecFile);
+    const slaData = await readFileAsArrayBuffer(slaFile);
+    const pspecContent = await readFileAsText(pspecFile);
+    const cspecContent = await readFileAsText(cspecFile);
+    const binData = await readFileAsArrayBuffer(binFile);
 
-    // For the purpose of this example, we mock the XML image format
-    // In a real usage, you'd wrap the binary data in the <binaryimage> XML tag
+    // In a real usage, you wrap the binary data in the <binaryimage> XML tag
     const imageXml = `
-<binaryimage>
-  <byte_chunk address="ram:0x1000">
-    <!-- Binary data would be hex encoded here -->
-    ${binFile.name} loaded
-  </byte_chunk>
+<binaryimage arch="wasm:le:32:default">
+  <bytechunk address="ram:0x1000">
+    ${bytesToHex(binData)}
+  </bytechunk>
 </binaryimage>`;
 
     output.textContent = 'Calling WASM decompiler...';
 
-    // Call the bridge function
-    const result = decompilerModule.ccall(
-        'decompile_pcode',
-        'string',
-        ['string', 'string', 'string'],
-        [slaContent, pspecContent, imageXml]
-    );
+    // Copy binary SLA data to WASM heap
+    const slaPtr = decompilerModule._malloc(slaData.length);
+    decompilerModule.HEAPU8.set(slaData, slaPtr);
 
-    output.textContent = result;
+    try {
+        // Call the bridge function
+        const result = decompilerModule.ccall(
+            'decompile_pcode',
+            'string',
+            ['number', 'number', 'string', 'string', 'string', 'string'],
+            [slaPtr, slaData.length, pspecContent, cspecContent, imageXml, funcName]
+        );
+
+        output.textContent = result;
+    } finally {
+        decompilerModule._free(slaPtr);
+    }
 }
 
 document.getElementById('decompileBtn').addEventListener('click', runDecompiler);

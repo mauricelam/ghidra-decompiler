@@ -12,6 +12,7 @@
         .container { display: flex; flex-direction: column; gap: 10px; max-width: 800px; }
         .input-group { border: 1px solid #ddd; padding: 10px; border-radius: 4px; }
         pre { background: #f4f4f4; padding: 10px; border: 1px solid #ccc; overflow-x: auto; white-space: pre-wrap; }
+        label { display: inline-block; width: 180px; }
     </style>
 </head>
 <body>
@@ -20,13 +21,15 @@
     <div class="container">
         <div class="input-group">
             <h3>1. Load Specifications</h3>
-            <label>SLEIGH (.sla) file: <input type="file" id="slaInput"></label><br><br>
-            <label>Processor (.pspec) file: <input type="file" id="pspecInput"></label>
+            <label for="slaInput">SLEIGH (.sla) file:</label> <input type="file" id="slaInput"><br><br>
+            <label for="pspecInput">Processor (.pspec) file:</label> <input type="file" id="pspecInput"><br><br>
+            <label for="cspecInput">Compiler (.cspec) file:</label> <input type="file" id="cspecInput">
         </div>
 
         <div class="input-group">
             <h3>2. Load Binary</h3>
-            <label>Binary file: <input type="file" id="binInput"></label>
+            <label for="binInput">Binary file:</label> <input type="file" id="binInput"><br><br>
+            <label for="funcName">Function name/addr:</label> <input type="text" id="funcName" value="0x1000">
             <p><small>Note: This example converts the binary to a simple XML image format for the bridge.</small></p>
         </div>
 
