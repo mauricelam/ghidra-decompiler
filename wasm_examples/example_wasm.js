@@ -1,59 +1,74 @@
 /*
  * ADDITION IN THIS FORK:
  * This file provides a browser-side example of using the Ghidra decompiler
- * WebAssembly module.
+ * WebAssembly module with real file inputs.
  */
 
-async function runExample() {
-    const outputElement = document.getElementById('output');
-    outputElement.textContent = 'Initializing Ghidra Decompiler...';
+let decompilerModule = null;
 
+async function init() {
+    const output = document.getElementById('output');
     try {
-        // Check if the initialization function exists
         if (typeof GhidraDecompiler === 'undefined') {
-            throw new Error('GhidraDecompiler is not defined. Ensure ghidra_decompiler.js is built and served correctly.');
+            throw new Error('GhidraDecompiler is not defined. Did you build it?');
         }
+        decompilerModule = await GhidraDecompiler();
+        // Initialize the library
+        decompilerModule._init_decompiler();
 
-        // Initialize the WASM module
-        // GhidraDecompiler is the EXPORT_NAME defined in Makefile.wasm
-        const Module = await GhidraDecompiler();
-
-        // ADDITION IN THIS FORK: Mandatory fork modification comment.
-        // Wrap the C function 'decompile_pcode' for easy calling.
-        const decompile_pcode = Module.cwrap('decompile_pcode', 'string', ['string', 'string', 'string']);
-
-        // Example XML inputs (placeholders)
-        const slaContent = `
-            <sleigh version="1" bigendian="false">
-                <spaces>
-                    <space name="ram" index="1" size="8" default="yes"/>
-                </spaces>
-                <!-- ... more sleigh content ... -->
-            </sleigh>`;
-        const pspecContent = `
-            <processor name="example">
-                <!-- ... processor details ... -->
-            </processor>`;
-        const imageXml = `
-            <binaryimage>
-                <byte_chunk address="ram:0x1000">
-                    90 90 90 c3
-                </byte_chunk>
-            </binaryimage>`;
-
-        outputElement.textContent += '\nCalling decompile_pcode with sample input...';
-
-        // Perform decompilation
-        const result = decompile_pcode(slaContent, pspecContent, imageXml);
-
-        outputElement.textContent += '\n\nResult:\n' + result;
-        console.log('Decompiler result:', result);
-
-    } catch (error) {
-        outputElement.textContent += '\n\nError: ' + error.message;
-        console.error('Error running decompiler:', error);
+        output.textContent = 'Module ready. Please select files.';
+        document.getElementById('decompileBtn').disabled = false;
+    } catch (e) {
+        output.textContent = 'Error: ' + e.message;
     }
 }
 
-// Run the example when the page is loaded
-window.addEventListener('load', runExample);
+async function readFile(file) {
+    if (!file) return "";
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.readAsText(file);
+    });
+}
+
+async function runDecompiler() {
+    const output = document.getElementById('output');
+    const slaFile = document.getElementById('slaInput').files[0];
+    const pspecFile = document.getElementById('pspecInput').files[0];
+    const binFile = document.getElementById('binInput').files[0];
+
+    if (!slaFile || !binFile) {
+        alert('Please provide at least a .sla file and a binary file.');
+        return;
+    }
+
+    output.textContent = 'Reading files...';
+    const slaContent = await readFile(slaFile);
+    const pspecContent = await readFile(pspecFile);
+
+    // For the purpose of this example, we mock the XML image format
+    // In a real usage, you'd wrap the binary data in the <binaryimage> XML tag
+    const imageXml = `
+<binaryimage>
+  <byte_chunk address="ram:0x1000">
+    <!-- Binary data would be hex encoded here -->
+    ${binFile.name} loaded
+  </byte_chunk>
+</binaryimage>`;
+
+    output.textContent = 'Calling WASM decompiler...';
+
+    // Call the bridge function
+    const result = decompilerModule.ccall(
+        'decompile_pcode',
+        'string',
+        ['string', 'string', 'string'],
+        [slaContent, pspecContent, imageXml]
+    );
+
+    output.textContent = result;
+}
+
+document.getElementById('decompileBtn').addEventListener('click', runDecompiler);
+window.addEventListener('load', init);

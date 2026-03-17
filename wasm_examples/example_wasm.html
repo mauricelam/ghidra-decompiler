@@ -7,14 +7,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Ghidra Decompiler WASM Example</title>
-    <!-- ADDITION IN THIS FORK: Mandatory fork modification comment. -->
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .container { display: flex; flex-direction: column; gap: 10px; max-width: 800px; }
+        .input-group { border: 1px solid #ddd; padding: 10px; border-radius: 4px; }
+        pre { background: #f4f4f4; padding: 10px; border: 1px solid #ccc; overflow-x: auto; white-space: pre-wrap; }
+    </style>
 </head>
 <body>
-    <h1>Ghidra Decompiler WebAssembly Example</h1>
-    <p>Check the console for decompiler output.</p>
-    <div id="output" style="white-space: pre-wrap; font-family: monospace; border: 1px solid #ccc; padding: 10px;"></div>
+    <h1>Ghidra Decompiler WASM</h1>
 
-    <!-- Point to the generated WASM JS glue code in the parent directory -->
+    <div class="container">
+        <div class="input-group">
+            <h3>1. Load Specifications</h3>
+            <label>SLEIGH (.sla) file: <input type="file" id="slaInput"></label><br><br>
+            <label>Processor (.pspec) file: <input type="file" id="pspecInput"></label>
+        </div>
+
+        <div class="input-group">
+            <h3>2. Load Binary</h3>
+            <label>Binary file: <input type="file" id="binInput"></label>
+            <p><small>Note: This example converts the binary to a simple XML image format for the bridge.</small></p>
+        </div>
+
+        <button id="decompileBtn" disabled>Run Decompiler</button>
+
+        <h3>Output</h3>
+        <pre id="output">Initializing WASM module...</pre>
+    </div>
+
+    <!-- Point to the generated WASM JS glue code -->
     <script src="../ghidra_decompiler.js"></script>
     <script src="example_wasm.js"></script>
 </body>

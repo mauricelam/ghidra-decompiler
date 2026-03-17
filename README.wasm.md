@@ -41,7 +41,28 @@ A complete example showing how to load and use the WASM module in a browser is p
    Navigate to `http://localhost:8000/wasm_examples/example_wasm.html`.
 
 4. **Verify the output**:
-   The page should display "Decompiler WASM Module Loaded Successfully" once the module is initialized.
+   The page should display "Module ready" once the WASM module is initialized.
+
+## How to Decompile a File
+
+To perform an actual decompilation, the decompiler needs two things:
+1. **The Architecture Specification**: Ghidra uses compiled SLEIGH files (`.sla`). You can find these in a standard Ghidra installation under `Ghidra/Processors/<ARCH>/data/languages/`.
+2. **The Binary Image**: The decompiler needs the bytes to decompile.
+
+### Step-by-Step Example:
+1. Open the browser example (`example_wasm.html`).
+2. Upload an `.sla` file (e.g., `x86.sla` from your Ghidra folder).
+3. Upload any binary file.
+4. Click "Run Decompiler".
+5. The example bridge will confirm receipt of the files. (For a full C++ implementation, the bridge in `wasm_wrapper.cc` would then pass these to a `SleighArchitecture` object).
+
+## Native Standalone Usage
+You can also use the native tool to decompile via XML-based image descriptions:
+```bash
+./decomp_standalone
+[decomp]> load file my_image.xml
+[decomp]> decompile
+```
 
 ## Implementation Notes
 - BFD dependency has been removed in this fork to simplify standalone usage and WASM compatibility.
