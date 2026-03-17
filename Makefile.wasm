@@ -1,0 +1,42 @@
+# WASM Makefile for Ghidra Decompiler using Emscripten
+# MODIFICATION IN THIS FORK: This file supports WebAssembly builds.
+
+CXX=em++
+# MODIFICATION IN THIS FORK: GHIDRA_NO_BFD added to support standalone/WASM builds.
+OPT_CXXFLAGS=-O3 -Wall -Wno-sign-compare -DGHIDRA_NO_BFD
+
+CORE=	xml marshal space float address pcoderaw translate opcodes globalcontext
+DECCORE=capability architecture options graph cover block cast typeop database cpool \
+	comment stringmanage modelrules fspec action loadimage grammar varnode op type \
+	variable varmap jumptable emulate emulateutil flow userop expression multiprecision \
+	funcdata funcdata_block funcdata_op funcdata_varnode unionresolve pcodeinject \
+	heritage prefersplit rangeutil ruleaction subflow blockaction merge double \
+	transform constseq bitfield coreaction condexe override dynamic crc32 prettyprint \
+	printlanguage printc printjava memstate opbehavior paramid signature
+SLEIGH=	sleigh pcodeparse pcodecompile sleighbase slghsymbol \
+	slghpatexpress slghpattern semantics context slaformat compression filemanage
+EXTRA=callgraph ifacedecomp ifaceterm interface loadimage_xml raw_arch testfunction unify xml_arch codedata sleigh_arch inject_sleigh
+
+LIBDECOMP_NAMES=$(CORE) $(DECCORE) $(EXTRA) $(SLEIGH) libdecomp
+
+OBJS=$(LIBDECOMP_NAMES:%=wasm_obj/%.o) wasm_obj/wasm_wrapper.o
+
+# Exported functions for JS access
+EXPORTED_FUNCTIONS=['_init_decompiler', '_decompile_pcode', '_free_string', '_malloc', '_free']
+EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']
+
+wasm_obj/%.o: %.cc
+	@mkdir -p wasm_obj
+	$(CXX) -c $(OPT_CXXFLAGS) $< -o $@
+
+ghidra_decompiler.js: $(OBJS)
+	$(CXX) $(OPT_CXXFLAGS) $(OBJS) -o ghidra_decompiler.js \
+		-s EXPORTED_FUNCTIONS="$(EXPORTED_FUNCTIONS)" \
+		-s EXPORTED_RUNTIME_METHODS="$(EXPORTED_RUNTIME_METHODS)" \
+		-s MODULARIZE=1 -s EXPORT_NAME="GhidraDecompiler" \
+		-s ALLOW_MEMORY_GROWTH=1 -s USE_ZLIB=1
+
+all: ghidra_decompiler.js
+
+clean:
+	rm -rf wasm_obj ghidra_decompiler.js ghidra_decompiler.wasm

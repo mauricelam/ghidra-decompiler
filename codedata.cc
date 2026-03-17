@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 #include "codedata.hh"
+
+/*
+ * MODIFICATION IN THIS FORK:
+ * This file has been modified to use conditional compilation for BFD-related code,
+ * allowing it to be compiled out for standalone and WebAssembly builds.
+ */
+
+#ifndef GHIDRA_NO_BFD
 #include "loadimage_bfd.hh"
+#endif
 
 namespace ghidra {
 
@@ -732,6 +741,7 @@ void IfcCodeDataInit::execute(istream &s)
 void IfcCodeDataTarget::execute(istream &s)
 
 {
+#ifndef GHIDRA_NO_BFD
   string token;
 
   s >> ws;
@@ -751,6 +761,12 @@ void IfcCodeDataTarget::execute(istream &s)
   else {
     codedata->addTarget(irec[i].funcname,irec[i].thunkaddress,(uint4)1);
   }
+#else
+  // MODIFICATION IN THIS FORK:
+  // This command is disabled in this fork as it relies on the GNU BFD library,
+  // which is not included in the standalone or WebAssembly builds.
+  throw IfaceExecutionError("codedata target command not supported in standalone build (requires BFD)");
+#endif
 }
 
 void IfcCodeDataRun::execute(istream &s)
