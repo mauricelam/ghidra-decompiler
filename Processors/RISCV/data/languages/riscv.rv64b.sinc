@@ -106,4 +106,3 @@
 :subwu rd, rs1, rs2 is op0006=0x3b & op1214=0x0 & op2531=0x25 & rd & rs1 & rs2 unimpl
 
 :unshflw  rd, rs1, rs2 is op0006=0x3b & op1214=0x5 & op2531=0x4 & rd & rs1 & rs2 unimpl
-

@@ -40,7 +40,7 @@
     <compiler name="default" spec="HCS12X.cspec" id="default"/>
     <external_name tool="gnu" name="m9s12x"/>
   </language>
-  
+
   <!-- deprecated HCS12, which was equivalent to HCS12X, allows opening of existing Programs which use the old ID -->
   <language processor="HCS-12X"
             deprecated="true"

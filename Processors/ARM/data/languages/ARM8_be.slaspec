@@ -14,4 +14,3 @@
 @define VFPv4 ""
 
 @include "ARM.sinc"
-

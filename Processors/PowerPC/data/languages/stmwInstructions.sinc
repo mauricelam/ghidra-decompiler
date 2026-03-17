@@ -98,4 +98,3 @@ STMR31:		is STMR30 { build STMR30; storeReg(r31); }
 	tea = dPlusRaOrZeroAddress;
 	build STMR31;
 }
-

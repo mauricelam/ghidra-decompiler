@@ -50,8 +50,8 @@
         </pentry>
         <!-- Any struct type is returned by pointer, regardless of size -->
         <rule>
-        	<datatype name="struct"/>
-        	<hidden_return/>
+		<datatype name="struct"/>
+		<hidden_return/>
         </rule>
       </output>
       <unaffected>
@@ -317,7 +317,7 @@
       </returnaddress>
   </prototype>
 
-  
+
   <resolveprototype name="__cdecl/__regparm">
     <model name="__cdecl"/>        <!-- The default case -->
     <model name="__regparm3"/>
@@ -336,7 +336,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="get_pc_thunk.bp">
     <target name="__i686.get_pc_thunk.bp"/>
     <target name="__x86.get_pc_thunk.bp"/>
@@ -347,7 +347,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="get_pc_thunk_bx">
     <target name="__i686.get_pc_thunk.bx"/>
     <target name="__x86.get_pc_thunk.bx"/>
@@ -380,7 +380,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="get_pc_thunk_di">
     <target name="__i686.get_pc_thunk.di"/>
     <target name="__x86.get_pc_thunk.di"/>
@@ -391,7 +391,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="get_pc_thunk_si">
     <target name="__i686.get_pc_thunk.si"/>
     <target name="__x86.get_pc_thunk.si"/>
@@ -413,7 +413,7 @@
 	  ]]></body>
 	</pcode>
   </callfixup>
-  
+
   <callfixup name="fentry">
     <target name="__fentry__"/>
     <pcode>
@@ -422,7 +422,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="mcount">
     <target name="mcount"/>
     <pcode>
@@ -431,7 +431,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="x86_indirect_thunk_ebp">
     <target name="__x86_indirect_thunk_ebp"/>
     <pcode>
@@ -440,7 +440,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="x86_indirect_thunk_eax">
     <target name="__x86_indirect_thunk_eax"/>
     <pcode>
@@ -449,7 +449,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="x86_indirect_thunk_ebx">
     <target name="__x86_indirect_thunk_ebx"/>
     <pcode>
@@ -458,7 +458,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="x86_indirect_thunk_ecx">
     <target name="__x86_indirect_thunk_ecx"/>
     <pcode>
@@ -467,7 +467,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="x86_indirect_thunk_edx">
     <target name="__x86_indirect_thunk_edx"/>
     <pcode>
@@ -476,5 +476,5 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
 </compiler_spec>

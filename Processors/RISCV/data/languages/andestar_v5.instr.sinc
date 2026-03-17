@@ -276,7 +276,7 @@ lsb: "#"^op2025 is op2025 { export *[const]:$(XLEN) op2025; }
 	# choosery method
 	# rd = 0 + (zext(m1)*-4) + (zext(m2)*-3) + (zext(m3)*-2) + (zext(m4)*-1);
 @else
-   	m1:1 = (rs1[0,8]  == rs2[0,8]);
+	m1:1 = (rs1[0,8]  == rs2[0,8]);
 	m2:1 = (rs1[8,8]  == rs2[0,8]);
 	m3:1 = (rs1[16,8] == rs2[0,8]);
 	m4:1 = (rs1[24,8] == rs2[0,8]);
@@ -324,7 +324,7 @@ lsb: "#"^op2025 is op2025 { export *[const]:$(XLEN) op2025; }
 	# choosery method
 	# rd = 0 + (zext(m1)*-4) + (zext(m2)*-3) + (zext(m3)*-2) + (zext(m4)*-1);
 @else
-   	m1:1 = (rs1[0,8]==0)  | (rs1[0,8]  == rs2[0,8]);
+	m1:1 = (rs1[0,8]==0)  | (rs1[0,8]  == rs2[0,8]);
 	m2:1 = (rs1[8,8]==0)  | (rs1[8,8]  == rs2[8,8]);
 	m3:1 = (rs1[16,8]==0) | (rs1[16,8] == rs2[16,8]);
 	m4:1 = (rs1[24,8]==0) | (rs1[24,8] == rs2[24,8]);
@@ -372,7 +372,7 @@ lsb: "#"^op2025 is op2025 { export *[const]:$(XLEN) op2025; }
 	# choosery method
 	# rd = 0 + (zext(m1)*-4) + (zext(m2)*-3) + (zext(m3)*-2) + (zext(m4)*-1);
 @else
-   	m1:1 = (rs1[0,8]  != rs2[0,8]);
+	m1:1 = (rs1[0,8]  != rs2[0,8]);
 	m2:1 = (rs1[8,8]  != rs2[8,8]);
 	m3:1 = (rs1[16,8] != rs2[16,8]);
 	m4:1 = (rs1[24,8] != rs2[24,8]);
@@ -420,7 +420,7 @@ lsb: "#"^op2025 is op2025 { export *[const]:$(XLEN) op2025; }
 	# choosery method
 	# rd = 0 + (zext(m1)*-4) + (zext(m2)*-3) + (zext(m3)*-2) + (zext(m4)*-1);
 @else
-   	m1:1 = (rs1[0,8]  != rs2[0,8]);
+	m1:1 = (rs1[0,8]  != rs2[0,8]);
 	m2:1 = (rs1[8,8]  != rs2[8,8]);
 	m3:1 = (rs1[16,8] != rs2[16,8]);
 	m4:1 = (rs1[24,8] != rs2[24,8]);
@@ -452,7 +452,7 @@ lsb: "#"^op2025 is op2025 { export *[const]:$(XLEN) op2025; }
 
 imm11_exec: val is cop1212 & cop1011 & cop0909 & cop0808 & cop0506 & cop0404 & cop0303 & cop0202
   [ val = (cop0808<<11)|(cop1212<<10)|(cop0303<<9)|(cop0909<<8)|(cop0506<<6)|(cop0202<<5)|(cop1011<<3)|(cop0404<<2); ] {
-  	export *[ExecTable]:2 val;
+	export *[ExecTable]:2 val;
 }
 
 #
@@ -475,7 +475,7 @@ imm11_exec: val is cop1212 & cop1011 & cop0909 & cop0808 & cop0506 & cop0404 & c
 #
 imm11_nexec: val is cop1011 & cop0909 & cop0808 & cop0707 & cop0506 & cop0404 & cop0303 & cop0202
   [ val = (cop0808<<11)|(cop0707<<10)|(cop0303<<9)|(cop0909<<8)|(cop0506<<6)|(cop0202<<5)|(cop1011<<3)|(cop0404<<2); ] {
-  	export *[ExecTable]:2 val;
+	export *[ExecTable]:2 val;
 }
 
 # 100 1 imm[4:3|8] imm[11] imm[10] imm[7:6|2|9|5] 00
@@ -604,5 +604,3 @@ define pcodeop vfwcvt.f.bu.v;
 	vd = vfwcvt.f.bu.v(vs2);
 	build vm;
 }
-
-

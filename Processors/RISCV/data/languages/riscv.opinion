@@ -11,11 +11,11 @@
       <!-- EF_RISCV_ABI_QUAD          0x0006  -->
       <!-- EF_RISCV_RVE               0x0008  -->
       <!-- EF_RISCV_TSO               0x0010  -->
-      
+
       <constraint primary="243" processor="RISCV" endian="little" size="32"/> <!-- must choose between 'default' and 'AndeStar' variants -->
       <constraint primary="243" processor="RISCV" endian="little" size="64" variant="default"/>
-      
+
     </constraint>
-    
+
   </constraint>
 </opinions>

@@ -13,7 +13,7 @@
       <funcstart/>
     </postpatterns>
   </patternpairs>
-  
+
   <patternpairs totalbits="16" postbits="11">
     <!--  Medium confidence, more bits, but prepattern are jumps, not return -->
     <prepatterns>
@@ -28,7 +28,7 @@
       <possiblefuncstart/>
     </postpatterns>
   </patternpairs>
-  
+
   <patternpairs totalbits="20" postbits="7">
     <!--  Lower confidence, too few bits on start pattern -->
     <prepatterns>

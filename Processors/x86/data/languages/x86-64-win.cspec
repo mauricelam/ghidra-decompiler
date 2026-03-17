@@ -29,10 +29,10 @@
           <entry size="8" alignment="8" />
      </size_alignment_map>
      <bitfield_packing>
-     	  <use_MS_convention value="true"/>
+	  <use_MS_convention value="true"/>
      </bitfield_packing>
   </data_organization>
-  
+
   <global>
     <range space="ram"/>
     <register name="MXCSR"/>
@@ -79,12 +79,12 @@
       <pentry minsize="1" maxsize="500" align="8">
         <addr offset="40" space="stack"/>
       </pentry>
-      <!-- only structs of size 8,16,32,64 bits can be packed to register -->  
+      <!-- only structs of size 8,16,32,64 bits can be packed to register -->
       <rule>
-      	<datatype name="struct" sizes="3,5,6,7"/>
-      	<convert_to_ptr/>
+	<datatype name="struct" sizes="3,5,6,7"/>
+	<convert_to_ptr/>
       </rule>
-    </input> 
+    </input>
       <output>
         <pentry minsize="4" maxsize="8" metatype="float">
           <register name="XMM0_Qa"/>
@@ -94,8 +94,8 @@
         </pentry>
         <!-- only structs of size 8,16,32,64 bits can be returned via register -->
         <rule>
-      	  <datatype name="struct" sizes="3,5,6,7"/>
-      	  <hidden_return/>
+	  <datatype name="struct" sizes="3,5,6,7"/>
+	  <hidden_return/>
         </rule>
       </output>
       <unaffected>
@@ -168,8 +168,8 @@
       </group>
       <pentry minsize="1" maxsize="500" align="8">
         <addr offset="40" space="stack"/>
-      </pentry>  
-    </input> 
+      </pentry>
+    </input>
     <output>
       <pentry minsize="4" maxsize="8" metatype="float">
         <register name="XMM0_Qa"/>
@@ -233,7 +233,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="security_check_cookie">
     <target name="__security_check_cookie"/>
     <pcode>

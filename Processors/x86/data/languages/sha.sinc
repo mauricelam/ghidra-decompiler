@@ -50,4 +50,3 @@ define pcodeop sha256msg2_sha ;
 {
 	XmmReg1 = sha256msg2_sha( XmmReg1, XmmReg2_m128 );
 }
-

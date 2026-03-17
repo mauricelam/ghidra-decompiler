@@ -40,14 +40,14 @@ import ghidra.program.model.data.FileDataTypeManager;
 public class CreateJNIGDTArchivesScript extends GhidraScript {
 
 	private File outputDirectory;
-	
+
 	// location of header files base directory
 	private static String headerFilePath = "/data/HeaderFiles";
 
 	@Override
 	protected void run() throws Exception {
 		outputDirectory = askDirectory("Select Directory for GDT files", "Select GDT Output Dir");
-		
+
 		parseGDT_Linux_JNI();
 
 		parseGDT_Windows_JNI();
@@ -56,22 +56,22 @@ public class CreateJNIGDTArchivesScript extends GhidraScript {
 
 	private void parseHeaderFilesToGDT(DataTypeManager openTypes[], File outputDir, String gdtName, String languageID, String compiler, String[] filenames, String[] args)
 			throws ParseException, ghidra.app.util.cparser.CPP.ParseException, IOException {
-		
+
 		String dataTypeFile = outputDir + File.separator + gdtName + ".gdt";
-		
+
 		File f = getArchiveFile(dataTypeFile);
-		
+
 		FileDataTypeManager dtMgr = CParserUtils.parseHeaderFiles(openTypes, filenames, null, args,
 			f.getAbsolutePath(), languageID, compiler, monitor);
-		
+
 		dtMgr.close();
 	}
-	
+
 	/**
 	 * Turn string into a file, delete old archive/lock file if it exists
-	 * 
+	 *
 	 * @param dataTypeFile
-	 * 
+	 *
 	 * @return file
 	 */
 	private File getArchiveFile(String dataTypeFile) {
@@ -88,7 +88,7 @@ public class CreateJNIGDTArchivesScript extends GhidraScript {
 	}
 
 
-	public void parseGDT_Linux_JNI() throws Exception {	
+	public void parseGDT_Linux_JNI() throws Exception {
 		String filenames[] = {
 				"jni.h",
 				"jawt.h",
@@ -97,7 +97,7 @@ public class CreateJNIGDTArchivesScript extends GhidraScript {
 				"jvmticmlr.h",
 				"classfile_constants.h",
 		};
-		
+
 		String args[] = {
 				"-I"+headerFilePath+"/jni/linux",
 				"-I"+headerFilePath+"/jni/linux/linux",
@@ -116,7 +116,7 @@ public class CreateJNIGDTArchivesScript extends GhidraScript {
 				"-Daligned_u64=uint64_t",
 		};
 
-		
+
 		// Using another archive while parsing will cause:
 		//  - a dependence on the other archive
 		//  - any missing data types while parsing are supplied if present from existingDTMgr
@@ -129,11 +129,11 @@ public class CreateJNIGDTArchivesScript extends GhidraScript {
 		File file = new File(clib64ArchiveFile.getAbsolutePath());
 		DataTypeManager existingDTMgr = FileDataTypeManager.openFileArchive(file, false);
 		DataTypeManager openTypes[] = { existingDTMgr };
-		
+
 		parseHeaderFilesToGDT(openTypes, outputDirectory, "jni_linux", "x86:LE:64:default", "gcc", filenames, args);
 	}
-	
-	public void parseGDT_Windows_JNI() throws Exception {	
+
+	public void parseGDT_Windows_JNI() throws Exception {
 		String filenames[] = {
 				"jni.h",
 				"jawt.h",
@@ -142,7 +142,7 @@ public class CreateJNIGDTArchivesScript extends GhidraScript {
 				"jvmticmlr.h",
 				"classfile_constants.h",
 		};
-		
+
 		String args[] = {
 				"-I"+headerFilePath+"/jni/win32",
 				"-I"+headerFilePath+"/jni/win32/win32",
@@ -173,7 +173,7 @@ public class CreateJNIGDTArchivesScript extends GhidraScript {
 		File file = new File(clib64ArchiveFile.getAbsolutePath());
 		DataTypeManager existingDTMgr = FileDataTypeManager.openFileArchive(file, false);
 		DataTypeManager openTypes[] = { existingDTMgr };
-		
+
 		parseHeaderFilesToGDT(openTypes, outputDirectory, "jni_windows", "x86:LE:64:default", "windows", filenames, args);
 	}
 }

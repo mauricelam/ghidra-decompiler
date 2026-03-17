@@ -10,7 +10,7 @@ define space register type=register_space size=4;
 define register offset=0 size=4 [ A  X  RS  R  PC ];
 define register offset=0 size=2 [ AH _ XH _  RSH _ RH _ PCH _ ];
 define register offset=0 size=1 [ AB _ _ _ XB _ _ _  RSB _ _ _ RB _ _ _ PCB _ _ _ ];
- 
+
 # Instruction encoding: Insop:8, dst_reg:4, src_reg:4, off:16, imm:32 - from lsb to msb
 define token instr(64)
 	imm=(32, 63)
@@ -138,42 +138,42 @@ jfoff: reloc  is jf [ reloc = inst_next + jf * 8; ] { export *:8 reloc; }
 	goto joff;
 }
 
-:JEQ jtoff, jfoff, imm  is imm & jtoff & jfoff & op_alu_jmp_opcode=0x1 & op_alu_jmp_source=0 & op_insn_class=0x5 {	
+:JEQ jtoff, jfoff, imm  is imm & jtoff & jfoff & op_alu_jmp_opcode=0x1 & op_alu_jmp_source=0 & op_insn_class=0x5 {
 	if (A==imm) goto jtoff;
 	goto jfoff;
 }
 
-:JEQ jtoff, jfoff, X  is X & jtoff & jfoff & op_alu_jmp_opcode=0x1 & op_alu_jmp_source=1 & op_insn_class=0x5 {	
+:JEQ jtoff, jfoff, X  is X & jtoff & jfoff & op_alu_jmp_opcode=0x1 & op_alu_jmp_source=1 & op_insn_class=0x5 {
 	if (A==X) goto jtoff;
 	goto jfoff;
 }
 
-:JGT jtoff, jfoff, imm  is imm & jtoff & jfoff & op_alu_jmp_opcode=0x2 & op_alu_jmp_source=0 & op_insn_class=0x5 {	
+:JGT jtoff, jfoff, imm  is imm & jtoff & jfoff & op_alu_jmp_opcode=0x2 & op_alu_jmp_source=0 & op_insn_class=0x5 {
 	if (A > imm) goto jtoff;
 	goto jfoff;
 }
 
-:JGT jtoff, jfoff, X  is X & jtoff & jfoff & op_alu_jmp_opcode=0x2 & op_alu_jmp_source=1 & op_insn_class=0x5 {	
+:JGT jtoff, jfoff, X  is X & jtoff & jfoff & op_alu_jmp_opcode=0x2 & op_alu_jmp_source=1 & op_insn_class=0x5 {
 	if (A > X) goto jtoff;
 	goto jfoff;
 }
 
-:JGE jtoff, jfoff, imm  is imm & jtoff & jfoff & op_alu_jmp_opcode=0x3 & op_alu_jmp_source=0 & op_insn_class=0x5 {	
+:JGE jtoff, jfoff, imm  is imm & jtoff & jfoff & op_alu_jmp_opcode=0x3 & op_alu_jmp_source=0 & op_insn_class=0x5 {
 	if (A >= imm) goto jtoff;
 	goto jfoff;
 }
 
-:JGE jtoff, jfoff, X  is X & jtoff & jfoff & op_alu_jmp_opcode=0x3 & op_alu_jmp_source=1 & op_insn_class=0x5 {	
+:JGE jtoff, jfoff, X  is X & jtoff & jfoff & op_alu_jmp_opcode=0x3 & op_alu_jmp_source=1 & op_insn_class=0x5 {
 	if (A >= X) goto jtoff;
 	goto jfoff;
 }
 
-:JSET jtoff, jfoff, imm  is imm & jtoff & jfoff & op_alu_jmp_opcode=0x4 & op_alu_jmp_source=0 & op_insn_class=0x5 {	
+:JSET jtoff, jfoff, imm  is imm & jtoff & jfoff & op_alu_jmp_opcode=0x4 & op_alu_jmp_source=0 & op_insn_class=0x5 {
 	if ((A&imm) != 0) goto jtoff;
 	goto jfoff;
 }
 
-:JSET jtoff, jfoff, X  is X & jtoff & jfoff & op_alu_jmp_opcode=0x4 & op_alu_jmp_source=1 & op_insn_class=0x5 {	
+:JSET jtoff, jfoff, X  is X & jtoff & jfoff & op_alu_jmp_opcode=0x4 & op_alu_jmp_source=1 & op_insn_class=0x5 {
 	if ((A&X) != 0) goto jtoff;
 	goto jfoff;
 }

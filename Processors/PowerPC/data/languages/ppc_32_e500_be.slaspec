@@ -8,8 +8,8 @@
 
 @define ENDIAN "big"
 
-# Although a 32-bit architecture, 64-bit general purpose registers are supported. 
-# Language has been modeled using a 64-bit implementation with a 32-bit truncated 
+# Although a 32-bit architecture, 64-bit general purpose registers are supported.
+# Language has been modeled using a 64-bit implementation with a 32-bit truncated
 # memory space (see ldefs).
 
 @define REGISTER_SIZE "8"

@@ -97,7 +97,7 @@
     </unaffected>
     </prototype>
   </default_proto>
-  
+
   <prototype name="__call0" extrapop="0" stackshift="0">
     <input>
       <pentry minsize="1" maxsize="4" extension="inttype">
@@ -149,7 +149,7 @@
       <register name="a15"/>
     </unaffected>
   </prototype>
-  
+
   <callotherfixup targetop="swap4">
     <pcode incidentalcopy="true">
       <body><![CDATA[
@@ -164,7 +164,7 @@
       ]]></body>
     </pcode>
   </callotherfixup>
-  
+
   <callotherfixup targetop="restore4">
     <pcode incidentalcopy="true">
       <body><![CDATA[
@@ -181,7 +181,7 @@
       ]]></body>
     </pcode>
   </callotherfixup>
-  
+
   <callotherfixup targetop="swap8">
     <pcode incidentalcopy="true">
       <body><![CDATA[
@@ -200,7 +200,7 @@
       ]]></body>
     </pcode>
   </callotherfixup>
-  
+
   <callotherfixup targetop="restore8">
     <pcode incidentalcopy="true">
       <body><![CDATA[
@@ -217,7 +217,7 @@
       ]]></body>
     </pcode>
   </callotherfixup>
-  
+
   <callotherfixup targetop="swap12">
     <pcode incidentalcopy="true">
       <body><![CDATA[
@@ -228,7 +228,7 @@
       ]]></body>
     </pcode>
   </callotherfixup>
-  
+
   <callotherfixup targetop="restore12">
     <pcode incidentalcopy="true">
       <body><![CDATA[
@@ -239,7 +239,7 @@
       ]]></body>
     </pcode>
   </callotherfixup>
-  
+
   <callotherfixup targetop="rotateRegWindow">
     <pcode>
       <input name="CALLINC"/>
@@ -248,7 +248,7 @@
       ]]></body>
     </pcode>
   </callotherfixup>
-  
+
   <callotherfixup targetop="restoreRegWindow">
     <pcode>
       <body><![CDATA[

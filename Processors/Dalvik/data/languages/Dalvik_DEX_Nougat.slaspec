@@ -125,5 +125,3 @@ define token invokeLamda_operands ( 24 )
 {
 	#TODO pCode
 }
-
-

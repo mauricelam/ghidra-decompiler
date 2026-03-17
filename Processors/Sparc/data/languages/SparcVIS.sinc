@@ -442,4 +442,3 @@ define pcodeop pdist;
 {
 	fdrd = pdist(fdrs1,fdrs2);
 }
-

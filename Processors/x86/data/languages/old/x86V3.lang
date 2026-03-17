@@ -845,4 +845,3 @@
         <register name="TR_Address" offset="0x2232" bitsize="32" />
     </registers>
 </language>
-

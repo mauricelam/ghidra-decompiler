@@ -85,7 +85,7 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp.txt fsel mask=0x0d000000	
+#la-fp.txt fsel mask=0x0d000000
 #0x0d000000	0xfffc0000	f0:5,f5:5,f10:5,c15:3	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0', 'fcc15_3_s0']
 :fsel  FRD, FRJ, FRK, fccA           is op20_31=0xd0 & FRD & FRJ & FRK & fccA {
 	local test:1 = (fccA == 0);
@@ -112,57 +112,57 @@ define pcodeop uncertain_fcsr;
 #####################################
 
 
-#la-fp-s.txt fadd.s mask=0x01008000	
+#la-fp-s.txt fadd.s mask=0x01008000
 #0x01008000	0xffff8000	f0:5, f5:5, f10:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fadd.s  frD, frJ, frK               is op15_31=0x201 & frD & frJ & frK {
 	frD = frJ f+ frK;
 }
 
-#la-fp-s.txt fsub.s mask=0x01028000	
+#la-fp-s.txt fsub.s mask=0x01028000
 #0x01028000	0xffff8000	f0:5, f5:5, f10:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fsub.s  frD, frJ, frK               is op15_31=0x205 & frD & frJ & frK {
 	frD = frJ f- frK;
 }
 
-#la-fp-s.txt fmul.s mask=0x01048000	
+#la-fp-s.txt fmul.s mask=0x01048000
 #0x01048000	0xffff8000	f0:5, f5:5, f10:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fmul.s  frD, frJ, frK               is op15_31=0x209 & frD & frJ & frK {
 	frD = frJ f* frK;
 }
 
-#la-fp-s.txt fdiv.s mask=0x01068000	
+#la-fp-s.txt fdiv.s mask=0x01068000
 #0x01068000	0xffff8000	f0:5, f5:5, f10:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fdiv.s  frD, frJ, frK               is op15_31=0x20d & frD & frJ & frK {
 	frD = frJ f/ frK;
 }
 
 
-#la-fp-s.txt fmadd.s mask=0x08100000	
+#la-fp-s.txt fmadd.s mask=0x08100000
 #0x08100000	0xfff00000	f0:5, f5:5, f10:5, f15:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0', 'freg15_5_s0']
 :fmadd.s  frD, frJ, frK, frA         is op20_31=0x81 & frD & frJ & frK & frA {
 	frD = (frJ f* frK) f+ frA;
 }
 
-#la-fp-s.txt fmsub.s mask=0x08500000	
+#la-fp-s.txt fmsub.s mask=0x08500000
 #0x08500000	0xfff00000	f0:5, f5:5, f10:5, f15:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0', 'freg15_5_s0']
 :fmsub.s  frD, frJ, frK, frA         is op20_31=0x85 & frD & frJ & frK & frA {
 	frD = (frJ f* frK) f- frA;
 }
 
-#la-fp-s.txt fnmadd.s mask=0x08900000	
+#la-fp-s.txt fnmadd.s mask=0x08900000
 #0x08900000	0xfff00000	f0:5, f5:5, f10:5, f15:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0', 'freg15_5_s0']
 :fnmadd.s  frD, frJ, frK, frA        is op20_31=0x89 & frD & frJ & frK & frA {
 	frD = f- ((frJ f* frK) f+ frA);
 }
 
-#la-fp-s.txt fnmsub.s mask=0x08d00000	
+#la-fp-s.txt fnmsub.s mask=0x08d00000
 #0x08d00000	0xfff00000	f0:5, f5:5, f10:5, f15:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0', 'freg15_5_s0']
 :fnmsub.s  frD, frJ, frK, frA        is op20_31=0x8d & frD & frJ & frK & frA {
 	frD = f- ((frJ f* frK) f- frA);
 }
 
 
-#la-fp-s.txt fmax.s mask=0x01088000	
+#la-fp-s.txt fmax.s mask=0x01088000
 #0x01088000	0xffff8000	f0:5, f5:5, f10:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fmax.s  frD, frJ, frK               is op15_31=0x211 & frD & frJ & frK {
 	local jval = frJ;
@@ -171,7 +171,7 @@ define pcodeop uncertain_fcsr;
 	frD = (zext(test) * jval) + (zext(!test) * kval);
 }
 
-#la-fp-s.txt fmin.s mask=0x010a8000	
+#la-fp-s.txt fmin.s mask=0x010a8000
 #0x010a8000	0xffff8000	f0:5, f5:5, f10:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fmin.s  frD, frJ, frK               is op15_31=0x215 & frD & frJ & frK {
 	local jval = frJ;
@@ -181,7 +181,7 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp-s.txt fmaxa.s mask=0x010c8000	
+#la-fp-s.txt fmaxa.s mask=0x010c8000
 #0x010c8000	0xffff8000	f0:5, f5:5, f10:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fmaxa.s  frD, frJ, frK              is op15_31=0x219 & frD & frJ & frK {
 	local jval = frJ;
@@ -190,7 +190,7 @@ define pcodeop uncertain_fcsr;
 	frD = (zext(test) * jval) + (zext(!test) * kval);
 }
 
-#la-fp-s.txt fmina.s mask=0x010e8000	
+#la-fp-s.txt fmina.s mask=0x010e8000
 #0x010e8000	0xffff8000	f0:5, f5:5, f10:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fmina.s  frD, frJ, frK              is op15_31=0x21d & frD & frJ & frK {
 	local jval = frJ;
@@ -200,33 +200,33 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp-s.txt fabs.s mask=0x01140400	
+#la-fp-s.txt fabs.s mask=0x01140400
 #0x01140400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :fabs.s  frD, frJ                    is op10_31=0x4501 & frD & frJ {
 	frD = abs(frJ);
 }
 
-#la-fp-s.txt fneg.s mask=0x01141400	
+#la-fp-s.txt fneg.s mask=0x01141400
 #0x01141400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :fneg.s  frD, frJ                    is op10_31=0x4505 & frD & frJ {
 	frD = f- frJ;
 }
 
 
-#la-fp-s.txt fsqrt.s mask=0x01144400	
+#la-fp-s.txt fsqrt.s mask=0x01144400
 #0x01144400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :fsqrt.s  frD, frJ                   is op10_31=0x4511 & frD & frJ {
 	frD = sqrt(frJ);
 }
 
-#la-fp-s.txt frecip.s mask=0x01145400	
+#la-fp-s.txt frecip.s mask=0x01145400
 #0x01145400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :frecip.s  frD, frJ                  is op10_31=0x4515 & frD & frJ {
 	local one:4 = 1;
 	frD = int2float(one) f/ frJ;
 }
 
-#la-fp-s.txt frsqrt.s mask=0x01146400	
+#la-fp-s.txt frsqrt.s mask=0x01146400
 #0x01146400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :frsqrt.s  frD, frJ                  is op10_31=0x4519 & frD & frJ {
 	local one:4 = 1;
@@ -234,20 +234,20 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp-s.txt fscaleb.s mask=0x01108000	
+#la-fp-s.txt fscaleb.s mask=0x01108000
 #0x01108000	0xffff8000	f0:5, f5:5, f10:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fscaleb.s  frD, frJ, frK            is op15_31=0x221 & frD & frJ & frK {
 	frD = f_scaleb(frJ, frK);
 }
 
 
-#la-fp-s.txt flogb.s mask=0x01142400	
+#la-fp-s.txt flogb.s mask=0x01142400
 #0x01142400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :flogb.s  frD, frJ                   is op10_31=0x4509 & frD & frJ {
 	frD = f_logb(frJ);
 }
 
-#la-fp-s.txt fcopysign.s mask=0x01128000	
+#la-fp-s.txt fcopysign.s mask=0x01128000
 #0x01128000	0xffff8000	f0:5, f5:5, f10:5	['freg0_5_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fcopysign.s  frD, frJ, frK          is op15_31=0x225 & frD & frJ & frK {
 	local kval = frK & 0x80000000;
@@ -256,53 +256,53 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp-s.txt fclass.s mask=0x01143400	
+#la-fp-s.txt fclass.s mask=0x01143400
 #0x01143400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :fclass.s  frD, frJ                  is op10_31=0x450d & frD & frJ {
 	frD = f_class(frJ);
 }
 
 
-#la-fp-s.txt fmov.s mask=0x01149400	
+#la-fp-s.txt fmov.s mask=0x01149400
 #0x01149400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :fmov.s  frD, frJ                    is op10_31=0x4525 & frD & frJ {
 	frD = frJ;
 }
 
 
-#la-fp-s.txt movgr2fr.w mask=0x0114a400	
+#la-fp-s.txt movgr2fr.w mask=0x0114a400
 #0x0114a400	0xfffffc00	f0:5,r5:5	['freg0_5_s0', 'reg5_5_s0']
 :movgr2fr.w  frD, RJ32src            is op10_31=0x4529 & frD & RJ32src {
 	frD = RJ32src;
 }
 
-#la-fp-s.txt movgr2frh.w mask=0x0114ac00	
+#la-fp-s.txt movgr2frh.w mask=0x0114ac00
 #0x0114ac00	0xfffffc00	f0:5,r5:5	['freg0_5_s0', 'reg5_5_s0']
 :movgr2frh.w  drD, RJ32src           is op10_31=0x452b & drD & RJ32src {
 	drD = (zext(RJ32src) << 32) | (drD & 0xffffffff);
 }
 
 
-#la-fp-s.txt movfr2gr.s mask=0x0114b400	
+#la-fp-s.txt movfr2gr.s mask=0x0114b400
 #0x0114b400	0xfffffc00	r0:5, f5:5	['reg0_5_s0', 'freg5_5_s0']
 :movfr2gr.s  RD, frJ                 is op10_31=0x452d & RD & frJ {
 	RD = sext(frJ);
 }
 
-#la-fp-s.txt movfrh2gr.s mask=0x0114bc00	
+#la-fp-s.txt movfrh2gr.s mask=0x0114bc00
 #0x0114bc00	0xfffffc00	r0:5, f5:5	['reg0_5_s0', 'freg5_5_s0']
 :movfrh2gr.s  RD, drJ                is op10_31=0x452f & RD & drJ {
 	RD = sext(drJ[32,32]);
 }
 
 
-#la-fp-s.txt ftintrm.w.s mask=0x011a0400	
+#la-fp-s.txt ftintrm.w.s mask=0x011a0400
 #0x011a0400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ftintrm.w.s  frD, frJ               is op10_31=0x4681 & frD & frJ {
 	frD = trunc(frJ);
 }
 
-#la-fp-s.txt ftintrm.l.s mask=0x011a2400	
+#la-fp-s.txt ftintrm.l.s mask=0x011a2400
 #0x011a2400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ftintrm.l.s  frD, frJ               is op10_31=0x4689 & frD & frJ {
 	local val:8 = trunc(frJ);
@@ -310,13 +310,13 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp-s.txt ftintrp.w.s mask=0x011a4400	
+#la-fp-s.txt ftintrp.w.s mask=0x011a4400
 #0x011a4400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ftintrp.w.s  frD, frJ               is op10_31=0x4691 & frD & frJ {
 	frD = trunc(frJ);
 }
 
-#la-fp-s.txt ftintrp.l.s mask=0x011a6400	
+#la-fp-s.txt ftintrp.l.s mask=0x011a6400
 #0x011a6400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ftintrp.l.s  frD, frJ               is op10_31=0x4699 & frD & frJ {
 	local val:8 = trunc(frJ);
@@ -324,13 +324,13 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp-s.txt ftintrz.w.s mask=0x011a8400	
+#la-fp-s.txt ftintrz.w.s mask=0x011a8400
 #0x011a8400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ftintrz.w.s  frD, frJ               is op10_31=0x46a1 & frD & frJ {
 	frD = trunc(frJ);
 }
 
-#la-fp-s.txt ftintrz.l.s mask=0x011aa400	
+#la-fp-s.txt ftintrz.l.s mask=0x011aa400
 #0x011aa400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ftintrz.l.s  frD, frJ               is op10_31=0x46a9 & frD & frJ {
 	local val:8 = trunc(frJ);
@@ -338,13 +338,13 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp-s.txt ftintrne.w.s mask=0x011ac400	
+#la-fp-s.txt ftintrne.w.s mask=0x011ac400
 #0x011ac400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ftintrne.w.s  frD, frJ              is op10_31=0x46b1 & frD & frJ {
 	frD = round_even(frJ);
 }
 
-#la-fp-s.txt ftintrne.l.s mask=0x011ae400	
+#la-fp-s.txt ftintrne.l.s mask=0x011ae400
 #0x011ae400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ftintrne.l.s  frD, frJ              is op10_31=0x46b9 & frD & frJ {
 	local val:8 = round_even(frJ);
@@ -352,13 +352,13 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp-s.txt ftint.w.s mask=0x011b0400	
+#la-fp-s.txt ftint.w.s mask=0x011b0400
 #0x011b0400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ftint.w.s  frD, frJ                 is op10_31=0x46c1 & frD & frJ {
 	frD = trunc(frJ);
 }
 
-#la-fp-s.txt ftint.l.s mask=0x011b2400	
+#la-fp-s.txt ftint.l.s mask=0x011b2400
 #0x011b2400	0xfffffc00	f0:5, f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ftint.l.s  frD, frJ                 is op10_31=0x46c9 & frD & frJ {
 	local val:8 = trunc(frJ);
@@ -366,21 +366,21 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp-s.txt ffint.s.w mask=0x011d1000	
+#la-fp-s.txt ffint.s.w mask=0x011d1000
 #0x011d1000	0xfffffc00	f0:5,f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ffint.s.w  frD,frJ                  is op10_31=0x4744 & frD & frJ {
 	frD =int2float(frJ);
 }
 
 
-#la-fp-s.txt ffint.s.l mask=0x011d1800	
+#la-fp-s.txt ffint.s.l mask=0x011d1800
 #0x011d1800	0xfffffc00	f0:5,f5:5	['freg0_5_s0', 'freg5_5_s0']
 :ffint.s.l  frD, drD                  is op10_31=0x4746 & frD & drD {
 	frD = int2float(drD);
 }
 
 
-#la-fp-s.txt frint.s mask=0x011e4400	
+#la-fp-s.txt frint.s mask=0x011e4400
 #0x011e4400	0xfffffc00	f0:5,f5:5	['freg0_5_s0', 'freg5_5_s0']
 :frint.s  frD,frJ                    is op10_31=0x4791 & frD & frJ {
 	local val:4 = trunc(frJ);
@@ -388,27 +388,27 @@ define pcodeop uncertain_fcsr;
 }
 
 
-#la-fp-s.txt fld.s mask=0x2b000000	
+#la-fp-s.txt fld.s mask=0x2b000000
 #0x2b000000	0xffc00000	f0:5,r5:5,so10:12	['freg0_5_s0', 'reg5_5_s0', 'soffs10_12_s0']
 :fld.s  frD, ldst_addr               is op22_31=0xac & frD & ldst_addr {
 	frD = *[ram]:4 ldst_addr;
 }
 
 
-#la-fp-s.txt fst.s mask=0x2b400000	
+#la-fp-s.txt fst.s mask=0x2b400000
 #0x2b400000	0xffc00000	f0:5,r5:5,so10:12	['freg0_5_s0', 'reg5_5_s0', 'soffs10_12_s0']
 :fst.s  frD, ldst_addr               is op22_31=0xad & frD & ldst_addr {
 	*[ram]:4 ldst_addr = frD:4;
 }
 
 
-#la-fp-s.txt fldx.s mask=0x38300000	
+#la-fp-s.txt fldx.s mask=0x38300000
 #0x38300000	0xffff8000	f0:5,r5:5,r10:5	['freg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :fldx.s  frD, ldstx_addr             is op15_31=0x7060 & frD & ldstx_addr {
 	frD = *[ram]:4 ldstx_addr;
 }
 
-#la-fp-s.txt fstx.s mask=0x38380000	
+#la-fp-s.txt fstx.s mask=0x38380000
 #0x38380000	0xffff8000	f0:5,r5:5,r10:5	['freg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :fstx.s  frD, ldstx_addr             is op15_31=0x7070 & frD & ldstx_addr {
 	*[ram]:4 ldstx_addr = frD;
@@ -429,7 +429,7 @@ fcond: SNaN^"ne"   is ccf=0x8 & SNaN { FCMPR = FCMP1 f!= FCMP2; }
 fcond: SNaN^"or"   is ccf=0xa & SNaN { FCMPR = !(nan(FCMP1) || nan(FCMP2)); }
 fcond: SNaN^"une"  is ccf=0xc & SNaN { FCMPR = (nan(FCMP1) || nan(FCMP2)) || (FCMP1 f!= FCMP2); }
 
-#la-fp-s.txt fcmp.caf.s mask=0x0c100000	
+#la-fp-s.txt fcmp.caf.s mask=0x0c100000
 #0x0c100000	0xffff8018	c0:3, f5:5, f10:5	['fcc0_3_s0', 'freg5_5_s0', 'freg10_5_s0']
 :fcmp.^fcond^".s"  fccD, frJ, frK    is op20_31=0xc1 & fcond & op3_4 = 0 & fccD & frJ & frK {
 	FCMP1 = frJ;
@@ -439,7 +439,7 @@ fcond: SNaN^"une"  is ccf=0xc & SNaN { FCMPR = (nan(FCMP1) || nan(FCMP2)) || (FC
 }
 
 
-#la-bound-fp-s.txt fldgt.s mask=0x38740000	
+#la-bound-fp-s.txt fldgt.s mask=0x38740000
 #0x38740000	0xffff8000	f0:5, r5:5, r10:5	['freg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :fldgt.s  frD, RJsrc, RKsrc          is op15_31=0x70e8 & frD & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -451,7 +451,7 @@ fcond: SNaN^"une"  is ccf=0xc & SNaN { FCMPR = (nan(FCMP1) || nan(FCMP2)) || (FC
 }
 
 
-#la-bound-fp-s.txt fldle.s mask=0x38750000	
+#la-bound-fp-s.txt fldle.s mask=0x38750000
 #0x38750000	0xffff8000	f0:5, r5:5, r10:5	['freg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :fldle.s  frD, RJsrc, RKsrc          is op15_31=0x70ea & frD & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -463,7 +463,7 @@ fcond: SNaN^"une"  is ccf=0xc & SNaN { FCMPR = (nan(FCMP1) || nan(FCMP2)) || (FC
 }
 
 
-#la-bound-fp-s.txt fstgt.s mask=0x38760000	
+#la-bound-fp-s.txt fstgt.s mask=0x38760000
 #0x38760000	0xffff8000	f0:5, r5:5, r10:5	['freg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :fstgt.s  frD, RJsrc, RKsrc          is op15_31=0x70ec & frD & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -475,7 +475,7 @@ fcond: SNaN^"une"  is ccf=0xc & SNaN { FCMPR = (nan(FCMP1) || nan(FCMP2)) || (FC
 }
 
 
-#la-bound-fp-s.txt fstle.s mask=0x38770000	
+#la-bound-fp-s.txt fstle.s mask=0x38770000
 #0x38770000	0xffff8000	f0:5, r5:5, r10:5	['freg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :fstle.s  frD, RJsrc, RKsrc          is op15_31=0x70ee & frD & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -485,4 +485,3 @@ fcond: SNaN^"une"  is ccf=0xc & SNaN { FCMPR = (nan(FCMP1) || nan(FCMP2)) || (FC
 	<store>
 	*[ram]:4 vaddr = frD;
 }
-

@@ -152,4 +152,3 @@ define pcodeop custom3.rd.rs1.rs2;
 {
 	rd = custom3.rd.rs1.rs2(rs1, rs2);
 }
-

@@ -88,7 +88,7 @@ define token instrArm (32)
     x=(5,5)
     r=(5,5)
     y=(6,6)
-    
+
 	# Advanced SIMD and VFP instruction fields
 	D22=(22,22)
 	N7=(7,7)
@@ -136,9 +136,9 @@ define token instrArm (32)
 	Sm0_3=(0,2)
 	Sm1_3=(0,2)
 	cmode=(8,11)
-	
-	
-	
+
+
+
 	# Arbitrary bit fields
     bit31=(31,31)
     bit30=(30,30)
@@ -252,7 +252,7 @@ define token instrArm (32)
     c0001=(0,1)
     c0000=(0,0)
 
-# 
+#
 # 32-bit Thumb fields which correspond closely with ARM fields for
 # certain coprocessor instructions
 #
@@ -306,7 +306,7 @@ define token instrArm (32)
 	thv_cmode=(24,27)
 	thv_Sm0_3=(16,18)
 	thv_Sm1_3=(16,18)
-	
+
 	thv_Rd=(28,31)
 	thv_Rt=(28,31)
 	thv_Rn=(0,3)
@@ -314,7 +314,7 @@ define token instrArm (32)
     thv_Rt2=(24,27)
 	thv_immed=(16,23)
 	thv_cpn=(8,10)
-	    
+
     # Arbitrary bit fields for 32-bit Little Endian Thumb
 
     thv_bit31=(15,15)
@@ -423,10 +423,10 @@ define token instrArm (32)
     thv_c0001=(16,17)
     thv_c0000=(16,16)
     thv_option=(16,19)
-    
+
 @else # ENDIAN == "big"
 
-  	# Advanced SIMD and VFP instruction fields for 32-bit Big Endian Thumb
+	# Advanced SIMD and VFP instruction fields for 32-bit Big Endian Thumb
 	thv_D22=(22,22)
 	thv_N7=(7,7)
 	thv_L7=(7,7)
@@ -473,7 +473,7 @@ define token instrArm (32)
 	thv_Sm0_3=(0,2)
 	thv_Sm1_3=(0,2)
 	thv_cmode=(8,11)
-	
+
 	thv_Rd=(12,15)
 	thv_Rt=(12,15)
 	thv_Rn=(16,19)
@@ -481,7 +481,7 @@ define token instrArm (32)
     thv_Rt2=(8,11)
 	thv_immed=(0,7)
 	thv_cpn=(24,26)
-	    
+
     # Arbitrary bit fields for 32-bit Big Endian Thumb
     thv_bit31=(31,31)
     thv_bit30=(30,30)
@@ -589,14 +589,14 @@ define token instrArm (32)
     thv_c0001=(0,1)
     thv_c0000=(0,0)
     thv_option=(0,3)
-    
+
 @endif # ENDIAN = "big"
 
 ;
 
 attach variables [ Rn Rd Rs Rm RdHi RdLo smRd smRn smRm smRa RmHi RnLo ] [ r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 sp lr pc ];
 attach variables [ Rd2 Rm2 ] [ r1 _ r3 _ r5 _ r7 _ r9 _ r11 _ sp _ _ _ ]; # see LDREXD
-attach variables [ CRd CRn CRm ] [ cr0 cr1 cr2 cr3 cr4 cr5 cr6 cr7 cr8 cr9 cr10 cr11 cr12 cr13 cr14 cr15 ]; 										
+attach variables [ CRd CRn CRm ] [ cr0 cr1 cr2 cr3 cr4 cr5 cr6 cr7 cr8 cr9 cr10 cr11 cr12 cr13 cr14 cr15 ];
 attach variables [ thv_Rd thv_Rn thv_Rt thv_Rt2 ] [ r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 sp lr pc ];
 
 attach names [ cpn ] [ p0 p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12 p13 p14 p15  ];
@@ -658,7 +658,7 @@ COND: cc is $(AMODE) &  cc		      { if (!cc) goto inst_next; }   # Execute condi
 COND:    is $(AMODE) &  cond=14	  { }		# Always execute
 #COND:    is $(AMODE) &  cond=15	  { }	# Always execute - deprecated, should not be used.
 
-@if defined(INCLUDE_NEON) # Unconditional Neon Thumb instructions share many Conditional Neon ARM constructors 
+@if defined(INCLUDE_NEON) # Unconditional Neon Thumb instructions share many Conditional Neon ARM constructors
 COND: ItCond is TMode=1 & thv_c2831=14 & cond & ItCond    	  { }			     # ItCond execute
 #COND: ItCond is TMode=1 & thv_c2831=15 & cond & ItCond    	  { }			     # ItCond execute
 @endif
@@ -1490,7 +1490,7 @@ spsrmask: "spsr_xsf"	is mask=14	{ export 0xffffff00:4; }
 spsrmask: "spsr_cxsf"	is mask=15	{ export 0xffffffff:4; }
 
 #####################
-######  immediate bit-number data for unsigned/signed saturated instructions 
+######  immediate bit-number data for unsigned/signed saturated instructions
 #####################
 @if defined(VERSION_6)
 
@@ -1542,7 +1542,7 @@ with : ARMcondCk=1 {
 # other ARM instructions to avoid incorrect
 # constructor matching for those that use the
 # COND subconstructor.  This also ensures
-# that the various VFP instructions supersede the 
+# that the various VFP instructions supersede the
 # CDP/MCR/MRC general coprocessor instructions
 #
 #################################################
@@ -1661,14 +1661,14 @@ FFLAG: "f" is c0606=1  				{ disableFIQinterrupts(); }
 FFLAG:     is c0606=0  				{ }
 IFLAGS: AFLAG^IFLAG^FFLAG is AFLAG & IFLAG & FFLAG  { }
 
-SetMode: "#"^16  is c0004=0x10  { setUserMode(); } 
-SetMode: "#"^17  is c0004=0x11  { setFIQMode(); } 
-SetMode: "#"^18  is c0004=0x12  { setIRQMode(); } 
-SetMode: "#"^19  is c0004=0x13  { setSupervisorMode(); } 
+SetMode: "#"^16  is c0004=0x10  { setUserMode(); }
+SetMode: "#"^17  is c0004=0x11  { setFIQMode(); }
+SetMode: "#"^18  is c0004=0x12  { setIRQMode(); }
+SetMode: "#"^19  is c0004=0x13  { setSupervisorMode(); }
 SetMode: "#"^22  is c0004=0x16  { setMonitorMode(); }
-SetMode: "#"^23  is c0004=0x17  { setAbortMode(); } 
-SetMode: "#"^27  is c0004=0x1b  { setUndefinedMode(); } 
-SetMode: "#"^31  is c0004=0x1f  { setSystemMode(); } 
+SetMode: "#"^23  is c0004=0x17  { setAbortMode(); }
+SetMode: "#"^27  is c0004=0x1b  { setUndefinedMode(); }
+SetMode: "#"^31  is c0004=0x1f  { setSystemMode(); }
 
 :cps SetMode    		is $(AMODE) & ARMcond=0 & cond=15 & c2027=16 & c1819=0 & c1717=1 & c0916=0 & c0508=0 & SetMode { }
 :cpsie IFLAGS    	is $(AMODE) & ARMcond=0 & cond=15 & c2027=16 & c1819=2 & c1717=0 & c0916=0 & c0505=0 & c0004=0 & IFLAGS { }
@@ -1912,7 +1912,7 @@ macro add_with_carry_flags(op1,op2){
 macro sub_with_carry_flags(op1, op2){
   local result = op1 - op2;
   tmpCY = (op1 > op2) || (result < zext(CY));
-  tmpOV = sborrow(op1,op2) ^^ sborrow(result,zext(!CY));	
+  tmpOV = sborrow(op1,op2) ^^ sborrow(result,zext(!CY));
 }
 
 
@@ -2957,7 +2957,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 # ===== START mcr
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=0 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -2966,7 +2966,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=0 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -2975,7 +2975,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=0 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -2984,7 +2984,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=3 & cpn=15 & Rd & CRn=0 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -2993,7 +2993,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=1 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3002,7 +3002,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=1 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3011,7 +3011,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=1 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3020,7 +3020,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=1 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=1 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3029,7 +3029,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=1 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=1 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3038,7 +3038,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=1 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=1 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3047,7 +3047,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=2 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3056,7 +3056,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=2 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3065,7 +3065,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=2 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3074,7 +3074,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=3 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3083,7 +3083,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=5 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3092,7 +3092,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=5 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3101,7 +3101,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=6 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3110,7 +3110,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=6 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3119,7 +3119,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=4 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3128,7 +3128,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=5 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3137,7 +3137,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=5 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3146,7 +3146,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=5 & c0404=1 & opc2=4 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3155,7 +3155,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=6 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3164,7 +3164,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=6 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3173,7 +3173,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=6 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3182,7 +3182,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3191,7 +3191,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3200,7 +3200,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3209,7 +3209,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2=4 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3218,7 +3218,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2=5 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3227,7 +3227,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=14 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3236,7 +3236,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=14 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3245,7 +3245,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=7 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=8 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3254,7 +3254,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=7 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=8 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3263,7 +3263,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=7 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=8 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3272,7 +3272,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=13 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3281,7 +3281,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=13 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3290,7 +3290,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=13 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3299,7 +3299,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=3 & cpn=15 & Rd & CRn=13 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3308,7 +3308,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=4 & cpn=15 & Rd & CRn=13 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3317,7 +3317,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=2 & c0404=1 & opc2=4 & cpn=15 & Rd & CRn=15 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3326,7 +3326,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=1 & c0404=1 & opc2 & cpn=15 & Rd & CRn=0 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3336,7 +3336,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=2 & c0404=1 & opc2 & cpn=15 & Rd & CRn=0 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3346,7 +3346,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=4 & c0404=1 & opc2 & cpn=15 & Rd & CRn=0 & c2020=0 & opc1=2 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3356,7 +3356,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2 & cpn=15 & Rd & CRn=1 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3366,7 +3366,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=1 & c0404=1 & opc2 & cpn=15 & Rd & CRn=1 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3376,7 +3376,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2 & cpn=15 & Rd & CRn=2 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3386,7 +3386,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=5 & c0404=1 & opc2 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3396,7 +3396,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2 & cpn=15 & Rd & CRn=7 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3406,7 +3406,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm & c0404=1 & opc2 & cpn=15 & Rd & CRn=0 & c2020=0 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3416,7 +3416,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-:mcr^COND mcrOperands  is 
+:mcr^COND mcrOperands  is
     $(AMODE) &  CRm & c0404=1 & opc2 & cpn=15 & Rd & CRn=15 & c2020=0 & opc1 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3426,7 +3426,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 }
 
 
-# ===== END mcr 
+# ===== END mcr
 
 :mcr^COND cpn,opc1,Rd,CRn,CRm,opc2 is $(AMODE) & ARMcond=1 & COND & c2427=14 & opc1 & c2020=0 & CRn & Rd & cpn & opc2 & c0404=1 & CRm
 {
@@ -3620,7 +3620,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 # ===== Start mrc
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=0 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3630,7 +3630,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=0 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3640,7 +3640,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=0 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3650,7 +3650,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=3 & cpn=15 & Rd & CRn=0 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3660,7 +3660,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=1 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3670,7 +3670,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=1 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3680,7 +3680,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=1 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3690,7 +3690,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=1 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=1 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3700,7 +3700,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=1 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=1 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3710,7 +3710,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=1 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=1 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3720,7 +3720,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=2 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3730,7 +3730,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=2 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3740,7 +3740,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=2 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3750,7 +3750,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=3 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3760,7 +3760,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=5 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3770,7 +3770,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=5 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3780,7 +3780,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=6 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3790,7 +3790,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=6 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3800,7 +3800,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=4 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3810,7 +3810,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=5 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3820,7 +3820,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=5 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3830,7 +3830,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=5 & c0404=1 & opc2=4 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3840,7 +3840,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=6 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3850,7 +3850,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=6 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3860,7 +3860,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=6 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3870,7 +3870,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3880,7 +3880,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3890,7 +3890,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3900,7 +3900,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2=4 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3910,7 +3910,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2=5 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3920,7 +3920,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=14 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3930,7 +3930,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=14 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3940,7 +3940,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=7 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=8 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3950,7 +3950,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=7 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=8 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3960,7 +3960,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=7 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=8 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3970,7 +3970,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=0 & cpn=15 & Rd & CRn=13 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3980,7 +3980,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=1 & cpn=15 & Rd & CRn=13 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -3990,7 +3990,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=2 & cpn=15 & Rd & CRn=13 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4000,7 +4000,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=3 & cpn=15 & Rd & CRn=13 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4010,7 +4010,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2=4 & cpn=15 & Rd & CRn=13 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4020,7 +4020,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=2 & c0404=1 & opc2=4 & cpn=15 & Rd & CRn=15 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4030,7 +4030,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=1 & c0404=1 & opc2 & cpn=15 & Rd & CRn=0 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4041,7 +4041,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=2 & c0404=1 & opc2 & cpn=15 & Rd & CRn=0 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4052,7 +4052,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=4 & c0404=1 & opc2 & cpn=15 & Rd & CRn=0 & c2020=1 & opc1=2 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4063,7 +4063,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2 & cpn=15 & Rd & CRn=1 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4074,7 +4074,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=1 & c0404=1 & opc2 & cpn=15 & Rd & CRn=1 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4085,7 +4085,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=0 & c0404=1 & opc2 & cpn=15 & Rd & CRn=2 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4096,7 +4096,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=5 & c0404=1 & opc2 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4107,7 +4107,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm=10 & c0404=1 & opc2 & cpn=15 & Rd & CRn=7 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4118,7 +4118,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm & c0404=1 & opc2 & cpn=15 & Rd & CRn=0 & c2020=1 & opc1=0 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4129,7 +4129,7 @@ ArmPCRelImmed12: reloff		is U23=0 & immed & rotate
 
 
 
-:mrc^COND mcrOperands  is 
+:mrc^COND mcrOperands  is
     $(AMODE) &  CRm & c0404=1 & opc2 & cpn=15 & Rd & CRn=15 & c2020=1 & opc1 & c2427=14 & COND & ARMcond=1 &
         mcrOperands
 {
@@ -4570,7 +4570,7 @@ macro BitReverse_arm(val) {
 :rbit^COND Rd, rm	is $(AMODE) & ARMcond=1 & COND & c2327=13 & c2022=7 & c0407=3 & c1619=15 & c0811=15 & Rd & rm
 {
 	build COND;
-  	build rm;
+	build rm;
 	local t:4 = rm & 0xff;
     local b1:1 = t:1;
     t = (rm >> 8) & 0xff;
@@ -4937,7 +4937,7 @@ macro BitReverse_arm(val) {
 	local rD3 = ((zext(GE3) * Rn) + (zext(!GE3) * Rm)) & 0x0ff0000;
 	local rD4 = ((zext(GE4) * Rn) + (zext(!GE4) * Rm)) & 0x0ff000000;
 	Rd = rD1 | rD2 | rD3 | rD4;
-}  
+}
 
 @if defined(VERSION_6K)
 
@@ -4956,7 +4956,7 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
 :setend armEndianNess  is $(AMODE) &  (c0031=0xf1010000 | c0031=0xf1010200) & armEndianNess { setEndianState(armEndianNess); }
 
 
-:shadd16^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=1 & Rm 
+:shadd16^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=1 & Rm
 {
   build COND;
   local tmpRn = Rn;
@@ -4966,7 +4966,7 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
   Rd = (sum2 << 16) + (sum1 & 0xffff);
 }
 
-:shadd8^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=9 & Rm 
+:shadd8^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=9 & Rm
 {
   build COND;
   local tmpRn = Rn;
@@ -4985,7 +4985,7 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
 }
 
 # shaddsubx
-:shasx^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=3 & Rm 
+:shasx^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=3 & Rm
 {
   build COND;
   local tmpRn = Rn;
@@ -4997,7 +4997,7 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
 }
 
 # shsubbaddx
-:shsax^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=5 & Rm 
+:shsax^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=5 & Rm
 {
   build COND;
   local tmpRn = Rn;
@@ -5008,7 +5008,7 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
   Rd[16,16] = diff[1,16];
 }
 
-:shsub16^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=7 & Rm 
+:shsub16^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=7 & Rm
 {
   build COND;
   local tmpRn = Rn;
@@ -5018,7 +5018,7 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
   Rd = (sum2 << 16) + (sum1 & 0xffff);
 }
 
-:shsub8^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=15 & Rm 
+:shsub8^COND Rd, Rn, Rm  is $(AMODE) & ARMcond=1 & COND & c2027=0x63 & Rn & Rd & c0811=15 & c0407=15 & Rm
 {
   build COND;
   local tmpRn = Rn;
@@ -5064,11 +5064,11 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
   local product1 = sext(tmpLRn) * sext(tmpLRm);
   local product2 = sext(tmpURn:2) * sext(tmpURm:2);
   local tmpprod = product1 + product2;
-  Q = scarry(smRa, tmpprod) || Q; #Q is sticky 
+  Q = scarry(smRa, tmpprod) || Q; #Q is sticky
   smRd = smRa + tmpprod;
 }
 
-:smladx^COND smRd, smRn, smRm, smRa  is $(AMODE) & ARMcond=1 & COND & c2027=0x70 & c0407=3 & smRd & smRn & smRm & smRa  
+:smladx^COND smRd, smRn, smRm, smRa  is $(AMODE) & ARMcond=1 & COND & c2027=0x70 & c0407=3 & smRd & smRn & smRm & smRa
 {
   build COND;
   local tmpRn = smRn;
@@ -5171,7 +5171,7 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
 	prod2:4 = sext(rnHi) * sext(rmHi);
 	diff:4 = prod1 - prod2;
 	Q = scarry(diff, smRa) || Q; #Q is sticky
-	smRd = smRa + diff;	
+	smRd = smRa + diff;
 }
 
 :smlsdx^COND smRd,smRn,smRm,smRa  is $(AMODE) & ARMcond=1 & COND & c2027=0x70 & smRd & smRn & c0607=1 & x=1 & c0404=1 & smRm & smRa
@@ -5185,7 +5185,7 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
 	prod2:4 = sext(rnHi) * sext(tmpRm:2);
 	diff:4 = prod1 - prod2;
 	Q = scarry(diff, smRa) || Q; #Q is sticky
-	smRd = smRa + diff;	
+	smRd = smRa + diff;
 }
 
 :smlsld^COND RdLo,RdHi,smRn,smRm  is $(AMODE) & ARMcond=1 & COND & c2027=0x74 & RdHi & RdLo & smRm & c0607=1 & x=0 & c0404=1 & smRn
@@ -5358,9 +5358,9 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
 }
 
 
-:ssat^COND Rd, sSatImm5, shift4  is $(AMODE) & ARMcond=1 & COND & c2127=0x35 & c0405=1 & sSatImm5 & Rd & shift4 
+:ssat^COND Rd, sSatImm5, shift4  is $(AMODE) & ARMcond=1 & COND & c2127=0x35 & c0405=1 & sSatImm5 & Rd & shift4
 {
-  build COND;  
+  build COND;
   build shift4;
   tmp:4 = SignedSaturate(shift4, sSatImm5);
   Q = SignedDoesSaturate(shift4, sSatImm5);
@@ -5406,7 +5406,7 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
   local diffl = sext(lRn:2) - sext(lRm:2);
   GE1 = diffl s>= 0;
   GE2 = diffl s>= 0;
-  local diffu = sext(uRn:2) - sext(uRm:2); 
+  local diffu = sext(uRn:2) - sext(uRm:2);
   GE3 = diffu s>= 0;
   GE4 = diffu s>= 0;
   Rd = ((diffu & 0xffff) << 16) | (diffl & 0xffff);
@@ -5548,10 +5548,10 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
 	local addr = Rn;
 	local tmpRm = Rm;
 	local tmpRm2 = Rm2;
-  	access:1 = hasExclusiveAccess(addr);
-  	Rd = 1;
-  	if (!access) goto inst_next;
-  	Rd = 0;
+	access:1 = hasExclusiveAccess(addr);
+	Rd = 1;
+	if (!access) goto inst_next;
+	Rd = 0;
 	*(addr) = tmpRm;
 	addr = addr + 4;
 	*(addr) = tmpRm2;
@@ -5562,10 +5562,10 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
 	build COND;
 	local tmp = Rn;
 	local tmpRm = Rm;
-  	access:1 = hasExclusiveAccess(tmp);
-  	Rd = 1;
-  	if (!access) goto inst_next;
-  	Rd = 0;
+	access:1 = hasExclusiveAccess(tmp);
+	Rd = 1;
+	if (!access) goto inst_next;
+	Rd = 0;
 	*tmp = tmpRm:2;
 }
 
@@ -6441,7 +6441,7 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
 #  call [tmp];
 #  TB=0;
 #} # Optional change to THUMB
-  
+
 #:call^COND^SBIT_CZNO shift1 	is $(AMODE) &  pref=0xe1a0e00f; COND & c2124=13 & SBIT_CZNO & c1619=0 & Rd=15 & c2627=0 & shift1
 #{
 #  lr = inst_next + 8;
@@ -6480,4 +6480,3 @@ armEndianNess: "BE" is c0031=0xf1010200 { export 1:1; }
 
 
 } # End with : ARMcondCk=1
-

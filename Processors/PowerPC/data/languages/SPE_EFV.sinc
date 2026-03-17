@@ -27,7 +27,7 @@
 
    D = tmpC;
 }
- 
+
 # =================================================================
 # Page 562
 
@@ -102,7 +102,7 @@
    # negate the float
    tmpC = f-( tmpC );
    setSPEFSCR_L( tmpC );
- 
+
    <done>
 
    setSummarySPEFSCR();
@@ -134,7 +134,7 @@
    # negate the float
    tmpD = f-( tmpD );
    setSPEFSCR_H( tmpD );
- 
+
    <done1>
 
    setSummarySPEFSCR();
@@ -155,7 +155,7 @@
 # ISA-cmt: evfscfsi - Vector Convert Floating-Point Single-Precision from Signed Integer
 # ISA-info: evfscfsi - Form "EVX" Page 566 Category "SP.FV"
 # binutils: mytest.d:  204:	10 20 12 91 	evfscfsi r1,r2
-:evfscfsi D,B is OP=4 & D & BITS_16_20=0 & B & XOP_0_10=657 
+:evfscfsi D,B is OP=4 & D & BITS_16_20=0 & B & XOP_0_10=657
 {
    #
    # low section
@@ -180,7 +180,7 @@
    # negate the float
    tmpB = f-( tmpB );
    setSPEFSCR_L( tmpB );
- 
+
    <done>
 
    setSummarySPEFSCR();
@@ -209,7 +209,7 @@
    # negate the float
    tmpC = f-( tmpC );
    setSPEFSCR_H( tmpC );
- 
+
    <done1>
 
    setSummarySPEFSCR();
@@ -1433,7 +1433,7 @@
 # ISA-cmt: Vector Multiply Word Unsigned, Modulo, Integer and Accumulate
 # evmwumiaa rD,rA,rB 101 0101 1000
 # evmwumiaa confict with macchwo
-:evmwumiaa D,A,B is OP=4 & A & B & D & XOP_0_10=0x558 { 
+:evmwumiaa D,A,B is OP=4 & A & B & D & XOP_0_10=0x558 {
    tmpAL:8 = zext( A:4 );
    tmpBL:8 = zext( B:4 );
 
@@ -1510,6 +1510,3 @@
    ea:$(REGISTER_SIZE) = RA_OR_ZERO + B;
    *:8(ea) = D;
 }
-
-
-

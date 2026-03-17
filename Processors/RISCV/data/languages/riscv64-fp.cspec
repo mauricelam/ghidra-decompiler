@@ -138,32 +138,32 @@
       </output>
       <unaffected>
         <register name="sp"/>
-      	<register name="gp"/>
-      	<register name="tp"/>
+	<register name="gp"/>
+	<register name="tp"/>
         <register name="s0"/>
-      	<register name="s1"/>
-      	<register name="s2"/>
-      	<register name="s3"/>
-      	<register name="s4"/>
-      	<register name="s5"/>
-      	<register name="s6"/>
-      	<register name="s7"/>
-      	<register name="s8"/>
-      	<register name="s9"/>
-      	<register name="s10"/>
-      	<register name="s11"/>
-      	<register name="fs0"/>
-      	<register name="fs1"/>
-      	<register name="fs2"/>
-      	<register name="fs3"/>
-      	<register name="fs4"/>
-      	<register name="fs5"/>
-      	<register name="fs6"/>
-      	<register name="fs7"/>
-      	<register name="fs8"/>
-      	<register name="fs9"/>
-      	<register name="fs10"/>
-      	<register name="fs11"/>
+	<register name="s1"/>
+	<register name="s2"/>
+	<register name="s3"/>
+	<register name="s4"/>
+	<register name="s5"/>
+	<register name="s6"/>
+	<register name="s7"/>
+	<register name="s8"/>
+	<register name="s9"/>
+	<register name="s10"/>
+	<register name="s11"/>
+	<register name="fs0"/>
+	<register name="fs1"/>
+	<register name="fs2"/>
+	<register name="fs3"/>
+	<register name="fs4"/>
+	<register name="fs5"/>
+	<register name="fs6"/>
+	<register name="fs7"/>
+	<register name="fs8"/>
+	<register name="fs9"/>
+	<register name="fs10"/>
+	<register name="fs11"/>
       </unaffected>
       <killedbycall>
         <register name="ra"/>

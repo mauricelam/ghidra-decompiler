@@ -23,7 +23,7 @@
           <entry size="8" alignment="8" />
      </size_alignment_map>
      <bitfield_packing>
-     	  <use_MS_convention value="true"/>
+	  <use_MS_convention value="true"/>
      </bitfield_packing>
   </data_organization>
 
@@ -32,7 +32,7 @@
   </global>
 
   <stackpointer register="sp" space="ram"/>
-  
+
   <funcptr align="2"/>     <!-- Function pointers are word aligned and leastsig bit may encode otherstuff -->
   <default_proto>
     <prototype name="__stdcall" extrapop="0" stackshift="0">
@@ -225,7 +225,7 @@
       </killedbycall>
     </prototype>
   </default_proto>
-  
+
   <callotherfixup targetop="setISAMode">
     <pcode incidentalcopy="true">
       <!-- NOP -->

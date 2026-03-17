@@ -5,6 +5,6 @@
     <property key="emulateInstructionStateModifierClass"
 			value="ghidra.program.emulation.TRICOREEmulateInstructionStateModifier"/>
   </properties>
-  
+
   <programcounter register="PC"/>
 </processor_spec>

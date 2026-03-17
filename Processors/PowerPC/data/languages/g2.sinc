@@ -11,4 +11,3 @@ define pcodeop tlbld;
 {
 	tlbli(B);
 }
-

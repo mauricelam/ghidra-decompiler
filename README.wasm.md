@@ -46,15 +46,15 @@ A complete example showing how to load and use the WASM module in a browser is p
 ## How to Decompile a File
 
 To perform an actual decompilation, the decompiler needs two things:
-1. **The Architecture Specification**: Ghidra uses compiled SLEIGH files (`.sla`). You can find these in a standard Ghidra installation under `Ghidra/Processors/<ARCH>/data/languages/`.
+1. **The Architecture Specification**: Ghidra uses compiled SLEIGH files (`.sla`). You can find these in the standard `Processors/` directory. For example, for x86 64-bit: `Processors/x86/data/languages/x86-64.sla`.
 2. **The Binary Image**: The decompiler needs the bytes to decompile.
 
-### Step-by-Step Example:
+### Step-by-Step Example in Browser:
 1. Open the browser example (`example_wasm.html`).
-2. Upload an `.sla` file (e.g., `x86.sla` from your Ghidra folder).
-3. Upload any binary file.
+2. Upload an `.sla` file (e.g., `Processors/x86/data/languages/x86.sla`).
+3. Upload any binary file you wish to decompile.
 4. Click "Run Decompiler".
-5. The example bridge will confirm receipt of the files. (For a full C++ implementation, the bridge in `wasm_wrapper.cc` would then pass these to a `SleighArchitecture` object).
+5. The example bridge will confirm receipt of the files and display their sizes.
 
 ## Native Standalone Usage
 You can also use the native tool to decompile via XML-based image descriptions:
@@ -65,6 +65,6 @@ You can also use the native tool to decompile via XML-based image descriptions:
 ```
 
 ## Implementation Notes
-- BFD dependency has been removed in this fork to simplify standalone usage and WASM compatibility.
+- BFD dependency has been removed in this fork via `GHIDRA_NO_BFD` conditional compilation to simplify standalone usage and WASM compatibility.
 - Pre-generated parser files are used to avoid dependency on `bison` and `flex`.
 - `wasm_wrapper.cc` provides the entry point for WebAssembly exports.

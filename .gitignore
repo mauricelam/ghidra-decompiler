@@ -23,3 +23,6 @@ wasm_obj/
 ghidra_decompiler.js
 ghidra_decompiler.wasm
 ghidra_decompiler.worker.js
+wasm_examples/ghidra_decompiler.js
+wasm_examples/ghidra_decompiler.wasm
+wasm_examples/ghidra_decompiler.worker.js

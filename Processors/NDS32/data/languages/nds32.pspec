@@ -6,7 +6,7 @@
   <default_memory_blocks>
     <memory_block name="csr" start_address="csreg:0x0" length="0x8000" initialized="false"/>
   </default_memory_blocks>
-  
+
     <default_symbols>
          <symbol name="cpu_ver"         address="csreg:0x000"     size="4" description="" />
          <symbol name="core_id"         address="csreg:0x001"     size="4" description="" />
@@ -16,7 +16,7 @@
          <symbol  name="msc_cfg"        address="csreg:0x020"     size="4" description="" />
          <symbol  name="msc_cfg2"       address="csreg:0x021"     size="4" description="" />
          <symbol  name="fucop_exist"    address="csreg:0x028"     size="4" description="" />
-         
+
          <symbol name="psw"             address="csreg:0x080"     size="4" description="" />
          <symbol name="ipsw"            address="csreg:0x081"     size="4" description="" />
          <symbol name="p_ipsw"          address="csreg:0x082"     size="4" description="" />
@@ -53,7 +53,7 @@
          <symbol name="int_pri2"       address="next"             size="4" description="" />
          <symbol name="int_pri3"       address="next"             size="4" description="" />
          <symbol name="int_pri4"       address="next"             size="4" description="" />
-         
+
          <symbol name="mmu_ctl"        address="csreg:0x100"      size="4" description="" />
          <symbol name="bg_region"      address="csreg:0x101"      size="4" description="" />
          <symbol name="l1pptb"         address="csreg:0x108"      size="4" description="" />
@@ -70,7 +70,7 @@
          <symbol name="misc_ctl"       address="csreg:0x179"      size="4" description="" />
          <symbol name="ecc_misc"       address="csreg:0x17a"      size="4" description="" />
          <symbol name="bpc0"           address="csreg:0x180"      size="4" description="" />
-         
+
          <symbol name="bpc1"           address="next"             size="4" description="" />
          <symbol name="bpc2"           address="next"             size="4" description="" />
          <symbol name="bpc3"           address="next"             size="4" description="" />
@@ -151,5 +151,5 @@
          <symbol name="secur2"         address="csreg:0x309"      size="4" description="" />
          <symbol name="secur3"         address="csreg:0x30a"      size="4" description="" />
   </default_symbols>
-  
+
 </processor_spec>

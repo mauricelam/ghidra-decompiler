@@ -14,7 +14,7 @@
     <compiler name="gnu" spec="ilp32f.cspec" id="default"/>
     <external_name tool="gnu" name="Loongarch32"/>
   </language>
-  
+
   <language processor="Loongarch"
             endian="little"
             size="32"
@@ -28,7 +28,7 @@
     <compiler name="default" spec="ilp32d.cspec" id="default"/>
     <external_name tool="gnu" name="Loongarch32"/>
   </language>
-  
+
   <language processor="Loongarch"
             endian="little"
             size="64"
@@ -44,7 +44,7 @@
     <external_name tool="qemu" name="qemu-mips64el"/>
     <external_name tool="qemu_system" name="qemu-system-mips64el"/>
   </language>
-  
+
   <language processor="Loongarch"
             endian="little"
             size="64"

@@ -146,7 +146,7 @@
       </localrange>
     </prototype>
   </default_proto>
-  
+
       <prototype name="__nonwindowcall" extrapop="0" stackshift="0">
       <input>
         <pentry minsize="1" maxsize="8" extension="inttype">
@@ -201,7 +201,7 @@
         <register name="l4"/>
         <register name="l5"/>
         <register name="l6"/>
-        <register name="l7"/> 
+        <register name="l7"/>
         <register name="i0"/>
         <register name="i1"/>
         <register name="i2"/>
@@ -218,7 +218,7 @@
         <range space="stack" first="0x0" last="0x8ae"/>   <!-- Stack bias of 7FF + 0xb0 window size -->
       </localrange>
     </prototype>
-    
+
   <callfixup name="sparc_get_pc_thunk.l7">
     <target name="__sparc_get_pc_thunk.l7"/>
     <pcode>
@@ -227,7 +227,7 @@
       ]]></body>
     </pcode>
   </callfixup>
-  
+
   <callfixup name="sparc_get_pc_thunk.g1">
     <target name="__sparc_get_pc_thunk.g1"/>
     <pcode>
@@ -244,6 +244,6 @@
       o0 = o7 + o0;
       ]]></body>
     </pcode>
-  </callfixup>  
-  
+  </callfixup>
+
 </compiler_spec>

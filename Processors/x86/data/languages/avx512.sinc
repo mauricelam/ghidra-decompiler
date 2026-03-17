@@ -10,7 +10,7 @@ define pcodeop vaddpd_avx512vl ;
 	XmmResult = vaddpd_avx512vl( evexV5_XmmReg, XmmReg2_m128_m64bcst );
 	XmmMask = XmmReg1;
 	build XmmOpMask64;
-	
+
 	ZmmReg1 = zext(XmmResult);
 }
 
@@ -21,7 +21,7 @@ define pcodeop vaddpd_avx512vl ;
 	YmmResult = vaddpd_avx512vl( evexV5_YmmReg, YmmReg2_m256_m64bcst );
 	YmmMask = YmmReg1;
 	build YmmOpMask64;
-	
+
 	ZmmReg1 = zext(YmmResult);
 }
 
@@ -33,7 +33,7 @@ define pcodeop vaddpd_avx512f ;
 	ZmmResult = vaddpd_avx512f( evexV5_ZmmReg, ZmmReg2_m512_m64bcst );
 	ZmmMask = ZmmReg1;
 	build ZmmOpMask64;
-	
+
 	ZmmReg1 = ZmmResult;
 }
 
@@ -45,7 +45,7 @@ define pcodeop vaddps_avx512vl ;
 	XmmResult = vaddps_avx512vl( evexV5_XmmReg, XmmReg2_m128_m32bcst );
 	XmmMask = XmmReg1;
 	build XmmOpMask32;
-	
+
 	ZmmReg1 = zext(XmmResult);
 }
 
@@ -56,7 +56,7 @@ define pcodeop vaddps_avx512vl ;
 	YmmResult = vaddps_avx512vl( evexV5_YmmReg, YmmReg2_m256_m32bcst);
 	YmmMask = YmmReg1;
 	build YmmOpMask32;
-	
+
 	ZmmReg1 = zext(YmmResult);
 }
 
@@ -68,7 +68,7 @@ define pcodeop vaddps_avx512f ;
 	ZmmResult = vaddps_avx512f( evexV5_ZmmReg, ZmmReg2_m512_m32bcst );
 	ZmmMask = ZmmReg1;
 	build ZmmOpMask32;
-	
+
 	ZmmReg1 = ZmmResult;
 }
 
@@ -80,7 +80,7 @@ define pcodeop vaddsd_avx512f ;
 	XmmResult = vaddsd_avx512f( evexV5_XmmReg, XmmReg2_m64 );
 	XmmMask = XmmReg1;
 	build XmmOpMask64;
-	
+
 	ZmmReg1 = zext(XmmResult);
 }
 
@@ -92,7 +92,7 @@ define pcodeop vaddss_avx512f ;
 	XmmResult = vaddss_avx512f( evexV5_XmmReg, XmmReg2_m32 );
 	XmmMask = XmmReg1;
 	build XmmOpMask64;
-	
+
 	ZmmReg1 = zext(XmmResult);
 }
 
@@ -104,7 +104,7 @@ define pcodeop vandpd_avx512vl ;
 	XmmResult = vandpd_avx512vl( evexV5_XmmReg, XmmReg2_m128_m64bcst );
 	XmmMask = XmmReg1;
 	build XmmOpMask64;
-	
+
 	ZmmReg1 = zext(XmmResult);
 }
 
@@ -115,7 +115,7 @@ define pcodeop vandpd_avx512vl ;
 	YmmResult = vandpd_avx512vl( evexV5_YmmReg, YmmReg2_m256_m64bcst );
 	YmmMask = YmmReg1;
 	build YmmOpMask64;
-	
+
 	ZmmReg1 = zext(YmmResult);
 }
 
@@ -127,7 +127,7 @@ define pcodeop vandpd_avx512dq ;
 	ZmmResult = vandpd_avx512dq( evexV5_ZmmReg, ZmmReg2_m512_m64bcst );
 	ZmmMask = ZmmReg1;
 	build ZmmOpMask64;
-	
+
 	ZmmReg1 = ZmmResult;
 }
 
@@ -139,7 +139,7 @@ define pcodeop vandps_avx512vl ;
 	XmmResult = vandps_avx512vl( evexV5_XmmReg, XmmReg2_m128_m32bcst );
 	XmmMask = XmmReg1;
 	build XmmOpMask32;
-	
+
 	ZmmReg1 = zext(XmmResult);
 }
 
@@ -149,7 +149,7 @@ define pcodeop vandps_avx512vl ;
 {
 	local tmp:32 = vandps_avx512vl( evexV5_YmmReg, YmmReg2_m256_m32bcst );
 	build YmmOpMask32;
-	
+
 	ZmmReg1 = zext(YmmResult);
 }
 
@@ -1786,7 +1786,7 @@ define pcodeop vmovsd_avx512f ;
 	build XmmOpMask;
 	tmp = (zext(XmmOpMask[0,1]) * tmp) + (zext(!XmmOpMask[0,1]) * XmmMask[0,64]);
 	m64 = tmp;
-	
+
 }
 
 # MOVSHDUP 4-114 PAGE 1234 LINE 64130
@@ -2945,7 +2945,7 @@ define pcodeop vpcmpeqd_avx512vl ;
 {
 	local tmp = vpcmpeqd_avx512vl( evexV5_XmmReg, XmmReg2_m128_m32bcst );
 	KReg_reg = zext(AVXOpMask[0,4]) & tmp;
-	
+
 }
 
 # PCMPEQB/PCMPEQW/PCMPEQD 4-244 PAGE 1364 LINE 70846
@@ -5018,7 +5018,7 @@ define pcodeop vpsrad_avx512f ;
 	YmmMask = evexV5_YmmReg;
 	build YmmOpMask32;
 	evexV5_ZmmReg = zext(YmmResult);
-	
+
 }
 
 # PSRAW/PSRAD/PSRAQ 4-446 PAGE 1566 LINE 81371
@@ -10584,7 +10584,7 @@ define pcodeop vpcmpub_avx512bw ;
 {
 	local tmp = vpcmpub_avx512bw( evexV5_ZmmReg, ZmmReg2_m512, VPCMPUB_op );
 	KReg_reg = zext(AVXOpMask[0,64]) & tmp;
-	
+
 }
 
 
@@ -14098,7 +14098,7 @@ define pcodeop vcvtdq2ph_avx512fp16 ;
 {
 	XmmResult = vcvtdq2ph_avx512fp16( YmmReg2_m256_m32bcst );
 	XmmMask = XmmReg1;
-	build XmmOpMask16;	
+	build XmmOpMask16;
 	ZmmReg1 = zext(XmmResult);
 }
 
@@ -17706,4 +17706,3 @@ define pcodeop vucomish_avx512fp16 ;
 	local tmp:16 = vucomish_avx512fp16( XmmReg2_m16 );
 	ZmmReg1 = zext(tmp);
 }
-

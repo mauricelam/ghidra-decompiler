@@ -33,7 +33,7 @@ define pcodeop yield;
 :emt RT is $(AMODE) & REL6=0 & prime=0x10 & mfmc0=0xB & rd32=0x1 & zero5=0xF & fct=0x21 & RT {
 	# Set VPEControl TE bit (bit 15)
 	RT = VPEControl; VPEControl = VPEControl | 0x8000; # VPEControl[15,1] = 1;
-} 
+}
 
 # Enable Virtual Processor Execution. Returns VPEControl
 :evpe RT is $(AMODE) & REL6=0 & prime=0x10 & mfmc0=0xB & rd32=0x0 & zero5=0x0 & fct=0x21 & RT {

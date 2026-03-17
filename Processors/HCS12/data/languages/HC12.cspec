@@ -19,9 +19,9 @@
   <global>
     <range space="RAM"/>
   </global>
-  
+
   <stackpointer register="SP" space="RAM" growth="negative"/>
-  
+
   <default_proto>
       <prototype name="__asmA" extrapop="2" stackshift="2" strategy="register">
       <input>

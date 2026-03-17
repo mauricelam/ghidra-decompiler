@@ -10,6 +10,5 @@
             id="BPF:LE:32:default">
     <description>BPF processor 32-bit little-endian</description>
     <compiler name="default" spec="BPF.cspec" id="default"/>
-  </language> 
+  </language>
 </language_definitions>
-

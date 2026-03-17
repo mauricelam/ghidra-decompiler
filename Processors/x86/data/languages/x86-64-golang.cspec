@@ -63,7 +63,7 @@
 				<pentry minsize="4" maxsize="8" metatype="float">
 					<register name="XMM7_Qa"/>
 				</pentry>
-				
+
 				<pentry minsize="1" maxsize="8">
 					<register name="RAX"/>
 				</pentry>
@@ -91,17 +91,17 @@
 				<pentry minsize="1" maxsize="8">
 					<register name="R11"/>
 				</pentry>
-		        
+
 				<pentry minsize="1" maxsize="500" align="8">
 					<addr offset="8" space="stack"/>
 				</pentry>
 			</input>
-	      
+
 			<output>
 				<pentry minsize="4" maxsize="8" metatype="float">
 					<register name="XMM0_Qa"/>
 				</pentry>
-		        
+
 				<pentry minsize="1" maxsize="8">
 					<register name="RAX"/>
 				</pentry>
@@ -130,7 +130,7 @@
 					<addr space="join" piece9="RAX" piece8="RBX" piece7="RCX" piece6="RDI" piece5="RSI" piece4="R8" piece3="R9" piece2="R10" piece1="R11"/>
 				</pentry>
 			</output>
-	      
+
 			<killedbycall>
 				<register name="RAX"/>
 				<register name="RBX"/>
@@ -145,8 +145,8 @@
 			<unaffected>
 				<register name="RSP"/>
 				<register name="RBP"/>
-				<register name="R14"/>        
-				<register name="RDX"/>        
+				<register name="R14"/>
+				<register name="RDX"/>
 			</unaffected>
 		</prototype>
 	</default_proto>
@@ -157,10 +157,10 @@
 				<addr offset="8" space="stack"/>
 			</pentry>
 		</input>
-      
+
 		<output>
 		</output>
-      
+
 		<killedbycall>
 			<register name="RAX"/>
 			<register name="RBX"/>
@@ -175,24 +175,24 @@
 		<unaffected>
 			<register name="RSP"/>
 			<register name="RBP"/>
-			<register name="R14"/>        
-			<register name="RDX"/>        
+			<register name="R14"/>
+			<register name="RDX"/>
 		</unaffected>
 	</prototype>
-    
+
 	<prototype name="gcwrite_batch" extrapop="8" stackshift="8">
 		<input>
 			<pentry minsize="1" maxsize="8">
 				<register name="R11"/>
 			</pentry>
 		</input>
-      
+
 		<output>
 			<pentry minsize="1" maxsize="8">
 				<register name="R11"/>
 			</pentry>
 		</output>
-      
+
 		<killedbycall>
 			<register name="R11"/>
 		</killedbycall>
@@ -207,7 +207,7 @@
 			<register name="R10"/>
 			<register name="RSP"/>
 			<register name="RBP"/>
-			<register name="R14"/>        
+			<register name="R14"/>
 		</unaffected>
 	</prototype>
 
@@ -220,9 +220,9 @@
 				<register name="RDI"/>
 			</pentry>
 		</input>
-      
+
 		<output></output>
-      
+
 		<unaffected>
 			<register name="RAX"/>
 			<register name="RBX"/>
@@ -235,23 +235,23 @@
 			<register name="R11"/>
 			<register name="RSP"/>
 			<register name="RBP"/>
-			<register name="R14"/>        
+			<register name="R14"/>
 		</unaffected>
 	</prototype>
-	
+
 	<prototype name="duffzero" extrapop="8" stackshift="8">
 		<input>
 			<pentry minsize="1" maxsize="8">
 				<register name="RDI"/>
 			</pentry>
 		</input>
-      
+
 		<output>
 			<pentry minsize="1" maxsize="8">
 				<register name="RDI"/>
 			</pentry>
 		</output>
-      
+
 		<killedbycall>
 			<register name="RDI"/>
 		</killedbycall>
@@ -267,10 +267,10 @@
 			<register name="R11"/>
 			<register name="RSP"/>
 			<register name="RBP"/>
-			<register name="R14"/>        
+			<register name="R14"/>
 		</unaffected>
 	</prototype>
-	
+
 	<prototype name="duffcopy" extrapop="8" stackshift="8">
 		<input>
 			<pentry minsize="1" maxsize="8">
@@ -280,7 +280,7 @@
 				<register name="RSI"/>
 			</pentry>
 		</input>
-      
+
 		<output>
 			<pentry minsize="1" maxsize="8">
 				<register name="RDI"/>
@@ -289,7 +289,7 @@
 				<addr space="join" piece2="RDI" piece1="RSI"/>
 			</pentry>
 		</output>
-      
+
 		<killedbycall>
 			<register name="RDI"/>
 			<register name="RSI"/>
@@ -308,7 +308,7 @@
 			<register name="R14"/>
 		</unaffected>
 	</prototype>
-	
+
 	<prototype name="__stdcall" extrapop="8" stackshift="8">
 		<!-- Derived from "System V Application Binary Interface AMD64 Architecture Processor Supplement" April 2016 -->
 		<input>
@@ -445,7 +445,7 @@
 			<range space="stack" first="8" last="39"/>
 		</localrange>
 	</prototype>
-	
+
 	<prototype name="syscall" extrapop="8" stackshift="8">
 		<input pointermax="8">
 			<pentry minsize="1" maxsize="8">

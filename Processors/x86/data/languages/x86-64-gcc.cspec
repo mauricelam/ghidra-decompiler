@@ -129,8 +129,8 @@
   </default_proto>
 	<prototype name="MSABI" extrapop="8" stackshift="8">
 	  <input pointermax="8">
-	  <!--  Use same grouping setup as x86-64-win.cspec. If the nth general-purpose register is 
-	  		consumed, consume the nth floating point register, and vice-versa -->
+	  <!--  Use same grouping setup as x86-64-win.cspec. If the nth general-purpose register is
+			consumed, consume the nth floating point register, and vice-versa -->
 	  <group>
         <pentry minsize="4" maxsize="8" metatype="float">
           <register name="XMM0_Qa"/>
@@ -166,13 +166,13 @@
       <pentry minsize="1" maxsize="500" align="8">
         <addr offset="40" space="stack"/>
       </pentry>
-      <!-- only structs of size 8,16,32,64 bits can be packed to register -->  
+      <!-- only structs of size 8,16,32,64 bits can be packed to register -->
       <rule>
-      	<datatype name="struct" sizes="3,5,6,7"/>
-      	<convert_to_ptr/>
+	<datatype name="struct" sizes="3,5,6,7"/>
+	<convert_to_ptr/>
       </rule>
-    </input> 
-  	<output>
+    </input>
+	<output>
       <pentry minsize="4" maxsize="8" metatype="float">
         <register name="XMM0_Qa"/>
       </pentry>
@@ -181,8 +181,8 @@
       </pentry>
       <!-- only structs of size 8,16,32,64 bits can be returned via register -->
       <rule>
-      	<datatype name="struct" sizes="3,5,6,7"/>
-      	<hidden_return/>
+	<datatype name="struct" sizes="3,5,6,7"/>
+	<hidden_return/>
       </rule>
 	</output>
 	  <unaffected>
@@ -274,12 +274,12 @@
       </unaffected>
       <!-- Functions with this prototype don't have a return address. But, if we don't specify one, this prototype will
            use the default, which is to have the return address on the stack. That conflicts with how this prototype actually
-           uses the stack, so we set a fake return address at a RBP, which is unspecified at process entry --> 
+           uses the stack, so we set a fake return address at a RBP, which is unspecified at process entry -->
       <returnaddress>
          <register name="RBP"/>
       </returnaddress>
     </prototype>
-    
+
     <callfixup name="x86_return_thunk">
       <target name="__x86_return_thunk"/>
       <pcode>

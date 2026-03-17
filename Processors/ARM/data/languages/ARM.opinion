@@ -6,7 +6,7 @@
       by a sequence of 0's and 1's to specify the key value.  Dots (".") can be used as a wild card
       for individual bits.  Space and underscores ("_") are ignored and can be used for formatting.
       When matching a hex value, prefix the secondary key constraint value with "0x", followed
-      by the hex value.  No wildcarding is supported. 
+      by the hex value.  No wildcarding is supported.
     -->
     <constraint loader="Portable Executable (PE)">
         <constraint compilerSpecID="windows">
@@ -23,7 +23,7 @@
         <constraint primary="450"   processor="ARM"     endian="little" size="32" variant="v8" />  <!-- ARM and Thumb, spec says only Thumb -->
         <constraint primary="452"   processor="ARM"     endian="little" size="32" variant="v8" />
     </constraint>
-    
+
     <constraint loader="Executable and Linking Format (ELF)" compilerSpecID="default">
       <!--
         Elf e_flags are used for the secondary attribute, the following are pulled from binutils include/elf/arm.h
@@ -46,7 +46,7 @@
         <constraint primary="40"   processor="ARM"                      size="32" variant="v8LEInstruction"
             secondary= "0b .... .... 1... .... .... .... .... ...."/>  <!-- EF_ARM_BE8 -->
     </constraint>
-    
+
     <constraint loader="Mac OS X Mach-O" compilerSpecID="default">
         <constraint primary="12.0"     processor="ARM"     endian="little" size="32" variant="v8"  /><!-- ARM all -->
         <constraint primary="12.5"     processor="ARM"     endian="little" size="32" variant="v4t" /><!-- ARM v4T -->

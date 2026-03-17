@@ -180,7 +180,7 @@ macro setParity(in_byte) {
 	tmp =  tmp ^ (tmp >> 2);
 	tmp = (tmp ^ (tmp >> 4)) & 1;
 	$(PV_flag) = (tmp == 0);
-	
+
 #     $(PV_flag) = hasEvenParity(in_byte);
 }
 
@@ -196,25 +196,25 @@ macro ioRead(addr,dest) {
 macro push16(val16) {
 	SP = SP - 2;
 	ptr:$(PTRSIZE) = segment(rBBR,SP);
-	*:2 ptr = val16; 
+	*:2 ptr = val16;
 }
 
 macro pop16(ret16) {
     ptr:$(PTRSIZE) = segment(rBBR,SP);
 	ret16 = *:2 ptr;
-	SP = SP + 2; 
+	SP = SP + 2;
 }
 
 macro push8(val8) {
 	SP = SP - 1;
 	ptr:$(PTRSIZE) = segment(rBBR,SP);
-	*:1 ptr = val8; 
+	*:1 ptr = val8;
 }
 
 macro pop8(ret8) {
     ptr:$(PTRSIZE) = segment(rBBR,SP);
 	ret8 = *:1 ptr;
-	SP = SP + 1; 
+	SP = SP + 1;
 }
 
 macro swap(val16) {
@@ -225,12 +225,12 @@ macro swap(val16) {
 }
 
 macro MemRead(dest,off) {
-   	ptr:$(PTRSIZE) = segment(rBBR,off);
+	ptr:$(PTRSIZE) = segment(rBBR,off);
 	dest = *:1 ptr;
 }
 
 macro MemStore(off,val) {
-   	ptr:$(PTRSIZE) = segment(rBBR,off);
+	ptr:$(PTRSIZE) = segment(rBBR,off);
 	*:1 ptr = val;
 }
 
@@ -243,24 +243,24 @@ macro JumpToLoc(off) {
 
 macro push16(val16) {
 	SP = SP - 2;
-	*:2 SP = val16; 
+	*:2 SP = val16;
 }
 
 macro pop16(ret16) {
 	ret16 = *:2 SP;
-	SP = SP + 2; 
+	SP = SP + 2;
 }
 
 macro push8(val8) {
 	SP = SP - 1;
 	ptr:$(PTRSIZE) = SP;
-	*:1 ptr = val8; 
+	*:1 ptr = val8;
 }
 
 macro pop8(ret8) {
     ptr:$(PTRSIZE) = SP;
 	ret8 = *:1 ptr;
-	SP = SP + 1; 
+	SP = SP + 1;
 }
 
 macro swap(val16) {
@@ -271,12 +271,12 @@ macro swap(val16) {
 }
 
 macro MemRead(dest,off) {
-   	ptr:$(PTRSIZE) = off;
+	ptr:$(PTRSIZE) = off;
 	dest = *:1 ptr;
 }
 
 macro MemStore(off,val) {
-   	ptr:$(PTRSIZE) = off;
+	ptr:$(PTRSIZE) = off;
 	*:1 ptr = val;
 }
 
@@ -394,11 +394,11 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 }
 
 :LD reg3_3,ixMem8   is op0_8=0xdd; op6_2=0x1 & reg3_3 & bits3_3!=0x6 & bits0_3=0x6; ixMem8  {
-	reg3_3 = ixMem8; 
+	reg3_3 = ixMem8;
 }
 
 :LD reg3_3,iyMem8   is op0_8=0xfd; op6_2=0x1 & reg3_3 & bits3_3!=0x6 & bits0_3=0x6; iyMem8  {
-	reg3_3 = iyMem8; 
+	reg3_3 = iyMem8;
 }
 
 :LD (HL),reg0_3     is op6_2=0x1 & bits3_3=0x6 & reg0_3 & HL {
@@ -560,7 +560,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :EX DE,HL           is op0_8=0xeb & DE & HL {
 	tmp:2 = DE;
 	DE = HL;
-	HL = tmp;	
+	HL = tmp;
 }
 
 :EX AF, AF_         is op0_8=0x08 & AF & AF_ {
@@ -599,12 +599,12 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	local outloc = DE;
 	MemRead(val,inloc);
 	MemStore(outloc,val);
-	
+
 	DE = outloc + 1;
 	HL = inloc + 1;
 	local test = BC - 1;
 	BC = test;
-	
+
 	$(H_flag) = 0;
 	$(PV_flag) = (test != 0);
 	$(N_flag) = 0;
@@ -616,14 +616,14 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	local outloc = DE;
 	MemRead(val,inloc);
 	MemStore(outloc,val);
-	
+
 	DE = outloc + 1;
 	HL = inloc + 1;
 	local test = BC - 1;
 	BC = test;
-	
+
 	if (test != 0) goto inst_start;
-	
+
 	$(H_flag) = 0;
 	$(PV_flag) = 0;
 	$(N_flag) = 0;
@@ -635,12 +635,12 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	local outloc = DE;
 	MemRead(val,inloc);
 	MemStore(outloc,val);
-	
+
 	DE = outloc - 1;
 	HL = inloc - 1;
 	local test = BC - 1;
 	BC = test;
-	
+
 	$(H_flag) = 0;
 	$(PV_flag) = (test != 0);
 	$(N_flag) = 0;
@@ -652,14 +652,14 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	local outloc = DE;
 	MemRead(val,inloc);
 	MemStore(outloc,val);
-	
+
 	DE = outloc - 1;
 	HL = inloc - 1;
 	local test = BC - 1;
 	BC = test;
-	
+
 	if (test != 0) goto inst_start;
-	
+
 	$(H_flag) = 0;
 	$(PV_flag) = 0;
 	$(N_flag) = 0;
@@ -670,7 +670,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	local loc = HL;
 	MemRead(val,loc);
 	local a_temp = A;
-	
+
 	cmp:1 = a_temp - val;
 	setResultFlags(cmp);
 	HL = loc + 1;
@@ -688,13 +688,13 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	local loc = HL;
 	MemRead(val,loc);
 	local a_temp = A;
-	
+
 	cmp:1 = a_temp - val;
 	setResultFlags(cmp);
 	HL = loc + 1;
 	local test = BC - 1;
 	BC = test;
-	
+
 	if (cmp != 0 || test != 0) goto inst_start;
 
 	carries:1 = (~a_temp & val) | (val & cmp) | (cmp & ~a_temp);
@@ -708,7 +708,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	local loc = HL;
 	MemRead(val,loc);
 	local a_temp = A;
-	
+
 	cmp:1 = a_temp - val;
 	setResultFlags(cmp);
 	HL = loc - 1;
@@ -726,13 +726,13 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	local loc = HL;
 	MemRead(val,loc);
 	local a_temp = A;
-	
+
 	cmp:1 = a_temp - val;
 	setResultFlags(cmp);
 	HL = loc - 1;
 	local test = BC - 1;
 	BC = test;
-	
+
 	if (cmp != 0 || test != 0) goto inst_start;
 
 	carries:1 = (~a_temp & val) | (val & cmp) | (cmp & ~a_temp);
@@ -744,7 +744,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :ADD A, reg0_3         is op6_2=0x2 & bits3_3=0x0 & reg0_3 & A {
 	local a_temp = A;
 	local reg_temp = reg0_3;
-	
+
 	additionFlags(a_temp, reg_temp);
 	a_temp= a_temp + reg0_3;
 	setResultFlags(a_temp);
@@ -753,7 +753,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 
 :ADD A, imm8           is op0_8=0xc6; imm8 & A {
 	local a_temp = A;
-	
+
 	additionFlags(a_temp, imm8);
 	a_temp = a_temp + imm8;
 	setResultFlags(a_temp);
@@ -764,7 +764,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	val:1 = 0;
 	MemRead(val,HL);
 	local a_temp = A;
-	
+
 	additionFlags(a_temp, val);
 	a_temp = a_temp + val;
 	setResultFlags(a_temp);
@@ -774,7 +774,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :ADD A, ixMem8         is op0_8=0xdd; op0_8=0x86; ixMem8 & A {
 	val:1 = ixMem8;
 	local a_temp = A;
-	
+
 	additionFlags(a_temp, val);
 	a_temp = a_temp + val;
 	setResultFlags(a_temp);
@@ -784,7 +784,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :ADD A, iyMem8         is op0_8=0xfd; op0_8=0x86; iyMem8 & A {
 	val:1 = iyMem8;
 	local a_temp = A;
-	
+
 	additionFlags(a_temp, val);
 	a_temp = a_temp + val;
 	setResultFlags(a_temp);
@@ -794,7 +794,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :ADC A, reg0_3         is op6_2=0x2 & bits3_3=0x1 & reg0_3 & A {
 	local a_temp = A;
 	local r_temp = reg0_3;
-	
+
 	additionWithCarry(a_temp, r_temp, a_temp);
 	setResultFlags(a_temp);
 	A = a_temp;
@@ -803,7 +803,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :ADC A, imm8           is op0_8=0xce; imm8 & A {
 	val:1 = imm8;
 	local a_temp = A;
-	
+
 	additionWithCarry(a_temp, val, a_temp);
 	setResultFlags(a_temp);
 	A = a_temp;
@@ -823,7 +823,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	val:1 = ixMem8;
 	MemRead(val,HL);
 	local a_temp = A;
-	
+
 	additionWithCarry(a_temp, val, a_temp);
 	setResultFlags(a_temp);
 	A = a_temp;
@@ -834,7 +834,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	val:1 = iyMem8;
 	MemRead(val,HL);
 	local a_temp = A;
-	
+
 	additionWithCarry(a_temp, val, a_temp);
 	setResultFlags(a_temp);
 	A = a_temp;
@@ -843,7 +843,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :SUB reg0_3         is op6_2=0x2 & bits3_3=0x2 & reg0_3 {
 	local a_temp = A;
 	local r_temp = reg0_3;
-	
+
 	subtractionFlags(a_temp, r_temp);
 	a_temp = a_temp - r_temp;
 	setResultFlags(a_temp);
@@ -852,7 +852,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 
 :SUB imm8           is op0_8=0xd6; imm8 {
 	local a_temp = A;
-	
+
 	subtractionFlags(a_temp, imm8);
 	a_temp = a_temp - imm8;
 	setResultFlags(a_temp);
@@ -863,7 +863,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	val:1 = 0;
 	MemRead(val,HL);
 	local a_temp = A;
-	
+
 	subtractionFlags(a_temp, val);
 	a_temp = a_temp - val;
 	setResultFlags(a_temp);
@@ -873,7 +873,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :SUB ixMem8         is op0_8=0xdd; op0_8=0x96; ixMem8 {
 	val:1 = ixMem8;
 	local a_temp = A;
-	
+
 	subtractionFlags(a_temp, val);
 	a_temp = a_temp - val;
 	setResultFlags(a_temp);
@@ -883,7 +883,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :SUB iyMem8         is op0_8=0xfd; op0_8=0x96; iyMem8 {
 	val:1 = iyMem8;
 	local a_temp = A;
-	
+
 	subtractionFlags(a_temp, val);
 	a_temp = a_temp - val;
 	setResultFlags(a_temp);
@@ -893,7 +893,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :SBC A, reg0_3         is op6_2=0x2 & bits3_3=0x3 & reg0_3 & A {
 	local a_temp = A;
 	local r_temp = reg0_3;
-	
+
 	subtractionWithCarry(a_temp, r_temp, a_temp);
 	setResultFlags(a_temp);
 	A = a_temp;
@@ -901,7 +901,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 
 :SBC A, imm8           is op0_8=0xde; imm8 & A {
 	local a_temp = A;
-	
+
 	subtractionWithCarry(a_temp, imm8, a_temp);
 	setResultFlags(a_temp);
 	A = a_temp;
@@ -1019,7 +1019,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	val:1 = 0;
 	MemRead(val,HL);
 	local a_temp = A;
-	
+
 	$(H_flag) = 0;
 	$(C_flag) = 0;
 	$(N_flag) = 0;
@@ -1077,11 +1077,11 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 	val:1 = 0;
 	MemRead(val,HL);
 	local a_temp = A;
-	
+
 	$(H_flag) = 0;
 	$(C_flag) = 0;
 	$(N_flag) = 0;
-	
+
 	a_temp = a_temp ^ val;
 	setResultFlags(a_temp);
 	setParity(a_temp);
@@ -1138,7 +1138,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :CP ixMem8          is op0_8=0xdd; op0_8=0xbe; ixMem8 {
 	val:1 = ixMem8;
 	local a_temp = A;
-	
+
 	cmp:1 = a_temp - val;
 	subtractionFlags(a_temp, val);
 	setResultFlags(cmp);
@@ -1147,7 +1147,7 @@ cc2: "C"   is bits3_3=0x7   { c:1 = $(C_flag); export c; }
 :CP iyMem8          is op0_8=0xfd; op0_8=0xbe; iyMem8 {
 	val:1 = iyMem8;
 local a_temp = A;
-	
+
 	cmp:1 = a_temp - val;
 	subtractionFlags(a_temp, val);
 	setResultFlags(cmp);
@@ -1234,7 +1234,7 @@ local a_temp = A;
 :DAA                is op0_8=0x27 {
 	local a_temp = A;
 if (DECOMPILE_MODE) goto <forDecompilation>;
-	
+
 	HN:1 = a_temp >> 4;     # high nibble
 	LN:1 = a_temp & 0xF;    # low nibbble
 	#
@@ -1242,7 +1242,7 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 	# adjustment is needed.
 	#
 	if (($(C_flag) == 0) & ($(H_flag) == 0) & (HN <= 0x9) & (LN <= 0x9)) goto <exit>;
-	
+
 	if ($(N_flag) == 1) goto <adjustAfterSubtract>;
 
 		#<adjustAfterAdd>, in effect
@@ -1254,40 +1254,40 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
     if ($(C_flag) == 1 & $(H_flag) == 0 & HN <= 0x2 & LN <= 0x9)               goto <addcase7>;
     if ($(C_flag) == 1 & $(H_flag) == 0 & HN <= 0x2 & LN >= 0xA & LN <= 0xF)   goto <addcase8>;
     if ($(C_flag) == 1 & $(H_flag) == 1 & HN <= 0x3 & LN <= 0x3)               goto <addcase9>;
-    goto <exit>; 
+    goto <exit>;
 
 		# Cases for addition
    #<addcase1>
     # Isn't used
    <addcase2>
     a_temp = a_temp + 0x06;
-    goto <exit>; 
+    goto <exit>;
    <addcase3>
     a_temp = a_temp + 0x06;
-    goto <exit>; 
+    goto <exit>;
    <addcase4>
     a_temp = a_temp + 0x60;
     $(C_flag) = 1;
-    goto <exit>; 
+    goto <exit>;
    <addcase5>
     a_temp = a_temp + 0x66;
     $(C_flag) = 1;
-    goto <exit>; 
+    goto <exit>;
    <addcase6>
     a_temp = a_temp + 0x66;
     $(C_flag) = 1;
-    goto <exit>; 
+    goto <exit>;
    <addcase7>
     a_temp = a_temp + 0x60;
-    goto <exit>; 
+    goto <exit>;
    <addcase8>
     a_temp = a_temp + 0x66;
-    goto <exit>; 
+    goto <exit>;
    <addcase9>
     a_temp = a_temp + 0x66;
 	goto <exit>;
-		
-   <adjustAfterSubtract>	
+
+   <adjustAfterSubtract>
 	# Cases for subtraction
     #if ($(C_flag) == 0 & $(H_flag) == 0 & HN >= 0x0 & HN <= 0x9 & LN >= 0x0 & LN <= 0x9)   goto <subcase1>;
     if ($(C_flag) == 0 & $(H_flag) == 1 & HN <= 0x8 & LN >= 0x6 & LN <= 0xF)               goto <subcase2>;
@@ -1295,32 +1295,32 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
     if ($(C_flag) == 1 & $(H_flag) == 1 & HN >= 0x6 & HN <= 0xF & LN >= 0x6 & LN <= 0xF)   goto <subcase4>;
     goto <exit>;
 
-   #<subcase1>  
+   #<subcase1>
     # Isn't used
    <subcase2>
     a_temp = a_temp + 0xFA;
-    goto <exit>; 
+    goto <exit>;
    <subcase3>
     a_temp = a_temp + 0xA0;
-    goto <exit>; 
+    goto <exit>;
    <subcase4>
     a_temp = a_temp + 0x9A;
 
-   <exit>		
-  
+   <exit>
+
    setResultFlags(a_temp);
    setParity(a_temp);
-   
+
    A = a_temp;
    goto <endDAA>;
-    
+
 
 <forDecompilation>
-   
-  
+
+
    a_temp = BCDadjust(a_temp, $(C_flag), $(H_flag));
    $(C_flag) = BCDadjustCarry(a_temp, $(C_flag), $(H_flag));
-  
+
    setResultFlags(a_temp);
    $(PV_flag) = hasEvenParity(a_temp);
    A = a_temp;
@@ -1329,13 +1329,13 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 }
 
 :CPL                is op0_8=0x2f {
-	A = ~A;	
+	A = ~A;
 	$(H_flag) = 1;
 	$(N_flag) = 1;
 }
 
 :NEG                is op0_8=0xed; op0_8=0x44 {
-	local a_temp = A;	
+	local a_temp = A;
 	subtractionFlags(0, a_temp);
 	a_temp = -a_temp;
 	A = a_temp;
@@ -1405,7 +1405,7 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 :SBC HL,sRegPair4_2 is op0_8=0xed & HL; op6_2=0x1 & sRegPair4_2 & bits0_4=0x2 {
 	local HL_temp = HL;
 	local Reg_temp = sRegPair4_2;
-	
+
 	subtractionWithCarry(HL_temp, sRegPair4_2, HL_temp);
 	setResultFlags(HL_temp);
 	HL = HL_temp;
@@ -1930,7 +1930,7 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 }
 
 :JP Addr16          is op0_8=0xc3; Addr16 {
-	goto Addr16;	
+	goto Addr16;
 }
 
 :JP cc,Addr16       is op6_2=0x3 & cc & bits0_3=0x2; Addr16 {
@@ -1947,18 +1947,18 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 
 :JP (HL)            is op0_8=0xe9 & HL {
 	off:2 = (zext(H) << 8) | zext(L);
-	
+
 	JumpToLoc(off);
 
 }
 
 :JP (IX)            is op0_8=0xdd & IX; op0_8=0xe9 {
-	
+
 	JumpToLoc(IX);
 }
 
 :JP (IY)            is op0_8=0xfd & IY; op0_8=0xe9 {
-	
+
 	JumpToLoc(IY);
 }
 
@@ -2078,7 +2078,7 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 	B = test;
 	val:1 = 0;
 	MemRead(val,HL);
-	
+
 	ioWrite(IOAddrC, val);
 	HL = HL + 1;
 	$(Z_flag) = (test == 0);
@@ -2089,12 +2089,12 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 	B = B - 1;
 	val:1 = 0;
 	MemRead(val,HL);
-	
+
 	ioWrite(IOAddrC, val);
 	HL = HL + 1;
-	
+
 	if (B != 0) goto inst_start;
-	
+
 	$(Z_flag) = 1;
 	$(N_flag) = 1;
 }
@@ -2104,7 +2104,7 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 	B = test;
 	val:1 = 0;
 	MemRead(val,HL);
-	
+
 	ioWrite(IOAddrC, val);
 	HL = HL - 1;
 	$(Z_flag) = (test == 0);
@@ -2115,12 +2115,12 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 	B = B - 1;
 	val:1 = 0;
 	MemRead(val,HL);
-	
+
 	ioWrite(IOAddrC, val);
 	HL = HL - 1;
-	
+
 	if (B != 0) goto inst_start;
-	
+
 	$(Z_flag) = 1;
 	$(N_flag) = 1;
 }
@@ -2145,7 +2145,7 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 :TST hlMem8         is op0_8=0xed; op0_8=0x34 & hlMem8 {
 	val:1 = 0;
 	MemRead(val,HL);
-	
+
 	local result = val & A;
 	setResultFlags(result);
 	$(H_flag)=1;
@@ -2154,7 +2154,7 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 	$(C_flag)=0;
 }
 
-:TST imm8           is op0_8=0xed; op0_8=0x64; imm8 { 
+:TST imm8           is op0_8=0xed; op0_8=0x64; imm8 {
 	val:1 = imm8 & A;
 	setResultFlags(val);
 	$(H_flag)=1;
@@ -2169,17 +2169,17 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 	setResultFlags(val);
 	$(H_flag)=0;
 	setParity(val);
-	$(N_flag)=0;	
+	$(N_flag)=0;
 }
 
 :IN0 reg3_3,IOAddr8 is op0_8=0xed; op6_2=0x0 & reg3_3 & bits0_3=0x0; IOAddr8 {
 	local r_temp = reg3_3;
 	ioRead(IOAddr8,r_temp); # read input location
 	reg3_3 = r_temp;
-	setResultFlags(r_temp); 
+	setResultFlags(r_temp);
 	$(H_flag)=0;
 	setParity(r_temp);
-	$(N_flag)=0;	
+	$(N_flag)=0;
 }
 
 :OUT0 IOAddr8,reg3_3 is op0_8=0xed; op6_2=0x0 & reg3_3 & bits0_3=0x1; IOAddr8 {
@@ -2207,15 +2207,15 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 	ioWrite(IOAddrC, val);
 	HL = HL - 1;
 	C = C - 1;
-	
+
 	if (test != 0) goto inst_start;
-	
+
 	$(S_flag)=0;
 	$(Z_flag)=1;
 	$(H_flag) = 0;
 #	$(PV_flag)=1;
 	$(PV_flag) = (val s< 0); # based upon last output byte
-	$(C_flag)=0;	
+	$(C_flag)=0;
 }
 
 :TSTIO IOAddr8      is op0_8=0xed; op0_8=0x74; IOAddr8 {
@@ -2253,15 +2253,15 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 	ioWrite(IOAddrC, val);
 	HL = HL - 1;
 	C = C + 1;
-	
+
 	if (test != 0) goto inst_start;
-	
+
 	$(S_flag)=0;
 	$(Z_flag)=1;
 	$(H_flag) = 0;
 #	$(PV_flag)=1;
 	$(PV_flag) = (val s< 0); # based upon last output byte
-	$(C_flag)=0;	
+	$(C_flag)=0;
 }
 
 :SLP                is op0_8=0xed; op0_8=0x76 {
@@ -2271,7 +2271,7 @@ if (DECOMPILE_MODE) goto <forDecompilation>;
 @endif
 
 # Undocumented instructions
-# information taken from https://clrhome.org/table 
+# information taken from https://clrhome.org/table
 
 @ifndef Z180
 
@@ -2426,7 +2426,7 @@ ixl_iyl: IYL is op0_8=0xfd & IYL { export IYL; }
 :ADD A, ixh_iyh is ixh_iyh; op0_8=0x84 & A {
 	local a_temp = A;
 	local val = ixh_iyh;
-	
+
 	additionFlags(a_temp, val);
 	a_temp = a_temp + val;
 	setResultFlags(a_temp);
@@ -2436,7 +2436,7 @@ ixl_iyl: IYL is op0_8=0xfd & IYL { export IYL; }
 :ADD A, ixl_iyl is ixl_iyl; op0_8=0x85 & A {
 	local a_temp = A;
 	local val = ixl_iyl;
-	
+
 	additionFlags(a_temp, val);
 	a_temp = a_temp + val;
 	setResultFlags(a_temp);
@@ -2446,7 +2446,7 @@ ixl_iyl: IYL is op0_8=0xfd & IYL { export IYL; }
 :ADC A, ixh_iyh is ixh_iyh; op0_8=0x8c & A {
 	local a_temp = A;
 	local val = ixh_iyh;
-	
+
 	additionWithCarry(a_temp, val, a_temp);
 	setResultFlags(a_temp);
 	A = a_temp;
@@ -2455,7 +2455,7 @@ ixl_iyl: IYL is op0_8=0xfd & IYL { export IYL; }
 :ADC A, ixl_iyl is ixl_iyl; op0_8=0x8d & A {
 	local a_temp = A;
 	local val = ixl_iyl;
-	
+
 	additionWithCarry(a_temp, val, a_temp);
 	setResultFlags(a_temp);
 	A = a_temp;
@@ -2464,7 +2464,7 @@ ixl_iyl: IYL is op0_8=0xfd & IYL { export IYL; }
 :SUB ixh_iyh is ixh_iyh; op0_8=0x94 {
 	local a_temp = A;
 	local val = ixh_iyh;
-	
+
 	subtractionFlags(a_temp, val);
 	a_temp = a_temp - val;
 	setResultFlags(a_temp);
@@ -2474,7 +2474,7 @@ ixl_iyl: IYL is op0_8=0xfd & IYL { export IYL; }
 :SUB ixl_iyl is ixl_iyl; op0_8=0x95 {
 	local a_temp = A;
 	local val = ixl_iyl;
-	
+
 	subtractionFlags(a_temp, val);
 	a_temp = a_temp - val;
 	setResultFlags(a_temp);
@@ -2564,7 +2564,7 @@ ixl_iyl: IYL is op0_8=0xfd & IYL { export IYL; }
 :CP ixh_iyh is ixh_iyh; op0_8=0xbc {
 	local a_temp = A;
 	local r_temp = ixh_iyh;
-	
+
 	cmp:1 = a_temp - r_temp;
 	subtractionFlags(a_temp, r_temp);
 	setResultFlags(cmp);
@@ -2573,7 +2573,7 @@ ixl_iyl: IYL is op0_8=0xfd & IYL { export IYL; }
 :CP ixl_iyl is ixl_iyl; op0_8=0xbd {
 	local a_temp = A;
 	local r_temp = ixl_iyl;
-	
+
 	cmp:1 = a_temp - r_temp;
 	subtractionFlags(a_temp, r_temp);
 	setResultFlags(cmp);

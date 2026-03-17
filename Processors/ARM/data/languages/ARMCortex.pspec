@@ -18,7 +18,7 @@
       <set name="spsr" val="0"/>
     </tracked_set>
   </context_data>
-  
+
   <default_symbols>
     <symbol name="MasterStackPointer" address="ram:0x0" entry="false" type="code_ptr"/>
     <symbol name="Reset" address="ram:0x4" entry="true" type="code_ptr"/>
@@ -38,5 +38,5 @@
     <symbol name="SysTick" address="ram:0x3C" entry="true" type="code_ptr"/>
     <symbol name="IRQ" address="ram:0x40" entry="true" type="code_ptr"/>
   </default_symbols>
-  
+
 </processor_spec>

@@ -17,5 +17,5 @@
 		<zero_register register="xzr" builtin="true"/>
 		<duffzero dest="x20" zero_arg="" zero_type=""/>
 		<closurecontext register="x26"/>
-	</register_info>	
+	</register_info>
 </golang>

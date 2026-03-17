@@ -145,6 +145,6 @@
     <external_name tool="DWARF.register.mapping.file" name="riscv32.dwarf"/>
     <external_name tool="qemu" name="qemu-riscv32"/>
     <external_name tool="qemu_system" name="qemu-system-riscv32"/>
-  </language> 
-  
+  </language>
+
 </language_definitions>

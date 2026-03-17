@@ -16,5 +16,5 @@
     <external_name tool="DWARF.register.mapping.file" name="riscv32.dwarf"/>
     <external_name tool="qemu" name="qemu-riscv32"/>
   </language>
-  
+
 </language_definitions>

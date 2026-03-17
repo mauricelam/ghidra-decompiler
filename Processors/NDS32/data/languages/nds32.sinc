@@ -133,13 +133,13 @@ define token instr32(32)
 
     StandbyZ    = (7, 9)
     StandbySub  = (5, 6)
-    
+
     GpSub1      = (19, 19)
     GpSub2      = (18, 19)
     GpSub3      = (17, 19)
 
     sh          = (5, 9)
-    
+
     Bxxc		= (19, 19)
 
     LsmwRa = (15, 19)
@@ -321,7 +321,7 @@ UsrName: "pfm_ctl"     is Group=2 & Usr=4 { tmp:2 = 0x208; export *[csreg]:4 tmp
 
 
 :mfusr Rt, UsrName is $(I32) & $(ALU_2) & Rt & UsrName & $(ALU2Z) & Sub6=0b100000 { Rt = UsrName; }
-:mfusr Rt, pc is $(I32) & $(ALU_2) & Rt & Group=0 & Usr=0b11111 & $(ALU2Z) & Sub6=0b100000  & pc { Rt = inst_next; } 
+:mfusr Rt, pc is $(I32) & $(ALU_2) & Rt & Group=0 & Usr=0b11111 & $(ALU2Z) & Sub6=0b100000  & pc { Rt = inst_next; }
 :mtusr Rt, UsrName is $(I32) & $(ALU_2) & Rt & UsrName & $(ALU2Z) & Sub6=0b100001 { UsrName = Rt; }
 :mtusr Rt, pc is $(I32) & $(ALU_2) & Rt & Group=0 & Usr=0b11111 & $(ALU2Z) & Sub6=0b100001 & pc { pc = Rt; goto[pc]; } # Not sure this works correctly
 
@@ -462,7 +462,7 @@ Rel16: addr is Imm16s [ addr = inst_start + (Imm16s << 1); ] { export *:4 addr; 
 ### Branch with link Instruction ###
 
 :bgezal Rt, Rel16 is $(I32) & $(BR2) & Rt & Br2t=0b1100 & Rel16
-{   
+{
     lp = inst_next;
     if(Rt s>= 0) goto <end>;
         call Rel16;
@@ -470,7 +470,7 @@ Rel16: addr is Imm16s [ addr = inst_start + (Imm16s << 1); ] { export *:4 addr; 
 }
 
 :bltzal Rt, Rel16 is $(I32) & $(BR2) & Rt & Br2t=0b1101 & Rel16
-{   
+{
     lp = inst_next;
     if(Rt s< 0) goto <end>;
         call Rel16;
@@ -1622,4 +1622,3 @@ OffImm12s: (offs) is Imm12s [ offs = Imm12s << 2; ] { export *[const]:4 offs; }
 :fmtcsr Rt is $(I32) & $(COP) & fop4=0xc & Rt & Fsa & f2op=0x1 & cop4=0x9 {
 	fpcsr = Rt;
 }
-

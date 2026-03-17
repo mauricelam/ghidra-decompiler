@@ -22,7 +22,7 @@ pshs1: pshs2        is imm81=0 & pshs2      { }
 pshs0: pshs1" "CC   is CC & imm80=1 & pshs1 { Push1(S, CC); }
 pshs0: pshs1        is imm80=0 & pshs1      { }
 
-:PSHS pshs0    is op=0x34; pshs0 { }                                                                                           
+:PSHS pshs0    is op=0x34; pshs0 { }
 ################################################################
 # PSHU helper
 ################################################################
@@ -45,4 +45,3 @@ pshu0: pshu1" "CC   is CC & imm80=1 & pshu1 { Push1(U, CC); }
 pshu0: pshu1        is imm80=0 & pshu1      { }
 
 :PSHU pshu0    is op=0x36; pshu0 { }
-

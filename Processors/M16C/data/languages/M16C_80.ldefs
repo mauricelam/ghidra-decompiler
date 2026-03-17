@@ -2,7 +2,7 @@
 
 <language_definitions>
   <!--
-  	Version-1.1 17-Nov-2008 - complete rewrite of M16C_80.slaspec
+	Version-1.1 17-Nov-2008 - complete rewrite of M16C_80.slaspec
   -->
   <language processor="M16C/80"
             endian="little"

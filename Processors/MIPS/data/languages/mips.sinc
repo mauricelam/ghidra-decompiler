@@ -180,14 +180,14 @@ define space ram type=ram_space size=$(ADDRSIZE) default;
 define space register type=register_space size=4;
 
 # General purpose registers
-define register offset=0 size=$(REGSIZE) [ 
-    zero at v0 v1 
-    a0 a1 a2 a3 
-    t0 t1 t2 t3 
-    t4 t5 t6 t7 
-    s0 s1 s2 s3 
-    s4 s5 s6 s7 
-    t8 t9 k0 k1 
+define register offset=0 size=$(REGSIZE) [
+    zero at v0 v1
+    a0 a1 a2 a3
+    t0 t1 t2 t3
+    t4 t5 t6 t7
+    s0 s1 s2 s3
+    s4 s5 s6 s7
+    t8 t9 k0 k1
     gp sp s8 ra
     pc
 ];
@@ -264,14 +264,14 @@ define register offset=0x1200 size=4 [
 
 # COP-0 control registers, sel=0
 define register offset=0x2000 size=$(REGSIZE) [
-    Index           Random          EntryLo0        EntryLo1 
-    Context         PageMask        Wired           HWREna  
-    BadVAddr        Count           EntryHi         Compare  
-    Status          Cause           EPC             PRId 
-    Config          LLAddr          WatchLo         WatchHi 
+    Index           Random          EntryLo0        EntryLo1
+    Context         PageMask        Wired           HWREna
+    BadVAddr        Count           EntryHi         Compare
+    Status          Cause           EPC             PRId
+    Config          LLAddr          WatchLo         WatchHi
     XContext        cop0_reg21      cop0_reg22      Debug
     DEPC            PerfCnt         ErrCtl          CacheErr
-    TagLo           TagHi           ErrorEPC        DESAVE 
+    TagLo           TagHi           ErrorEPC        DESAVE
 ];
 
 # COP-0 control registers, sel=1
@@ -384,7 +384,7 @@ define register offset=0x3200 size=$(REGSIZE) [
 	HW_RES28	HW_ULR			HW_RESIM30	HW_RESIM31
 ];
 
-@ifdef ISA_VARIANT 
+@ifdef ISA_VARIANT
 define register offset=0x3F00 size=1 [ ISAModeSwitch ];
 @endif
 
@@ -394,15 +394,15 @@ define register offset=0x3300 size=$(REGSIZE) [
 	thread_t0	thread_t1	thread_t2	thread_t3	thread_t4	thread_t5	thread_t6	thread_t7
 	thread_s0	thread_s1	thread_s2	thread_s3	thread_s4	thread_s5	thread_s6	thread_s7
 	thread_t8	thread_t9	thread_k0	thread_k1	thread_gp	thread_sp	thread_s8	thread_ra
-	
+
 	thread_f0	thread_f1	thread_f2	thread_f3	thread_f4	thread_f5	thread_f6	thread_f7
 	thread_f8	thread_f9	thread_f10	thread_f11	thread_f12	thread_f13	thread_f14	thread_f15
 	thread_f16	thread_f17	thread_f18	thread_f19	thread_f20	thread_f21	thread_f22	thread_f23
 	thread_f24	thread_f25	thread_f26	thread_f27	thread_f28	thread_f29	thread_f30	thread_f31
-	
+
 	thread_lo0	thread_hi0	thread_acx0	_	thread_lo1	thread_hi1	thread_acx1	_
 	thread_lo2	thread_hi2	thread_acx2	_	thread_lo3	thread_hi3	thread_acx3	_
-	
+
 	thread_fir	thread_fccr	thread_fexr	thread_fenr	thread_fcsr
 ];
 
@@ -412,10 +412,10 @@ define context contextreg
   PAIR_INSTRUCTION_FLAG=(0,0) noflow      # =1 paired instruction
   REL6=(31,31)							  # =1 Release 6, =0 Pre release 6, (Fixed, set via pspec)
   RELP=(30,30)							  # =1 Mips16e, =0 MicroMips. REL6, RELP can't both be 1 (Fixed, set via pspec)
-@ifdef ISA_VARIANT  
+@ifdef ISA_VARIANT
   ISA_MODE=(1,1)						  # =1 Decode using alternate ISA, variable.
   LowBitCodeMode = (1,1)				  # =1 if low bit of instruction address is set on a branch
-#below here is for mips16e. Overlaps with micromips   
+#below here is for mips16e. Overlaps with micromips
   ext_isjal=(2,2) noflow
   ext_value=(3,13) noflow
   ext_value_select=(3,5) noflow
@@ -471,8 +471,8 @@ define context contextreg
   ext_32_addims=(10,16) signed noflow
   ext_32_imm2=(15,16) noflow
   ext_32_imm2s=(15,16) signed noflow
-  ext_32_imm3=(14,16) noflow 
-  ext_32_imm3s=(14,16) signed noflow 
+  ext_32_imm3=(14,16) noflow
+  ext_32_imm3s=(14,16) signed noflow
   ext_32_imm5=(12,16) noflow
   ext_32_imm5s=(12,16) signed noflow
   ext_32_imm6=(11,16) noflow
@@ -481,17 +481,17 @@ define context contextreg
   ext_32_basea=(12,16) noflow
 
   ext_32_rd=(7,11) noflow
-  ext_32_rdset=(7,11) noflow  
+  ext_32_rdset=(7,11) noflow
   ext_32_rs1=(7,11) noflow
   ext_32_rs1lo=(7,11) noflow
   ext_32_rs1set=(7,11) noflow
   ext_16_rs=(7,9) noflow
   ext_16_rslo=(7,8) noflow
   ext_16_rshi=(9,9) noflow
-  
+
   ext_off16_s=(7,22) signed noflow
   ext_off16_u=(7,22) noflow
-@endif  # ISA_VARIANT  
+@endif  # ISA_VARIANT
 ;
 
 
@@ -521,7 +521,7 @@ define token instr(32)
     sa_dsp2     = (21,25)
     shift21     = (21,25)
     sz          = (21,25)
-    
+
     acf         = (21,22)
     acflo       = (21,22)
     acfhi       = (21,22)
@@ -557,7 +557,7 @@ define token instr(32)
     cond        = (16,20)
     op          = (16,20)
     zero1620    = (16,20)
-    
+
     zero1619    = (16,19)
     lohiacx     = (16,19)
     nd          = (17,17)
@@ -567,7 +567,7 @@ define token instr(32)
     svrs_aregb1 = (16,16)
     svrs_aregb0 = (15,15)
     svrs_areg   = (15,18)
-    
+
     zero1320    = (13,20)
     zero1315    = (13,15)
     save        = (13,13)
@@ -606,7 +606,7 @@ define token instr(32)
     fs_fcr      = (11,15)
     zero4       = (11,15)
     msbd        = (11,15)
-    
+
     lohiacx2    = (11,14)
     aclo        = (11,12)
     achi        = (11,12)
@@ -653,7 +653,7 @@ define token instr(32)
     simmed11    = (0,10)
 ;
 
-attach variables [ rs rt rd base index baser6 ] [ 
+attach variables [ rs rt rd base index baser6 ] [
     zero  at  v0  v1  a0  a1  a2  a3
     t0    t1  t2  t3  t4  t5  t6  t7
     s0    s1  s2  s3  s4  s5  s6  s7
@@ -672,22 +672,22 @@ attach variables [ rd_hw ] [
 ];
 
 @ifdef MIPS64
-attach variables [ rs32 rt32 rd32 ] [ 
+attach variables [ rs32 rt32 rd32 ] [
     zero_lo  at_lo  v0_lo  v1_lo  a0_lo  a1_lo  a2_lo  a3_lo
     t0_lo    t1_lo  t2_lo  t3_lo  t4_lo  t5_lo  t6_lo  t7_lo
     s0_lo    s1_lo  s2_lo  s3_lo  s4_lo  s5_lo  s6_lo  s7_lo
-    t8_lo    t9_lo  k0_lo  k1_lo  gp_lo  sp_lo  s8_lo  ra_lo 
+    t8_lo    t9_lo  k0_lo  k1_lo  gp_lo  sp_lo  s8_lo  ra_lo
 ];
 @else
 # For MIPS32 these are the same as rs, rt, and rd
-attach variables [ rs32 rt32 rd32 ] [ 
+attach variables [ rs32 rt32 rd32 ] [
     zero  at  v0  v1  a0  a1  a2  a3
     t0    t1  t2  t3  t4  t5  t6  t7
     s0    s1  s2  s3  s4  s5  s6  s7
-    t8    t9  k0  k1  gp  sp  s8  ra 
+    t8    t9  k0  k1  gp  sp  s8  ra
 ];
 @endif
-               
+
 attach variables [ fs ft fd fr ] [
     f0  f1  f2  f3  f4  f5  f6  f7  f8  f9  f10 f11 f12 f13 f14 f15
     f16 f17 f18 f19 f20 f21 f22 f23 f24 f25 f26 f27 f28 f29 f30 f31
@@ -715,16 +715,16 @@ attach variables [ fs_fcr ] [
 	_		_		_		_		_		_		_		_
 	_		fccr	fexr	_		fenr	_		_		fcsr
 ];
-    
+
 attach variables [ rd0_0 ] [
-    Index           Random          EntryLo0        EntryLo1 
-    Context         PageMask        Wired           HWREna  
-    BadVAddr        Count           EntryHi         Compare  
-    Status          Cause           EPC             PRId 
-    Config          LLAddr          WatchLo         WatchHi 
+    Index           Random          EntryLo0        EntryLo1
+    Context         PageMask        Wired           HWREna
+    BadVAddr        Count           EntryHi         Compare
+    Status          Cause           EPC             PRId
+    Config          LLAddr          WatchLo         WatchHi
     XContext        cop0_reg21      cop0_reg22      Debug
     DEPC            PerfCnt         ErrCtl          CacheErr
-    TagLo           TagHi           ErrorEPC        DESAVE 
+    TagLo           TagHi           ErrorEPC        DESAVE
 ];
 
 attach variables [ rd0_1 ] [
@@ -808,7 +808,7 @@ attach variables [ aclo acflo ] [ lo lo1 lo2 lo3 ];
 attach variables [ achi acfhi ] [ hi hi1 hi2 hi3 ];
 attach variables [ ac acf ] [ ac0 ac1 ac2 ac3 ];
 
-attach names hint [ 
+attach names hint [
     "load" "store" "hint2" "hint3" "load_streamed" "store_streamed" "load_retained" "store_retained"
     "hint8" "hint9" "hint10" "hint11" "hint12" "hint13" "hint14" "hint15"
     "hint16" "hint17" "hint18" "hint19" "hint20" "hint21" "hint22" "hint23" "hint24"
@@ -920,7 +920,7 @@ DinsXSize: mysize         is msbd & lsb   [ mysize = msbd - lsb + 1 + 32; ] { tm
 @endif
 
 macro JXWritePC(addr) {
-@ifdef ISA_VARIANT 
+@ifdef ISA_VARIANT
    ISAModeSwitch = (addr & 0x1) != 0;
    tmp:$(REGSIZE) = -2;
    tmp = tmp & addr;
@@ -1003,7 +1003,7 @@ define pcodeop TLB_read_indexed_entryPageMask;
 define pcodeop TLB_write_indexed_entry;
 define pcodeop TLB_write_random_entry;
 
-# prefetch(vaddr, hint); 
+# prefetch(vaddr, hint);
 define pcodeop prefetch;
 
 # getFpCondition(cc)

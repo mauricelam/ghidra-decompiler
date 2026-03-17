@@ -11,7 +11,7 @@
   <default_memory_blocks>
     <memory_block name="csr" start_address="csreg:0x0" length="0x8000" initialized="false"/>
   </default_memory_blocks>
-  
+
   <!-- TODO: add include directive and move to shared include -->
   <default_symbols>
      <symbol name="ustatus"       address="csreg:0x000"       size="8" description="" />
@@ -40,7 +40,7 @@
      <symbol name="sie"                  address="next"       size="8" description="" />
      <symbol name="stvec"                address="next"       size="8" description="" />
      <symbol name="scounteren"           address="next"       size="8" description="" />
-     
+
 
      <symbol name="sscratch"      address="csreg:0x140"       size="8" description="" />
      <symbol name="sepc"                 address="next"       size="8" description="" />

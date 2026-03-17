@@ -231,4 +231,3 @@ define pcodeop vpgatherqq ;
 	Reg32 = zext(byte_mask);
 	build check_Reg32_dest;
 }
-

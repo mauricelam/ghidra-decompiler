@@ -128,4 +128,3 @@
 :unshfli rd, rs1, op2025 is op0006=0x13 & op1214=0x5 & op2631=0x2 & op2025 & rd & rs1 unimpl
 
 :xnor rd, rs1, rs2 is op0006=0x33 & op1214=0x4 & op2531=0x20 & rd & rs1 & rs2 unimpl
-

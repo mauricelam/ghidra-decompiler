@@ -15,5 +15,3 @@
     ea:$(REGISTER_SIZE) = RA_OR_ZERO + RB;
     *:16 ($(EATRUNC)) = vrS;
 }
-
-

@@ -10,8 +10,8 @@
       <funcstart/>
     </postpatterns>
   </patternpairs>
-  
-  
+
+
   <patternpairs totalbits="32" postbits="16">
     <!--  Medium confidence, more bits, but prepattern are jumps, not return -->
     <prepatterns>
@@ -23,7 +23,7 @@
       <possiblefuncstart/>
     </postpatterns>
   </patternpairs>
-  
+
     <patternpairs totalbits="32" postbits="16">
     <!--  Higher confidence patterns, after a return and more defined bits -->
     <prepatterns>
@@ -34,5 +34,5 @@
       <possiblefuncstart/>
     </postpatterns>
   </patternpairs>
-  
+
 </patternlist>

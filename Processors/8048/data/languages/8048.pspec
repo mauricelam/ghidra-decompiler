@@ -3,7 +3,7 @@
 <processor_spec>
 
   <programcounter register="PC"/>
-  
+
   <default_symbols>
 
     <symbol name="BANK0_R0" address="INTMEM:00"/>
@@ -45,15 +45,15 @@
     <memory_block name="INTMEM" start_address="INTMEM:20" length="0xe0" initialized="false"/>
     <memory_block name="PORT" start_address="PORT:0" length="0x8" initialized="false"/>
   </default_memory_blocks>
-  
+
   <context_data>
 	  <context_set space="CODE" first="0x0" last="0x7ff">
-	  	  	<set name="DBF" val="0"/>
+			<set name="DBF" val="0"/>
 	  </context_set>
-	  
+
 	  <context_set space="CODE" first="0x800" last="0xfff">
-	  	  	<set name="DBF" val="1"/>
+			<set name="DBF" val="1"/>
 	  </context_set>
   </context_data>
-  
+
 </processor_spec>

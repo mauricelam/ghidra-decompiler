@@ -22,14 +22,14 @@
           <entry size="8" alignment="8" />
      </size_alignment_map>
   </data_organization>
-  
+
   <global>
     <range space="ram"/>
   </global>
-  
+
   <stackpointer register="sp" space="ram"/>
   <funcptr align="4"/>     <!-- Function pointers are word aligned and leastsig bit may encode otherstuff -->
-  
+
   <prefersplit style="inhalf">
     <register name="q0"/>
     <register name="q1"/>
@@ -63,7 +63,7 @@
     <register name="q29"/>
     <register name="q30"/>
   </prefersplit>
-  
+
   <default_proto>
     <prototype name="__swiftcall" extrapop="0" stackshift="0">
       <!-- https://github.com/swiftlang/swift/blob/main/docs/ABI/CallingConventionSummary.rst#arm64 -->
@@ -127,7 +127,7 @@
           <join/>
         </rule>
       </input>
-      <output>  
+      <output>
         <pentry minsize="2" maxsize="8" metatype="float">
           <register name="d0"/>
         </pentry>
@@ -173,12 +173,12 @@
         <register name="x19"/>
         <register name="x20"/>
         <register name="x21"/>
-        <register name="x22"/> 
-        <register name="x23"/> 
-        <register name="x24"/> 
-        <register name="x25"/> 
-        <register name="x26"/> 
-        <register name="x27"/> 
+        <register name="x22"/>
+        <register name="x23"/>
+        <register name="x24"/>
+        <register name="x25"/>
+        <register name="x26"/>
+        <register name="x27"/>
         <register name="x28"/>
         <register name="x29"/>
         <register name="x30"/>
@@ -337,12 +337,12 @@
     <unaffected>
       <register name="x19"/>
       <register name="x21"/>
-      <register name="x22"/> 
-      <register name="x23"/> 
-      <register name="x24"/> 
-      <register name="x25"/> 
-      <register name="x26"/> 
-      <register name="x27"/> 
+      <register name="x22"/>
+      <register name="x23"/>
+      <register name="x24"/>
+      <register name="x25"/>
+      <register name="x26"/>
+      <register name="x27"/>
       <register name="x28"/>
       <register name="x29"/>
       <register name="x30"/>

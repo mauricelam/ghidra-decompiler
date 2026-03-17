@@ -56,4 +56,3 @@ define pcodeop hvcl;
 :hvcl imm0_15              is op15_31=0x57 & imm0_15 {
 	hvcl(imm0_15:$(REGSIZE));
 }
-

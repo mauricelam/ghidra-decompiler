@@ -89,7 +89,7 @@ define register offset=0xf000 size=4 contextreg;
 define context contextreg
 	loopMode=(0,0)
 	loopEnd=(1,1) noflow
-	
+
 	#transient bits
 	phase=(31,31)
 ;
@@ -145,11 +145,11 @@ define token insn(24)
     op_t        = (16,19)
     op_t_0      = (16,16)
     op_t_si4    = (16,19) signed
-    
+
     # If flix instructions are defined for a BE processor
     # this will possibly need to be split for the operands
     flix_i20    = (0,19)
-    
+
     # Care needs to be taken with these for BE
     bri8_n      = (18,19)
     bri8_m      = (16,17)

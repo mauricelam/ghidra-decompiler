@@ -18,7 +18,7 @@
     <external_name tool="gnu" name="avr:31"/>
     <external_name tool="IDA-PRO" name="avr"/>
   </language>
-  
+
   <language processor="AVR8"
             deprecated="true"
             endian="little"
@@ -33,7 +33,7 @@
     <compiler name="gcc"        spec="avr8egcc.cspec"        id="gcc"/>
     <external_name tool="IDA-PRO" name="avr"/>
   </language>
-  
+
   <language processor="AVR8"
             endian="little"
             size="24"
@@ -49,7 +49,7 @@
     <external_name tool="gnu" name="avr:6"/>
     <external_name tool="IDA-PRO" name="avr"/>
   </language>
- 
+
   <language processor="AVR8"
             endian="little"
             size="24"
@@ -63,5 +63,5 @@
     <external_name tool="gnu" name="avr:107"/>
     <external_name tool="IDA-PRO" name="avr"/>
   </language>
-  
+
 </language_definitions>

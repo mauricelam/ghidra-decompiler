@@ -98,4 +98,3 @@
 	local lo:4 = f- ((A:4 f* B:4) f- D:4);
 	D = (D & 0xFFFFFFFF00000000) | zext(lo);
 }
-

@@ -22,7 +22,7 @@
 	local dst:$(XLEN) = &rd;
 	local src1:$(XLEN) = &rs1;
 	local src2:$(XLEN) = &rs2;
-    	*[register]:8 dst = *[register]:8 src1 + *[register]:8 src2;
+	*[register]:8 dst = *[register]:8 src1 + *[register]:8 src2;
 @else
 	rd = rs1 + rs2;
 @endif
@@ -47,7 +47,7 @@
 }
 
 
-# ave rt, ra, rb 	
+# ave rt, ra, rb
 :ave rd,rs1,rs2 is op0006=0x3f & rd & rs1 & rs2 & funct3=0x0 & funct7=0x70
 {
 	local tmp:$(XLEN) = rs1 + rs2;
@@ -71,7 +71,7 @@
 :bpick rd,rs1,rs2,rs3 is op0006=0x3f & rd & rs1 & rs2 & rs3 & funct3=0x3 & funct7=0x04  unimpl
 
 
-# clo16 rt, ra 	
+# clo16 rt, ra
 :clo16 rd,rs1 is op0006=0x3f & rd & rs1 & funct3=0x0 & funct7=0x57 & subf5=0x0a  unimpl
 
 
@@ -79,11 +79,11 @@
 :clo32 rd,rs1 is op0006=0x3f & rd & rs1 & funct3=0x0 & funct7=0x57 & subf5=0x12  unimpl
 
 
-# clo8 rt, ra 	
+# clo8 rt, ra
 :clo8 rd,rs1 is op0006=0x3f & rd & rs1 & funct3=0x0 & funct7=0x57 & subf5=0x02  unimpl
 
 
-# clrs16 rt, ra 	
+# clrs16 rt, ra
 :clrs16 rd,rs1 is op0006=0x3f & rd & rs1 & funct3=0x0 & funct7=0x57 & subf5=0x08  unimpl
 
 
@@ -91,11 +91,11 @@
 :clrs32 rd,rs1 is op0006=0x3f & rd & rs1 & funct3=0x0 & funct7=0x57 & subf5=0x10  unimpl
 
 
-# clrs8 rt, ra 	
+# clrs8 rt, ra
 :clrs8 rd,rs1 is op0006=0x3f & rd & rs1 & funct3=0x0 & funct7=0x57 & subf5=0x00  unimpl
 
 
-# clz16 rt, ra 	
+# clz16 rt, ra
 :clz16 rd,rs1 is op0006=0x3f & rd & rs1 & funct3=0x0 & funct7=0x57 & subf5=0x09  unimpl
 
 
@@ -103,7 +103,7 @@
 :clz32 rd,rs1 is op0006=0x3f & rd & rs1 & funct3=0x0 & funct7=0x57 & subf5=0x11  unimpl
 
 
-# clz8 rt, ra 	
+# clz8 rt, ra
 :clz8 rd,rs1 is op0006=0x3f & rd & rs1 & funct3=0x0 & funct7=0x57 & subf5=0x01  unimpl
 
 
@@ -992,5 +992,3 @@
 
 # zunpkd832 rt, ra 	 ; rt.H[_x_] = ZE16(ra.B[_y_]); ; RV32: (_x,y_) = (1,3), (0,2) ; RV64: (_x,y_) = (3,7),(2,6),(1,3), (0,2)
 :zunpkd832 rd,rs1 is op0006=0x3f & rd & rs1 & funct3=0x0 & funct7=0x56 & subf5=0x17  unimpl
-
-

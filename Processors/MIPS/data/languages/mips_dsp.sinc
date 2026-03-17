@@ -214,7 +214,7 @@ define pcodeop SUBUH.QB;
 	dsp_pos:$(REGSIZE) = DSPControl & 0x1f;
 	if (dsp_pos < 32) goto inst_next;
     delayslot(1);
-    goto Rel16; 
+    goto Rel16;
 }
 
 # BPOSGE32C	Purpose: Branch on Greater Than or Equal To Value 32 in DSPControl Pos Field Compact
@@ -222,7 +222,7 @@ define pcodeop SUBUH.QB;
 :bposge32c Rel16	is $(AMODE) & prime=0x1 & zero21=0x0 & op=0x1a & Rel16 {
 	dsp_pos:$(REGSIZE) = DSPControl & 0x1f;
 	if (dsp_pos < 32) goto inst_next;
-    goto Rel16; 
+    goto Rel16;
 }
 
 # CMP.cond.PH	Purpose: Compare Vectors of Signed Integer Halfword Values
@@ -829,15 +829,15 @@ define pcodeop SUBUH.QB;
 :pick.ph RD, RTsrc, RSsrc	is $(AMODE) & prime=0x1f & RSsrc & RTsrc & RD & fct2=0xb & fct=0x11 {
 	cc24:1 = DSPControl[24,1];
 	cc25:1 = DSPControl[25,1];
-	
+
 	val1:2 = RSsrc(0);
 	val2:2 = RTsrc(0);
 	tmp1:2 = (zext(cc24 == 1) * val1) + ((zext(cc24==0)) * val2);
-	
+
 	val1 = RSsrc(2);
 	val2 = RTsrc(2);
 	tmp2:2 = (zext(cc25 == 1) * val1) + ((zext(cc25==0)) * val2);
-	
+
 	RD = zext(tmp1) + zext(tmp2 << 16);
 }
 
@@ -848,7 +848,7 @@ define pcodeop SUBUH.QB;
 	local cc2:1 = DSPControl[25,1];
 	local cc3:1 = DSPControl[26,1];
 	local cc4:1 = DSPControl[27,1];
-	
+
 	local val1:1 = RSsrc(0);
 	local val2:1 = RTsrc(0);
 	local tmp1:1 = ((cc1 == 1) * val1) + (((cc1==0)) * val2);
@@ -856,7 +856,7 @@ define pcodeop SUBUH.QB;
 	val1 = RSsrc(1);
 	val2 = RTsrc(1);
 	local tmp2:1 = ((cc2 == 1) * val1) + (((cc2==0)) * val2);
-	
+
 	val1 = RSsrc(2);
 	val2 = RTsrc(2);
 	local tmp3:1 = ((cc3 == 1) * val1) + (((cc3==0)) * val2);
@@ -864,7 +864,7 @@ define pcodeop SUBUH.QB;
 	val1 = RSsrc(3);
 	val2 = RTsrc(3);
 	local tmp4:1 = ((cc4 == 1) * val1) + (((cc4==0)) * val2);
-	
+
 	RD = zext(tmp1) + zext(tmp2 << 8) + zext(tmp3 << 16) + zext(tmp4 << 24);
 }
 

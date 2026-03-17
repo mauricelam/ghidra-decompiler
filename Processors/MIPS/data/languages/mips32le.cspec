@@ -153,26 +153,26 @@
       </localrange>
     </prototype>
   </default_proto>
-  <prototype name="processEntry" extrapop="0" stackshift="0"> 
-      <input pointermax="4"> 
-        <pentry minsize="1" maxsize="4"> 
-          <register name="v0"/> 
-        </pentry> 
-        <pentry minsize="1" maxsize="500" align="4"> 
-          <addr offset="0" space="stack"/> 
-        </pentry> 
-      </input> 
-      <output killedbycall="true"> 
-        <pentry minsize="1" maxsize="4"> 
-          <register name="v0"/> 
-        </pentry> 
-      </output> 
+  <prototype name="processEntry" extrapop="0" stackshift="0">
+      <input pointermax="4">
+        <pentry minsize="1" maxsize="4">
+          <register name="v0"/>
+        </pentry>
+        <pentry minsize="1" maxsize="500" align="4">
+          <addr offset="0" space="stack"/>
+        </pentry>
+      </input>
+      <output killedbycall="true">
+        <pentry minsize="1" maxsize="4">
+          <register name="v0"/>
+        </pentry>
+      </output>
       <unaffected>
         <register name="sp"/>
       </unaffected>
       <internal_storage>
         <register name="gp"/>  <!-- Compilers may save gp to the stack before a call and restore it afterward -->
       </internal_storage>
-  </prototype> 
-    
+  </prototype>
+
 </compiler_spec>

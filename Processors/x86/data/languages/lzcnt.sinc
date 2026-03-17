@@ -29,4 +29,3 @@ macro lzcntflags(input, output) {
   lzcntflags(rm64, Reg64);
 }
 @endif
-

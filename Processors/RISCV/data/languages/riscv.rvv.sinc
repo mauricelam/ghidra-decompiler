@@ -1952,4 +1952,3 @@
 # vzext.vf8      31..26=0x12 vm vs2 19..15=2 14..12=0x2 vd 6..0=0x57
 # vzext.vf8 vd, vs2, vm  # Zero-extend SEW/8 source to SEW destination
 :vzext.vf8  vd, vs2^ vm   is op2631=0x12 & vm & vs2 & op1519=0x2 & op1214=0x2 & vd & op0006=0x57  unimpl
-

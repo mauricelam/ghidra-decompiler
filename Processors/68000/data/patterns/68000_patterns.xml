@@ -24,7 +24,7 @@
       <funcstart/>
     </postpatterns>
   </patternpairs>
-  
+
   <patternpairs totalbits="32" postbits="16">
     <!--  pattern after a bra.w, use more solid patterns for function starts -->
     <prepatterns>
@@ -37,6 +37,6 @@
       <funcstart/>
     </postpatterns>
   </patternpairs>
-  
- 
+
+
 </patternlist>

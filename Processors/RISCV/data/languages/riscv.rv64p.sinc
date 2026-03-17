@@ -290,5 +290,3 @@
 
 # ursub32 rt, ra, rb 	 ; rt.W[_x_] = (CONCAT(1'b0,ra.W[_x_]) - CONCAT(1'b0,rb.W[_x_])) >> 1; ; (RV64: __x__=1..0)
 :ursub32 rd,rs1,rs2 is op0006=0x3f & rd & rs1 & rs2 & funct3=0x2 & funct7=0x11  unimpl
-
-

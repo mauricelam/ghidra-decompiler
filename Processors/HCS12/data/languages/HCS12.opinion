@@ -5,4 +5,3 @@
         <constraint primary="53"    processor="HCS-12X"   endian="big"   size="24" variant="default"/>
     </constraint>
 </opinions>
-

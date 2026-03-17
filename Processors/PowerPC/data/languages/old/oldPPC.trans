@@ -4,4 +4,3 @@
     <to_language version="1">PowerPC:BE:32:default</to_language>
     <map_compiler_spec from="Sleigh-PowerPC 32-bit" to="default" />
 </language_translation>
-

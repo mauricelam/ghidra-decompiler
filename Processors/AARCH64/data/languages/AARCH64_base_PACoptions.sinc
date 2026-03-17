@@ -161,4 +161,3 @@ xpaci__PACpart: "hide" is ShowPAC=0 { }
 xpaclri__PACpart: "show_and_clobber" is ShowPAC=1 & PAC_clobber=1 { x30 = xpac(x30, 0:1); }
 xpaclri__PACpart: "show_noclobber" is ShowPAC=1 & PAC_clobber=0 { xpac(x30, 0:1); }
 xpaclri__PACpart: "hide" is ShowPAC=0 { }
-

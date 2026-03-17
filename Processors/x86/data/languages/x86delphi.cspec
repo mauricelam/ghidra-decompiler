@@ -62,7 +62,7 @@
     </unaffected>
     <killedbycall>
       <register name="ECX"/>
-  	<register name="EDX"/>
+	<register name="EDX"/>
     </killedbycall>
     <likelytrash>
       <register name="ECX"/>

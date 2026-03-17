@@ -899,14 +899,14 @@ define pcodeop vpunpcklqdq_avx2 ;
 :VEXTRACTI128 XmmReg2_m128, YmmReg1, imm8 is $(VEX_NONE) & $(VEX_L256) & $(VEX_PRE_66) & $(VEX_0F3A) & $(VEX_W0); byte=0x39; (YmmReg1 & XmmReg2_m128_extend) ... & XmmReg2_m128; imm8
 {
 	local ext:1 = (imm8:1 & 1) == 1;
-	
+
 	local val:16 = YmmReg1[0,128];
-	
+
 	if (ext == 0) goto <assign>;
 
     val = YmmReg1[128,128];
-    
-  <assign>  
+
+  <assign>
     XmmReg2_m128 = val;
 	build XmmReg2_m128_extend;
 }
@@ -969,7 +969,7 @@ define pcodeop vpblendd_avx2 ;
 	YmmReg1[104,8] = val;
 	YmmReg1[112,8] = val;
 	YmmReg1[120,8] = val;
-	
+
 	YmmReg1[128,8] = val;
 	YmmReg1[136,8] = val;
 	YmmReg1[144,8] = val;
@@ -986,7 +986,7 @@ define pcodeop vpblendd_avx2 ;
 	YmmReg1[232,8] = val;
 	YmmReg1[240,8] = val;
 	YmmReg1[248,8] = val;
-	
+
 	ZmmReg1 = zext(YmmReg1);
 }
 
@@ -1002,7 +1002,7 @@ define pcodeop vpblendd_avx2 ;
 	XmmReg1[80,16] = val;
 	XmmReg1[96,16] = val;
 	XmmReg1[112,16] = val;
-	
+
 	ZmmReg1 = zext(XmmReg1);
 }
 
@@ -1018,7 +1018,7 @@ define pcodeop vpblendd_avx2 ;
 	YmmReg1[80,16] = val;
 	YmmReg1[96,16] = val;
 	YmmReg1[112,16] = val;
-	
+
 	YmmReg1[128,16] = val;
 	YmmReg1[144,16] = val;
 	YmmReg1[160,16] = val;
@@ -1027,7 +1027,7 @@ define pcodeop vpblendd_avx2 ;
 	YmmReg1[208,16] = val;
 	YmmReg1[224,16] = val;
 	YmmReg1[240,16] = val;
-	
+
 	ZmmReg1 = zext(YmmReg1);
 }
 
@@ -1254,4 +1254,3 @@ define pcodeop vpsrlvq_avx2 ;
 	local tmp:32 = vpsrlvq_avx2( vexVVVV_YmmReg, YmmReg2_m256 );
 	ZmmReg1 = zext(tmp);
 }
-

@@ -910,7 +910,7 @@
 
 define pcodeop crc.w.b.w;
 
-#la-bitops-32.txt crc.w.b.w mask=0x00240000	
+#la-bitops-32.txt crc.w.b.w mask=0x00240000
 #0x00240000	0xffff8000	r0:5,r5:5,r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :crc.w.b.w RD, RJ32src, RK32src is op15_31=0x48 & RD & RJ32src & RK32src {
 	local val:1 = RJ32src(0);
@@ -919,7 +919,7 @@ define pcodeop crc.w.b.w;
 
 define pcodeop crc.w.h.w;
 
-#la-bitops-32.txt crc.w.h.w mask=0x00248000	
+#la-bitops-32.txt crc.w.h.w mask=0x00248000
 #0x00248000	0xffff8000	r0:5,r5:5,r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :crc.w.h.w RD, RJ32src, RK32src is op15_31=0x49 & RD & RJ32src & RK32src {
 	local val:2 = RJ32src(0);
@@ -928,7 +928,7 @@ define pcodeop crc.w.h.w;
 
 define pcodeop crc.w.w.w;
 
-#la-bitops-32.txt crc.w.w.w mask=0x00250000	
+#la-bitops-32.txt crc.w.w.w mask=0x00250000
 #0x00250000	0xffff8000	r0:5,r5:5,r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :crc.w.w.w RD, RJ32src, RK32src is op15_31=0x4a & RD & RJ32src & RK32src {
 	RD = crc_ieee802.3(RK32src, RJ32src, 32:1, 0xedb88320:4);
@@ -936,7 +936,7 @@ define pcodeop crc.w.w.w;
 
 define pcodeop crcc.w.b.w;
 
-#la-bitops-32.txt crcc.w.b.w mask=0x00260000	
+#la-bitops-32.txt crcc.w.b.w mask=0x00260000
 #0x00260000	0xffff8000	r0:5,r5:5,r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :crcc.w.b.w RD, RJ32src, RK32src  is op15_31=0x4c & RD & RJ32src & RK32src {
 	local val:1 = RJ32src(0);
@@ -945,7 +945,7 @@ define pcodeop crcc.w.b.w;
 
 define pcodeop crcc.w.h.w;
 
-#la-bitops-32.txt crcc.w.h.w mask=0x00268000	
+#la-bitops-32.txt crcc.w.h.w mask=0x00268000
 #0x00268000	0xffff8000	r0:5,r5:5,r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :crcc.w.h.w RD, RJ32src, RK32src  is op15_31=0x4d & RD & RJ32src & RK32src {
 	local val:2 = RJ32src(0);
@@ -954,7 +954,7 @@ define pcodeop crcc.w.h.w;
 
 define pcodeop crcc.w.w.w;
 
-#la-bitops-32.txt crcc.w.w.w mask=0x00270000	
+#la-bitops-32.txt crcc.w.w.w mask=0x00270000
 #0x00270000	0xffff8000	r0:5,r5:5,r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :crcc.w.w.w RD, RJ32src, RK32src  is op15_31=0x4e & RD & RJ32src & RK32src {
 	RD = crc_castagnoli(RK32src, RJ32src, 32:1, 0x82f63b78:4);
@@ -1006,7 +1006,7 @@ define pcodeop bstrins.w;
 }
 
 
-#la-bound.txt ldgt.b mask=0x38780000	
+#la-bound.txt ldgt.b mask=0x38780000
 #0x38780000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :ldgt.b RD, RJsrc, RKsrc       is op15_31=0x70f0 & RD & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1017,7 +1017,7 @@ define pcodeop bstrins.w;
 	RD = sext(*[ram]:1 vaddr);
 }
 
-#la-bound.txt ldgt.h mask=0x38788000	
+#la-bound.txt ldgt.h mask=0x38788000
 #0x38788000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :ldgt.h RD, RJsrc, RKsrc       is op15_31=0x70f1 & RD & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1028,7 +1028,7 @@ define pcodeop bstrins.w;
 	RD = sext(*[ram]:2 vaddr);
 }
 
-#la-bound.txt ldgt.w mask=0x38790000	
+#la-bound.txt ldgt.w mask=0x38790000
 #0x38790000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :ldgt.w RD, RJsrc, RKsrc       is op15_31=0x70f2 & RD & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1040,7 +1040,7 @@ define pcodeop bstrins.w;
 }
 
 
-#la-bound.txt ldle.b mask=0x387a0000	
+#la-bound.txt ldle.b mask=0x387a0000
 #0x387a0000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :ldle.b RD, RJsrc, RKsrc       is op15_31=0x70f4 & RD & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1051,7 +1051,7 @@ define pcodeop bstrins.w;
 	RD = sext(*[ram]:1 vaddr);
 }
 
-#la-bound.txt ldle.h mask=0x387a8000	
+#la-bound.txt ldle.h mask=0x387a8000
 #0x387a8000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :ldle.h RD, RJsrc, RKsrc       is op15_31=0x70f5 & RD & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1062,7 +1062,7 @@ define pcodeop bstrins.w;
 	RD = sext(*[ram]:2 vaddr);
 }
 
-#la-bound.txt ldle.w mask=0x387b0000	
+#la-bound.txt ldle.w mask=0x387b0000
 #0x387b0000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :ldle.w RD, RJsrc, RKsrc       is op15_31=0x70f6 & RD & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1074,7 +1074,7 @@ define pcodeop bstrins.w;
 }
 
 
-#la-bound.txt stgt.b mask=0x387c0000	
+#la-bound.txt stgt.b mask=0x387c0000
 #0x387c0000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :stgt.b RDsrc, RJsrc, RKsrc    is op15_31=0x70f8 & RDsrc & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1085,7 +1085,7 @@ define pcodeop bstrins.w;
 	*[ram]:1 RJsrc = RDsrc:1;
 }
 
-#la-bound.txt stgt.h mask=0x387c8000	
+#la-bound.txt stgt.h mask=0x387c8000
 #0x387c8000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :stgt.h RDsrc, RJsrc, RKsrc    is op15_31=0x70f9 & RDsrc & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1096,7 +1096,7 @@ define pcodeop bstrins.w;
 	*[ram]:2 vaddr = RDsrc:2;
 }
 
-#la-bound.txt stgt.w mask=0x387d0000	
+#la-bound.txt stgt.w mask=0x387d0000
 #0x387d0000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :stgt.w RDsrc, RJsrc, RKsrc    is op15_31=0x70fa & RDsrc & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1107,7 +1107,7 @@ define pcodeop bstrins.w;
 	*[ram]:4 vaddr = RDsrc:4;
 }
 
-#la-bound.txt stle.b mask=0x387e0000	
+#la-bound.txt stle.b mask=0x387e0000
 #0x387e0000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :stle.b RDsrc, RJsrc, RKsrc    is op15_31=0x70fc & RDsrc & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1118,7 +1118,7 @@ define pcodeop bstrins.w;
 	*[ram]:1 vaddr = RDsrc:1;
 }
 
-#la-bound.txt stle.h mask=0x387e8000	
+#la-bound.txt stle.h mask=0x387e8000
 #0x387e8000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :stle.h RDsrc, RJsrc, RKsrc    is op15_31=0x70fd & RDsrc & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1129,7 +1129,7 @@ define pcodeop bstrins.w;
 	*[ram]:2 vaddr = RDsrc:2;
 }
 
-#la-bound.txt stle.w mask=0x387f0000	
+#la-bound.txt stle.w mask=0x387f0000
 #0x387f0000	0xffff8000	r0:5, r5:5, r10:5	['reg0_5_s0', 'reg5_5_s0', 'reg10_5_s0']
 :stle.w RDsrc, RJsrc, RKsrc    is op15_31=0x70fe & RDsrc & RJsrc & RKsrc {
 	local vaddr = RJsrc;
@@ -1172,9 +1172,9 @@ define pcodeop cacop;
 #la-privileged-32.txt cacop mask=0x06000000	[@orig_fmt=Ud5JSk12, @primary]
 #0x06000000	0xffc00000	u0:5,r5:5,s10:12	['imm0_5_s0', 'reg5_5_s0', 'simm10_12_s0']
 cache_obj: op0_2 is op0_2 { local tmp:1 = op0_2; export *[const]:1 tmp; }
-op_type: "initialization" is op3_4=0 { export 0:1; } 
-op_type: "consistency"    is op3_4=1 { export 1:1; } 
-op_type: "coherency"      is op3_4=2 { export 2:1; } 
+op_type: "initialization" is op3_4=0 { export 0:1; }
+op_type: "consistency"    is op3_4=1 { export 1:1; }
+op_type: "coherency"      is op3_4=2 { export 2:1; }
 op_type: "Custom"         is op3_4=3 { export 3:1; }
 
 :cacop  op_type^"("^cache_obj^")", ldst_addr is op22_31=0x18 & cache_obj & op_type & ldst_addr {
@@ -1184,7 +1184,7 @@ op_type: "Custom"         is op3_4=3 { export 3:1; }
 
 define pcodeop lddir;
 level: imm10_8 is imm10_8 { export *[const]:1 imm10_8; }
-#la-privileged-32.txt lddir mask=0x06400000	
+#la-privileged-32.txt lddir mask=0x06400000
 #0x06400000	0xfffc0000	r0:5,r5:5,u10:8	['reg0_5_s0', 'reg5_5_s0', 'imm10_8_s0']
 :lddir  RD, RJsrc, level is op18_31=0x190 & RD & RJsrc & level {
 	RD = lddir(RJsrc, level);
@@ -1193,7 +1193,7 @@ level: imm10_8 is imm10_8 { export *[const]:1 imm10_8; }
 
 define pcodeop ldpte;
 seq: imm10_8 is imm10_8 { export *[const]:1 imm10_8; }
-#la-privileged-32.txt ldpte mask=0x06440000	
+#la-privileged-32.txt ldpte mask=0x06440000
 #0x06440000	0xfffc001f	r5:5,u10:8	['reg5_5_s0', 'imm10_8_s0']
 :ldpte  RJsrc, seq is op18_31=0x191 & op0_4=0x0 & RJsrc & seq {
 	ldpte(RJsrc, seq);
@@ -1201,7 +1201,7 @@ seq: imm10_8 is imm10_8 { export *[const]:1 imm10_8; }
 
 
 
-#la-privileged-32.txt iocsrrd.b mask=0x06480000	
+#la-privileged-32.txt iocsrrd.b mask=0x06480000
 #0x06480000	0xfffffc00	r0:5,r5:5	['reg0_5_s0', 'reg5_5_s0']
 :iocsrrd.b  RD, RJsrc is op10_31=0x19200 & RD & RJsrc {
 	local val:1 = *[iocsr]:1 RJsrc;
@@ -1209,7 +1209,7 @@ seq: imm10_8 is imm10_8 { export *[const]:1 imm10_8; }
 }
 
 
-#la-privileged-32.txt iocsrrd.h mask=0x06480400	
+#la-privileged-32.txt iocsrrd.h mask=0x06480400
 #0x06480400	0xfffffc00	r0:5,r5:5	['reg0_5_s0', 'reg5_5_s0']
 :iocsrrd.h  RD, RJsrc is op10_31=0x19201 & RD & RJsrc {
 	local val:2 = *[iocsr]:2 RJsrc;
@@ -1217,7 +1217,7 @@ seq: imm10_8 is imm10_8 { export *[const]:1 imm10_8; }
 }
 
 
-#la-privileged-32.txt iocsrrd.w mask=0x06480800	
+#la-privileged-32.txt iocsrrd.w mask=0x06480800
 #0x06480800	0xfffffc00	r0:5,r5:5	['reg0_5_s0', 'reg5_5_s0']
 :iocsrrd.w  RD, RJsrc is op10_31=0x19202 & RD & RJsrc {
 	local val:4 = *[iocsr]:4 RJsrc;
@@ -1226,7 +1226,7 @@ seq: imm10_8 is imm10_8 { export *[const]:1 imm10_8; }
 
 
 
-#la-privileged-32.txt iocsrwr.b mask=0x06481000	
+#la-privileged-32.txt iocsrwr.b mask=0x06481000
 #0x06481000	0xfffffc00	r0:5,r5:5	['reg0_5_s0', 'reg5_5_s0']
 :iocsrwr.b  RDsrc, RJsrc is op10_31=0x19204 & RDsrc & RJsrc {
     local val:1 = RDsrc:1;
@@ -1234,7 +1234,7 @@ seq: imm10_8 is imm10_8 { export *[const]:1 imm10_8; }
 }
 
 
-#la-privileged-32.txt iocsrwr.h mask=0x06481400	
+#la-privileged-32.txt iocsrwr.h mask=0x06481400
 #0x06481400	0xfffffc00	r0:5,r5:5	['reg0_5_s0', 'reg5_5_s0']
 :iocsrwr.h  RDsrc, RJsrc is op10_31=0x19205 & RDsrc & RJsrc {
     local val:2= RDsrc:2;
@@ -1242,7 +1242,7 @@ seq: imm10_8 is imm10_8 { export *[const]:1 imm10_8; }
 }
 
 
-#la-privileged-32.txt iocsrwr.w mask=0x06481800	
+#la-privileged-32.txt iocsrwr.w mask=0x06481800
 #0x06481800	0xfffffc00	r0:5,r5:5	['reg0_5_s0', 'reg5_5_s0']
 :iocsrwr.w  RDsrc, RJsrc is op10_31=0x19206 & RDsrc & RJsrc {
     local val:4= RDsrc:4;
@@ -1251,7 +1251,7 @@ seq: imm10_8 is imm10_8 { export *[const]:1 imm10_8; }
 
 
 define pcodeop tlbclr;
-#la-privileged-32.txt tlbclr mask=0x06482000	
+#la-privileged-32.txt tlbclr mask=0x06482000
 #0x06482000	0xffffffff
 :tlbclr  is instword=0x06482000 {
 	tlbclr();
@@ -1259,7 +1259,7 @@ define pcodeop tlbclr;
 
 
 define pcodeop tlbflush;
-#la-privileged-32.txt tlbflush mask=0x06482400	
+#la-privileged-32.txt tlbflush mask=0x06482400
 #0x06482400	0xffffffff
 :tlbflush  is instword=0x06482400 {
 	tlbflush();
@@ -1321,6 +1321,3 @@ define pcodeop invtlb;
 :invtlb  RJsrc, RKsrc, imm0_5 is op15_31=0xc93 & RJsrc & RKsrc & imm0_5 {
 	invtlb(RJsrc, RKsrc, imm0_5:1);
 }
-
-
-

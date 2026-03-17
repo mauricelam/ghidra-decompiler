@@ -737,4 +737,3 @@ define pcodeop vfnmsub231ss_fma ;
 	local tmp:16 = vfnmsub231ss_fma( XmmReg1, vexVVVV_XmmReg, XmmReg2_m32 );
 	ZmmReg1 = zext(tmp);
 }
-

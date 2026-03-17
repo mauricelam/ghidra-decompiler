@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <compiler_spec>
-  <data_organization> 
+  <data_organization>
      <absolute_max_alignment value="0" />
      <machine_alignment value="2" />
      <default_alignment value="1" />
@@ -21,11 +21,11 @@
           <entry size="8" alignment="8" />
      </size_alignment_map>
   </data_organization>
-   <global> 
-   	  <range space="packet"/>
-   	  <range space="ram"/>
-   	  <range space="mem"/>
-   </global> 
+   <global>
+	  <range space="packet"/>
+	  <range space="ram"/>
+	  <range space="mem"/>
+   </global>
   <stackpointer register="RS" space="ram"/>
    <default_proto>
     <prototype name="__fastcall" extrapop="0" stackshift="0">

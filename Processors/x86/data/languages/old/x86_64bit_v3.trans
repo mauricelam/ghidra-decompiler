@@ -7,4 +7,3 @@
     <map_compiler_spec from="gcc" to="gcc" />
     <map_compiler_spec from="golang" to="golang" />
 </language_translation>
-

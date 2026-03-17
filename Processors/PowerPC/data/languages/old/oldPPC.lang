@@ -1193,4 +1193,3 @@
         <register name="hwb" offset="0x201a" bitsize="16" />
     </registers>
 </language>
-

@@ -27,20 +27,20 @@
     <register name="a8"/>
     <register name="a9"/>
   </global>
-  
+
   <returnaddress>
     <register name="a11"/>
   </returnaddress>
-  
+
   <stackpointer register="a10" space="ram"/>
-  
+
   <prefersplit style="inhalf">
     <register name="e4"/>
     <register name="e6"/>
     <register name="p0"/>
     <register name="p8"/>
   </prefersplit>
-    
+
   <default_proto>
     <prototype name="__stdcall" extrapop="0" stackshift="0">
       <input>
@@ -85,14 +85,14 @@
              <convert_to_ptr/>
           </rule>
       </input>
-         
+
       <output>
         <pentry minsize="4" maxsize="4" metatype="ptr">
           <register name="a2"/>
         </pentry>
         <pentry minsize="1" maxsize="4" extension="inttype">
           <register name="d2"/>
-        </pentry>        
+        </pentry>
         <pentry minsize="5" maxsize="8">
           <register name="e2"/>
         </pentry>
@@ -123,7 +123,7 @@
     <!-- __stdcall_data calling convention removed, no longer necessary as decompiler will return
          the correct return storage location when there are multiple return location types
     -->
-    
+
   <callotherfixup targetop="saveCallerState">
      <pcode>
       <input name="fcx"/>
@@ -134,7 +134,7 @@
       ]]></body>
     </pcode>
    </callotherfixup>
-   
+
    <callotherfixup targetop="restoreCallerState">
     <pcode>
       <input name="fcx"/>

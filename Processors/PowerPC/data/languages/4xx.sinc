@@ -13,7 +13,7 @@
 # binutils: 476.d: 1a4: 7c 83 28 9c     dlmzb   r3,r4,r5
 # binutils: titan.d: 158:       7c 22 00 9c     dlmzb   r2,r1,r0
 define pcodeop DetermineLeftmostZeroByte;
-:dlmzb  S,A,B is OP=31 & S & A & B & XOP_1_10=78 & Rc=0 
+:dlmzb  S,A,B is OP=31 & S & A & B & XOP_1_10=78 & Rc=0
 {
    # search from left for the first occurrence of null byte
 
@@ -60,7 +60,7 @@ define pcodeop DetermineLeftmostZeroByte;
 # binutils: 476.d: 1a8:     7c 83 28 9d     dlmzb\.  r3,r4,r5
 # binutils: titan.d: 15c:   7c 22 00 9d     dlmzb\.  r2,r1,r0
 define pcodeop  DetermineLeftmostZeroByte1;
-:dlmzb. S,A,B is OP=31 & S & A & B & XOP_1_10=78 & Rc=1 
+:dlmzb. S,A,B is OP=31 & S & A & B & XOP_1_10=78 & Rc=1
 {
    # search from left for the first occurrence of null byte
 
@@ -129,5 +129,5 @@ define pcodeop  DetermineLeftmostZeroByte1;
 :icread RA_OR_ZERO,B		is OP=31 & BITS_21_25=0 & B & XOP_1_10=998 & BIT_0=0 & RA_OR_ZERO
 {
 	ea:$(REGISTER_SIZE) = RA_OR_ZERO + B;
-	instructionCacheRead(ea);	
+	instructionCacheRead(ea);
 }

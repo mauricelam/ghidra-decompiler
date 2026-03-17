@@ -142,9 +142,9 @@ public class CreateAVR8GDTArchiveScript extends GhidraScript {
 
 	/**
 	 * Turn string into a file, delete old archive if it exists
-	 * 
+	 *
 	 * @param dataTypeFile
-	 * 
+	 *
 	 * @return file
 	 */
 	private File getArchiveFile(String dataTypeFile) {
@@ -162,7 +162,7 @@ public class CreateAVR8GDTArchiveScript extends GhidraScript {
 
 	/**
 	 * parse a single AVR8 variant
-	 * 
+	 *
 	 * @param procName name of processor
 	 * @param dtMgr open data type manager to add types to
 	 * @param openTypes any open archives for missing data types
@@ -186,7 +186,7 @@ public class CreateAVR8GDTArchiveScript extends GhidraScript {
 
 	/**
 	 * get extra defines special for the AVR8 that describe memory locations per variant
-	 * 
+	 *
 	 * @param procName processor variant
 	 * @param dtMgr add data types to dtMgr
 	 * @param cpp pre-processor holds macros/defines from parsing

@@ -26,7 +26,7 @@ define register offset=0x0000 size=4 [
 ];
 
 define register offset=0x1000 size=3 [
-    PC # Program Counter 
+    PC # Program Counter
 ];
 
 define register offset=0x2000 size=3 [
@@ -39,7 +39,7 @@ define register offset=0x2000 size=2 [
 
 define register offset=0x3000 size=2 [
     SP # Current Stack Pointer (Represents active stack pointer: ISP or USP)
-    FB # Frame Base Register 
+    FB # Frame Base Register
     SB # Static Base Register
     FLG # Flag Register
     ISP # Interrupt Stack Pointer
@@ -204,7 +204,7 @@ attach variables [ b2_reg32 b2_d4_reg32 ] [ R2R0 R3R1 ];
 
 #
 # PCode Op
-#   
+#
 define pcodeop Break; # BRK
 define pcodeop DecimalAdd; # DADD
 define pcodeop DecimalAddWithCarry; # DADC
@@ -300,7 +300,7 @@ macro pop4(val) {
 #
 # Obtain base offset displacement for [AX | SB | FB] - AX and SB uses unsigned displacements, FB uses signed displacement
 src4dsp8:  imm8_dat^":8"     is b1_0007; b2_s4; imm8_dat      { export *[const]:2 imm8_dat; }
-src4dsp8:  simm8_dat^":8"    is b1_0007; b2_s4=0xb; simm8_dat { export *[const]:2 simm8_dat; }    
+src4dsp8:  simm8_dat^":8"    is b1_0007; b2_s4=0xb; simm8_dat { export *[const]:2 simm8_dat; }
 src4dsp16: imm16_dat^":16"  is b1_0007; b2_s4; imm16_dat     { export *[const]:2 imm16_dat; }
 
 # src4... Handle 4-bit encoded Source specified by b2_s4(4-bits)
@@ -335,7 +335,7 @@ skipBytesBeforeDst4:  is dstFollowsSrc=2 & b1_0007; b2_d4; imm8_dat        { } #
 
 # Obtain base offset displacement for [AX | SB | FB] - AX and SB uses unsigned displacements, FB uses signed displacement
 dst4dsp8:  imm8_dat^":8"     is (skipBytesBeforeDst4; imm8_dat)                             { export *[const]:2 imm8_dat; }
-dst4dsp8:  simm8_dat^":8"    is (b1_0007; b2_d4=0xb) ... & (skipBytesBeforeDst4; simm8_dat) { export *[const]:2 simm8_dat; }    
+dst4dsp8:  simm8_dat^":8"    is (b1_0007; b2_d4=0xb) ... & (skipBytesBeforeDst4; simm8_dat) { export *[const]:2 simm8_dat; }
 dst4dsp16: imm16_dat^":16"  is (skipBytesBeforeDst4; imm16_dat)                            { export *[const]:2 imm16_dat; }
 
 # dst4... Handle 4-bit encoded Destination specified by b2_d4(4-bits)
@@ -453,7 +453,7 @@ memBaseAx: [b2_d4_regAx]  is b1_0007; b2_d4_13=0x3 & b2_d4_regAx { export b2_d4_
 
 # bit-base is 16-bit register: Rx or Ax (constrain instruction pattern using b2_d4_3=0)
 regBase: b2_d4_reg16  is b1_0007; b2_d4_23=0x0 & b2_d4_reg16 { export b2_d4_reg16; }    # Rx
-regBase: b2_d4_regAx  is b1_0007; b2_d4_13=0x2 & b2_d4_regAx { export b2_d4_regAx; } # Ax 
+regBase: b2_d4_regAx  is b1_0007; b2_d4_13=0x2 & b2_d4_regAx { export b2_d4_regAx; } # Ax
 
 # bit-base is byte location within memory
 memBase: imm8_base^":8"^[b2_d4_regAxSF]  is b1_0007; b2_d4_23=0x2 & b2_d4_regAxSF; imm8_base   { ptr:3 = zext(b2_d4_regAxSF + imm8_base); export *:1 ptr; }    # dsp:8[Ax|SB]
@@ -525,7 +525,7 @@ reloffset_dst4T: dst4T  is $(DST4T) { local reladdr = inst_start + dst4T; export
 #
 # Conditionals
 #
-cnd8: "GEU"  is cnd8_dat=0x00 { tstCnd:1 = ($(CARRY) == 1); export tstCnd; }                             # Equal to or greater than (<=), C flag is 1 
+cnd8: "GEU"  is cnd8_dat=0x00 { tstCnd:1 = ($(CARRY) == 1); export tstCnd; }                             # Equal to or greater than (<=), C flag is 1
 cnd8: "GTU"  is cnd8_dat=0x01 { tstCnd:1 = (($(CARRY) & (!$(ZERO))) == 1); export tstCnd; }               # Greater than (<)
 cnd8: "EQ"   is cnd8_dat=0x02 { tstCnd:1 = ($(ZERO) == 1); export tstCnd; }                                   # Equal to  (=), Z flag is 1
 cnd8: "N"    is cnd8_dat=0x03 { tstCnd:1 = ($(SIGN) == 1); export tstCnd; }                             # Negative (0>)
@@ -534,13 +534,13 @@ cnd8: "O"    is cnd8_dat=0x05 { tstCnd:1 = ($(OVERFLOW) == 1); export tstCnd; } 
 cnd8: "GE"   is cnd8_dat=0x06 { tstCnd:1 = (($(SIGN) ^ $(OVERFLOW)) == 0); export tstCnd; }             # Equal to or greater than (signed value) (<=)
 cnd8: "LTU"  is cnd8_dat=0xf8 { tstCnd:1 = ($(CARRY) == 0); export tstCnd; }                             # less than (>), C flag is 0
 cnd8: "LEU"  is cnd8_dat=0xf9 { tstCnd:1 = (($(CARRY) & (!$(ZERO))) == 0); export tstCnd; }               # Equal to or less than (>=)
-cnd8: "NE"   is cnd8_dat=0xfa { tstCnd:1 = ($(ZERO) == 0); export tstCnd; }                                 # Not Equal to (=), Z flag is 0 
+cnd8: "NE"   is cnd8_dat=0xfa { tstCnd:1 = ($(ZERO) == 0); export tstCnd; }                                 # Not Equal to (=), Z flag is 0
 cnd8: "PZ"   is cnd8_dat=0xfb { tstCnd:1 = ($(SIGN) == 0); export tstCnd; }                             # Positive or zero (0<=)
 cnd8: "GT"   is cnd8_dat=0xfc { tstCnd:1 = ((($(SIGN) ^ $(OVERFLOW)) | $(ZERO)) == 0); export tstCnd; } # Greater than (signed value) (<)
 cnd8: "NO"   is cnd8_dat=0xfd { tstCnd:1 = ($(OVERFLOW) == 0); export tstCnd; }                             # O flag is 0
 cnd8: "LT"   is cnd8_dat=0xfe { tstCnd:1 = (($(SIGN) ^ $(OVERFLOW)) == 1); export tstCnd; } # less than (signed value) (<=)
 
-b2cnd4: "GEU"  is b2_0003=0x0 { tstCnd:1 = ($(CARRY) == 1); export tstCnd; }                             # Equal to or greater than (<=), C flag is 1 
+b2cnd4: "GEU"  is b2_0003=0x0 { tstCnd:1 = ($(CARRY) == 1); export tstCnd; }                             # Equal to or greater than (<=), C flag is 1
 b2cnd4: "GTU"  is b2_0003=0x1 { tstCnd:1 = (($(CARRY) & (!$(ZERO))) == 1); export tstCnd; }               # Greater than (<)
 b2cnd4: "EQ"   is b2_0003=0x2 { tstCnd:1 = ($(ZERO) == 1); export tstCnd; }                                 # Equal to  (=), Z flag is 1
 b2cnd4: "N"    is b2_0003=0x3 { tstCnd:1 = ($(SIGN) == 1); export tstCnd; }                             # Negative (0>)
@@ -565,9 +565,9 @@ b2cnd3: "LT"   is b2_0002=0x6 { tstCnd:1 = (($(SIGN) ^ $(OVERFLOW)) == 1); expor
 
 b1cnd3: "LTU"  is b1_0002=4 { tstCnd:1 = ($(CARRY) == 0); export tstCnd; }                               # less than (>), C flag is 0
 b1cnd3: "LEU"  is b1_0002=5 { tstCnd:1 = (($(CARRY) & (!$(ZERO))) == 0); export tstCnd; }                 # Equal to or less than (>=)
-b1cnd3: "NE"   is b1_0002=6 { tstCnd:1 = ($(ZERO) == 0); export tstCnd; }                                   # Not Equal to (=), Z flag is 0 
+b1cnd3: "NE"   is b1_0002=6 { tstCnd:1 = ($(ZERO) == 0); export tstCnd; }                                   # Not Equal to (=), Z flag is 0
 b1cnd3: "PZ"   is b1_0002=7 { tstCnd:1 = ($(SIGN) == 0); export tstCnd; }                               # Positive or zero (0<=)
-b1cnd3: "GEU"  is b1_0002=0 { tstCnd:1 = ($(CARRY) == 1); export tstCnd; }                             # Equal to or greater than (<=), C flag is 1 
+b1cnd3: "GEU"  is b1_0002=0 { tstCnd:1 = ($(CARRY) == 1); export tstCnd; }                             # Equal to or greater than (<=), C flag is 1
 b1cnd3: "GTU"  is b1_0002=1 { tstCnd:1 = (($(CARRY) & (!$(ZERO))) == 1); export tstCnd; }                 # Greater than (<)
 b1cnd3: "EQ"   is b1_0002=2 { tstCnd:1 = ($(ZERO) == 1); export tstCnd; }                                   # Equal to  (=), Z flag is 1
 b1cnd3: "N"    is b1_0002=3 { tstCnd:1 = ($(SIGN) == 1); export tstCnd; } # Negative (0>)
@@ -2079,21 +2079,21 @@ flagBit: "U"  is b2_0406=7 { export 7:2; }
     setResultFlags(tmp);
 }
 
-# (2) LDE.B dsp20, dst    
+# (2) LDE.B dsp20, dst
 :LDE.B dsp20A0B, dst4B              is ((b1_0107=0x3a & b1_size_0=0; b2_0407=0x9) ... & dst4B); dsp20A0B {
     tmp:1 = dsp20A0B;
     dst4B = tmp;
     setResultFlags(tmp);
 }
 
-# (2) LDE.B dsp20, Ax    
+# (2) LDE.B dsp20, Ax
 :LDE.B dsp20A0B, dst4Ax             is ((b1_0107=0x3a & b1_size_0=0; b2_0407=0x9) & $(DST4AX)); dsp20A0B {
     tmp:1 = dsp20A0B;
     dst4Ax = zext(tmp);
     setResultFlags(tmp);
 }
 
-# (2) LDE.W dsp20, dst    
+# (2) LDE.W dsp20, dst
 :LDE.W dsp20A0W, dst4W              is ((b1_0107=0x3a & b1_size_0=1; b2_0407=0x9) ... & dst4W); dsp20A0W {
     tmp:2 = dsp20A0W;
     dst4W = tmp;
@@ -2623,7 +2623,7 @@ pushRegList: "("^pushRegFB^" )"  is pushRegFB { build pushRegFB; }
     pop3(pc);
     f:1 = 0;
     pop1(f);
-    FLG = zext(f); # TODO: Not sure what state upper FLG bits should be in ?? 
+    FLG = zext(f); # TODO: Not sure what state upper FLG bits should be in ??
     return [pc];
 }
 
@@ -2921,7 +2921,7 @@ macro SHAsetShiftRightFlags(val,shift,result) {
     allZeros:1 = (mask & val) == 0;
     $(OVERFLOW) = (result s< 0 && allOnes) || (result s>= 0 && allZeros);
     setResultFlags(result);
-} 
+}
 
 macro SHAsetShiftLeftFlags(val,shift,result,sze) {
     local c = (val >> (sze - shift)) & 1;
@@ -3078,7 +3078,7 @@ macro SHLsetShiftRightFlags(val,shift,result) {
     local c = (val >> (shift - 1)) & 1;
     $(CARRY) = c:1;
     setResultFlags(result);
-} 
+}
 
 macro SHLsetShiftLeftFlags(val,shift,result,sze) {
     local c = (val >> (sze - shift)) & 1;
