@@ -17,6 +17,10 @@
  * MODIFICATION IN THIS FORK:
  * This file has been modified to include standard library entry points
  * for standalone and WebAssembly builds.
+ *
+ * ADDITION IN THIS FORK:
+ * startDecompilerLibrary and shutdownDecompilerLibrary provide
+ * a consistent way to initialize decompiler capabilities.
  */
 #include "libdecomp.hh"
 

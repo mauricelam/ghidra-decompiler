@@ -9,6 +9,11 @@ async function runExample() {
     outputElement.textContent = 'Initializing Ghidra Decompiler...';
 
     try {
+        // Check if the initialization function exists
+        if (typeof GhidraDecompiler === 'undefined') {
+            throw new Error('GhidraDecompiler is not defined. Ensure ghidra_decompiler.js is built and served correctly.');
+        }
+
         // Initialize the WASM module
         // GhidraDecompiler is the EXPORT_NAME defined in Makefile.wasm
         const Module = await GhidraDecompiler();

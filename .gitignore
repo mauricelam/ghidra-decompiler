@@ -17,3 +17,9 @@ ghi_opt
 sla_dbg
 sla_opt
 
+# MODIFICATION IN THIS FORK: Built artifacts for standalone and WASM builds
+decomp_standalone
+wasm_obj/
+ghidra_decompiler.js
+ghidra_decompiler.wasm
+ghidra_decompiler.worker.js
