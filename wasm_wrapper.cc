@@ -71,7 +71,9 @@ public:
                      const std::string &pspec_str, const std::string &cspec_str)
         : SleighArchitecture(fname, targ, &messages),
           sla_data(sla_ptr), sla_size(sla_sz),
-          pspec_content(pspec_str), cspec_content(cspec_str) {}
+          pspec_content(pspec_str), cspec_content(cspec_str) {
+        errorstream = &messages; // Ensure errorstream is correctly set
+    }
 
     virtual void buildLoader(DocumentStorage &store) override {
         const Element *el = store.getTag("binaryimage");
@@ -225,6 +227,13 @@ void free_string(char* str) {
 }
 
 /**
+ * Helper to read multi-byte values in a WASM-safe (alignment-agnostic) way.
+ */
+static uint16_t read_u16_le(const uint8_t* p) { return p[0] | (p[1] << 8); }
+static uint16_t read_u16_be(const uint8_t* p) { return p[1] | (p[0] << 8); }
+static uint32_t read_u32_le(const uint8_t* p) { return p[0] | (p[1] << 8) | (p[2] << 16) | (p[3] << 24); }
+
+/**
  * Detect the architecture of a binary based on its header (ELF/PE).
  * Returns a Ghidra language ID or an empty string if unknown.
  */
@@ -234,9 +243,11 @@ const char* detect_architecture(const uint8_t* data, int size) {
     if (size >= 4 && data[0] == 0x7f && data[1] == 'E' && data[2] == 'L' && data[3] == 'F') {
         // ELF Detection
         if (size >= 20) {
-            uint16_t machine = *(uint16_t*)(data + 18);
+            uint16_t machine = read_u16_le(data + 18);
             uint8_t ei_class = data[4]; // 1 = 32-bit, 2 = 64-bit
             uint8_t ei_data = data[5];  // 1 = little endian, 2 = big endian
+
+            if (ei_data == 2) machine = read_u16_be(data + 18);
 
             if (machine == 0x3e) result = "x86:LE:64:default"; // x86-64
             else if (machine == 0x03) result = "x86:LE:32:default"; // x86
@@ -258,10 +269,10 @@ const char* detect_architecture(const uint8_t* data, int size) {
     } else if (size >= 2 && data[0] == 'M' && data[1] == 'Z') {
         // PE Detection
         if (size >= 0x40) {
-            uint32_t pe_offset = *(uint32_t*)(data + 0x3c);
+            uint32_t pe_offset = read_u32_le(data + 0x3c);
             if (size >= pe_offset + 24) {
                 if (data[pe_offset] == 'P' && data[pe_offset+1] == 'E') {
-                    uint16_t machine = *(uint16_t*)(data + pe_offset + 4);
+                    uint16_t machine = read_u16_le(data + pe_offset + 4);
                     if (machine == 0x8664) result = "x86:LE:64:default";
                     else if (machine == 0x014c) result = "x86:LE:32:default";
                     else if (machine == 0xaa64) result = "AARCH64:LE:64:v8A";
