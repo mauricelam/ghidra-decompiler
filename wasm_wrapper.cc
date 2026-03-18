@@ -64,16 +64,16 @@ class WasmArchitecture : public SleighArchitecture {
     int sla_size;
     std::string pspec_content;
     std::string cspec_content;
+    std::ostringstream messages;
 public:
-    WasmArchitecture(const std::string &fname, const std::string &targ, ostream *estream,
+    WasmArchitecture(const std::string &fname, const std::string &targ,
                      const uint8_t* sla_ptr, int sla_sz,
                      const std::string &pspec_str, const std::string &cspec_str)
-        : SleighArchitecture(fname, targ, estream),
+        : SleighArchitecture(fname, targ, &messages),
           sla_data(sla_ptr), sla_size(sla_sz),
           pspec_content(pspec_str), cspec_content(cspec_str) {}
 
     virtual void buildLoader(DocumentStorage &store) override {
-        // Find binaryimage tag in the already parsed store
         const Element *el = store.getTag("binaryimage");
         if (el == (const Element *)0) {
             throw LowlevelError("Could not find binaryimage tag in DocumentStorage");
@@ -82,22 +82,18 @@ public:
     }
 
     virtual void resolveArchitecture(void) override {
-        // We don't need complex resolution; we are provided with the specs.
-        archid = "wasm:le:32:default"; // Placeholder
+        archid = "wasm:le:32:default";
     }
 
     virtual void buildSpecFile(DocumentStorage &store) override {
-        // Parse PSPEC
         std::istringstream pspec_s(pspec_content);
         Document *pdoc = store.parseDocument(pspec_s);
         store.registerTag(pdoc->getRoot());
 
-        // Parse CSPEC
         std::istringstream cspec_s(cspec_content);
         Document *cdoc = store.parseDocument(cspec_s);
         store.registerTag(cdoc->getRoot());
 
-        // Register a dummy sleigh tag so Sleigh::initialize is happy (though we override it)
         std::istringstream s("<sleigh>mem</sleigh>");
         Document *sdoc = store.parseDocument(s);
         store.registerTag(sdoc->getRoot());
@@ -116,7 +112,6 @@ public:
     }
 
     virtual void buildCoreTypes(DocumentStorage &store) override {
-        // Basic core types setup (fallback if not in spec)
         SleighArchitecture::buildCoreTypes(store);
     }
 
@@ -137,32 +132,32 @@ public:
     }
 
     virtual void buildSymbols(DocumentStorage &store) override {
-        // Symbols can be in the XML image or specs
+        // Handled by LoadImageXml and auto-discovery
     }
 
     virtual void modifySpaces(Translate *trans) override {
-        // No-op for WASM demo
+    }
+
+    virtual void postSpecFile(void) override {
+        SleighArchitecture::postSpecFile();
+        ((LoadImageXml *)loader)->open(this);
     }
 
     virtual void printMessage(const string &message) const override {
-        std::cerr << message << std::endl;
+        const_cast<std::ostringstream&>(messages) << message << std::endl;
     }
+
+    std::string getMessages() const { return messages.str(); }
 };
 
 } // namespace ghidra
 
 extern "C" {
 
-/**
- * Initialize the decompiler library.
- */
 void init_decompiler() {
     startDecompilerLibrary(NULL);
 }
 
-/**
- * Perform real decompilation of a function.
- */
 const char* decompile_pcode(const uint8_t* sla_data, int sla_size,
                             const char* pspec_content, const char* cspec_content,
                             const char* image_xml, const char* func_name) {
@@ -174,37 +169,41 @@ const char* decompile_pcode(const uint8_t* sla_data, int sla_size,
         Document *doc = store.parseDocument(image_stream);
         store.registerTag(doc->getRoot());
 
-        WasmArchitecture *glb = new WasmArchitecture("wasm_image", "default", &std::cerr,
+        WasmArchitecture *glb = new WasmArchitecture("wasm_image", "default",
                                                    sla_data, sla_size,
                                                    pspec_content, cspec_content);
         glb->init(store);
 
-        // Find the function to decompile
         Funcdata *fd = NULL;
-
-        // Try looking up by name
         fd = glb->symboltab->getGlobalScope()->queryFunction(func_name);
 
         if (fd == NULL) {
-            // Try parsing as hex address
             try {
                 Address addr = glb->parseAddressSimple(func_name);
                 fd = glb->symboltab->getGlobalScope()->queryFunction(addr);
+                if (fd == NULL) {
+                    // Create function if not found but address is valid
+                    fd = glb->symboltab->getGlobalScope()->addFunction(addr, func_name)->getFunction();
+                }
             } catch (...) {}
         }
 
         if (fd == NULL) {
-            result = "Error: Could not find function '" + std::string(func_name) + "'.";
+            result = "Error: Could not find or create function '" + std::string(func_name) + "'.\n";
+            result += "Decompiler Messages:\n" + glb->getMessages();
         } else {
-            // Perform decompilation
             glb->allacts.getCurrent()->reset(*fd);
             glb->allacts.getCurrent()->perform(*fd);
 
-            // Generate output
             std::ostringstream ss;
             glb->print->setOutputStream(&ss);
             glb->print->docFunction(fd);
             result = ss.str();
+
+            std::string msgs = glb->getMessages();
+            if (!msgs.empty()) {
+                result = "/* Decompiler Messages:\n" + msgs + "*/\n" + result;
+            }
         }
 
         delete glb;
@@ -216,15 +215,11 @@ const char* decompile_pcode(const uint8_t* sla_data, int sla_size,
         result = "Unknown error occurred during decompilation.";
     }
 
-    // Allocate memory for the result string to be passed back to JavaScript
     char* cstr = (char*)malloc(result.size() + 1);
     std::strcpy(cstr, result.c_str());
     return cstr;
 }
 
-/**
- * Free a string allocated by the module.
- */
 void free_string(char* str) {
     free(str);
 }
