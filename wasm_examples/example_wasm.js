@@ -164,14 +164,19 @@ async function runDecompiler() {
 
         try {
             // Call the bridge function
-            const result = decompilerModule.ccall(
+            // We use 'number' return type to get the pointer, so we can free it later
+            const resultPtr = decompilerModule.ccall(
                 'decompile_pcode',
-                'string',
+                'number',
                 ['number', 'number', 'string', 'string', 'string', 'string'],
                 [slaPtr, slaData.length, pspecContent, cspecContent, imageXml, funcName]
             );
 
+            const result = decompilerModule.UTF8ToString(resultPtr);
             output.textContent = result;
+
+            // Free the string returned by the decompiler
+            decompilerModule._free_string(resultPtr);
         } finally {
             decompilerModule._free(slaPtr);
         }
