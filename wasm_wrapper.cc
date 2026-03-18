@@ -224,4 +224,56 @@ void free_string(char* str) {
     free(str);
 }
 
+/**
+ * Detect the architecture of a binary based on its header (ELF/PE).
+ * Returns a Ghidra language ID or an empty string if unknown.
+ */
+const char* detect_architecture(const uint8_t* data, int size) {
+    std::string result = "";
+
+    if (size >= 4 && data[0] == 0x7f && data[1] == 'E' && data[2] == 'L' && data[3] == 'F') {
+        // ELF Detection
+        if (size >= 20) {
+            uint16_t machine = *(uint16_t*)(data + 18);
+            uint8_t ei_class = data[4]; // 1 = 32-bit, 2 = 64-bit
+            uint8_t ei_data = data[5];  // 1 = little endian, 2 = big endian
+
+            if (machine == 0x3e) result = "x86:LE:64:default"; // x86-64
+            else if (machine == 0x03) result = "x86:LE:32:default"; // x86
+            else if (machine == 0x28) {
+                if (ei_data == 1) result = "ARM:LE:32:v8";
+                else result = "ARM:BE:32:v8";
+            }
+            else if (machine == 0xb7) {
+                if (ei_data == 1) result = "AARCH64:LE:64:v8A";
+                else result = "AARCH64:BE:64:v8A";
+            }
+            else if (machine == 0x14) result = "PowerPC:BE:32:default";
+            else if (machine == 0x15) result = "PowerPC:BE:64:default";
+            else if (machine == 0xf3) {
+                if (ei_class == 2) result = "RISCV:LE:64:default";
+                else result = "RISCV:LE:32:default";
+            }
+        }
+    } else if (size >= 2 && data[0] == 'M' && data[1] == 'Z') {
+        // PE Detection
+        if (size >= 0x40) {
+            uint32_t pe_offset = *(uint32_t*)(data + 0x3c);
+            if (size >= pe_offset + 24) {
+                if (data[pe_offset] == 'P' && data[pe_offset+1] == 'E') {
+                    uint16_t machine = *(uint16_t*)(data + pe_offset + 4);
+                    if (machine == 0x8664) result = "x86:LE:64:default";
+                    else if (machine == 0x014c) result = "x86:LE:32:default";
+                    else if (machine == 0xaa64) result = "AARCH64:LE:64:v8A";
+                    else if (machine == 0x01c0) result = "ARM:LE:32:v8";
+                }
+            }
+        }
+    }
+
+    char* cstr = (char*)malloc(result.size() + 1);
+    std::strcpy(cstr, result.c_str());
+    return cstr;
+}
+
 }

@@ -107,8 +107,8 @@ function bytesToHex(bytes) {
 
 async function runDecompiler() {
     const output = document.getElementById('output');
-    const procIdx = document.getElementById('processorSelect').value;
-    const compIdx = document.getElementById('compilerSelect').value;
+    let procIdx = document.getElementById('processorSelect').value;
+    let compIdx = document.getElementById('compilerSelect').value;
 
     const slaInput = document.getElementById('slaInput').files[0];
     const pspecInput = document.getElementById('pspecInput').files[0];
@@ -121,8 +121,36 @@ async function runDecompiler() {
         return;
     }
 
-    output.textContent = 'Preparing specifications...';
+    output.textContent = 'Reading binary image...';
     try {
+        const binData = await readFileAsArrayBuffer(binFile);
+
+        // Auto-detect architecture if none selected
+        if (procIdx === "" && !slaInput) {
+            output.textContent = 'Attempting auto-detection...';
+            const binPtr = decompilerModule._malloc(binData.length);
+            decompilerModule.HEAPU8.set(binData, binPtr);
+            const detectedId = decompilerModule.ccall('detect_architecture', 'string', ['number', 'number'], [binPtr, binData.length]);
+            decompilerModule._free(binPtr);
+
+            if (detectedId) {
+                const foundIdx = processors.findIndex(p => p.id === detectedId);
+                if (foundIdx !== -1) {
+                    document.getElementById('processorSelect').value = foundIdx;
+                    updateCompilers();
+                    procIdx = foundIdx;
+                    compIdx = 0;
+                    output.textContent = `Detected architecture: ${processors[foundIdx].description}`;
+                } else {
+                    output.textContent = `Detected ${detectedId} but it's not in processors.json`;
+                }
+            } else {
+                output.textContent = 'Auto-detection failed. Please select architecture manually.';
+                return;
+            }
+        }
+
+        output.textContent = 'Preparing specifications...';
         let slaData, pspecContent, cspecContent;
 
         if (procIdx !== "") {
@@ -146,9 +174,6 @@ async function runDecompiler() {
             return;
         }
 
-        output.textContent = 'Reading binary image...';
-        const binData = await readFileAsArrayBuffer(binFile);
-
         const imageXml = `
 <binaryimage arch="wasm:le:32:default">
   <bytechunk address="ram:0x1000">
@@ -164,7 +189,6 @@ async function runDecompiler() {
 
         try {
             // Call the bridge function
-            // We use 'number' return type to get the pointer, so we can free it later
             const resultPtr = decompilerModule.ccall(
                 'decompile_pcode',
                 'number',
@@ -174,8 +198,6 @@ async function runDecompiler() {
 
             const result = decompilerModule.UTF8ToString(resultPtr);
             output.textContent = result;
-
-            // Free the string returned by the decompiler
             decompilerModule._free_string(resultPtr);
         } finally {
             decompilerModule._free(slaPtr);
