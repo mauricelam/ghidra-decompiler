@@ -13,6 +13,7 @@
         .input-group { border: 1px solid #ddd; padding: 10px; border-radius: 4px; }
         pre { background: #f4f4f4; padding: 10px; border: 1px solid #ccc; overflow-x: auto; white-space: pre-wrap; }
         label { display: inline-block; width: 180px; }
+        select { width: 300px; }
     </style>
 </head>
 <body>
@@ -20,14 +21,27 @@
 
     <div class="container">
         <div class="input-group">
-            <h3>1. Load Specifications</h3>
-            <label for="slaInput">SLEIGH (.sla) file:</label> <input type="file" id="slaInput"><br><br>
-            <label for="pspecInput">Processor (.pspec) file:</label> <input type="file" id="pspecInput"><br><br>
-            <label for="cspecInput">Compiler (.cspec) file:</label> <input type="file" id="cspecInput">
+            <h3>1. Select Processor</h3>
+            <label for="processorSelect">Architecture:</label>
+            <select id="processorSelect">
+                <option value="">-- Loading Processors --</option>
+            </select><br><br>
+            <label for="compilerSelect">Compiler:</label>
+            <select id="compilerSelect">
+                <option value="">-- Select Architecture First --</option>
+            </select>
+            <p><small>Processor specs are loaded directly from the server.</small></p>
         </div>
 
         <div class="input-group">
-            <h3>2. Load Binary</h3>
+            <h3>2. Custom Specifications (Optional)</h3>
+            <label for="slaInput">Custom .sla file:</label> <input type="file" id="slaInput"><br><br>
+            <label for="pspecInput">Custom .pspec file:</label> <input type="file" id="pspecInput"><br><br>
+            <label for="cspecInput">Custom .cspec file:</label> <input type="file" id="cspecInput">
+        </div>
+
+        <div class="input-group">
+            <h3>3. Load Binary</h3>
             <label for="binInput">Binary file:</label> <input type="file" id="binInput"><br><br>
             <label for="funcName">Function name/addr:</label> <input type="text" id="funcName" value="0x1000">
             <p><small>Note: This example converts the binary to a simple XML image format for the bridge.</small></p>
