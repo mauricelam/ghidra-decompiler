@@ -33,6 +33,10 @@ async function init() {
         // Initialize the library
         decompilerModule._init_decompiler();
 
+        if (!decompilerModule.HEAPU8) {
+            throw new Error('WASM module initialized but HEAPU8 is missing. Check Makefile.wasm EXPORTED_RUNTIME_METHODS.');
+        }
+
         output.textContent = 'Module ready. Please select a processor and a binary file.';
         document.getElementById('decompileBtn').disabled = false;
     } catch (e) {
@@ -152,10 +156,12 @@ async function runDecompiler() {
 
         output.textContent = 'Preparing specifications...';
         let slaData, pspecContent, cspecContent;
+        let archId = "wasm:le:32:default";
 
         if (procIdx !== "") {
             const proc = processors[procIdx];
             const comp = proc.compilers[compIdx];
+            archId = proc.id;
             output.textContent = `Fetching ${proc.id} specs...`;
             [slaData, pspecContent, cspecContent] = await Promise.all([
                 fetchFileAsArrayBuffer(proc.sla),
@@ -175,8 +181,8 @@ async function runDecompiler() {
         }
 
         const imageXml = `
-<binaryimage arch="wasm:le:32:default">
-  <bytechunk address="ram:0x1000">
+<binaryimage arch="${archId}">
+  <bytechunk space="ram" offset="0x1000">
     ${bytesToHex(binData)}
   </bytechunk>
 </binaryimage>`;
