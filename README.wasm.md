@@ -1,7 +1,7 @@
 # Ghidra C++ Decompiler Standalone & WebAssembly
 # ADDITION IN THIS FORK: Documentation for standalone and WebAssembly support.
 
-This project provides a standalone build configuration in this fork.
+This project provides a standalone build configuration and a WebAssembly bridge in this fork.
 
 ## Standalone Native Build
 To build the decompiler as a standalone static library and executable:
@@ -9,6 +9,13 @@ To build the decompiler as a standalone static library and executable:
 make -f Makefile.standalone
 ```
 This builds `libdecomp.a` and `decomp_standalone`.
+
+### Native Verification
+You can verify the decompiler functionality natively by running the verification script:
+```bash
+bash verify_native.sh
+```
+This script compiles a small C program and uses `decomp_standalone` to decompile it.
 
 ## WebAssembly Build
 To build for the browser using Emscripten:
@@ -29,10 +36,11 @@ A complete example showing how to load and use the WASM module in a browser is p
    ```bash
    make -f Makefile.wasm
    ```
-   This will generate `ghidra_decompiler.js` and `ghidra_decompiler.wasm` in the root directory.
 
 2. **Serve the repository**:
-   WebAssembly modules must be served via HTTP(S) to be loaded correctly by browsers. You can use any local web server. For example, using Python:
+   **IMPORTANT**: WebAssembly modules must be served via HTTP(S) to be loaded correctly by browsers. Opening the HTML file directly from your disk (`file://`) will NOT work due to security restrictions.
+
+   Use any local web server. For example, using Python:
    ```bash
    python3 -m http.server 8000
    ```
@@ -41,30 +49,12 @@ A complete example showing how to load and use the WASM module in a browser is p
    Navigate to `http://localhost:8000/wasm_examples/example_wasm.html`.
 
 4. **Verify the output**:
-   The page should display "Module ready" once the WASM module is initialized.
-
-## How to Decompile a File
-
-To perform an actual decompilation, the decompiler needs two things:
-1. **The Architecture Specification**: Ghidra uses compiled SLEIGH files (`.sla`). You can find these in the standard `Processors/` directory. For example, for x86 64-bit: `Processors/x86/data/languages/x86-64.sla`.
-2. **The Binary Image**: The decompiler needs the bytes to decompile.
-
-### Step-by-Step Example in Browser:
-1. Open the browser example (`example_wasm.html`).
-2. Upload an `.sla` file (e.g., `Processors/x86/data/languages/x86.sla`).
-3. Upload any binary file you wish to decompile.
-4. Click "Run Decompiler".
-5. The example bridge will confirm receipt of the files and display their sizes.
-
-## Native Standalone Usage
-You can also use the native tool to decompile via XML-based image descriptions:
-```bash
-./decomp_standalone
-[decomp]> load file my_image.xml
-[decomp]> decompile
-```
+   - The page should display "Module ready" once the WASM module is initialized.
+   - Upload a binary (e.g., an ELF or PE file).
+   - The system will attempt to **auto-detect** the architecture.
+   - Click "Run Decompiler".
 
 ## Implementation Notes
-- BFD dependency has been removed in this fork via `GHIDRA_NO_BFD` conditional compilation to simplify standalone usage and WASM compatibility.
-- Pre-generated parser files are used to avoid dependency on `bison` and `flex`.
-- `wasm_wrapper.cc` provides the entry point for WebAssembly exports.
+- **Memory-based**: The WASM implementation (`wasm_wrapper.cc`) uses custom `WasmArchitecture` and `WasmSleigh` classes to load all specifications from memory, bypassing the need for a virtual file system.
+- **Auto-detection**: The bridge includes logic to identify ELF and PE headers and automatically select the correct Ghidra language ID.
+- **Standalone compatibility**: The `GHIDRA_NO_BFD` macro is used to ensure portability and avoid GPL3 requirements.
