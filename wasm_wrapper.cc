@@ -84,7 +84,8 @@ public:
     }
 
     virtual void resolveArchitecture(void) override {
-        archid = "wasm:le:32:default";
+        archid = loader->getArchType();
+        if (archid.empty()) archid = "x86:LE:64:default";
     }
 
     virtual void buildSpecFile(DocumentStorage &store) override {
@@ -113,6 +114,10 @@ public:
         types = new TypeFactory(this);
     }
 
+    virtual void buildInstructions(DocumentStorage &store) override {
+        SleighArchitecture::buildInstructions(store);
+    }
+
     virtual void buildCoreTypes(DocumentStorage &store) override {
         SleighArchitecture::buildCoreTypes(store);
     }
@@ -134,7 +139,7 @@ public:
     }
 
     virtual void buildSymbols(DocumentStorage &store) override {
-        // Handled by LoadImageXml and auto-discovery
+        SleighArchitecture::buildSymbols(store);
     }
 
     virtual void modifySpaces(Translate *trans) override {
@@ -150,6 +155,27 @@ public:
     }
 
     std::string getMessages() const { return messages.str(); }
+
+    void initWasm(DocumentStorage &store) {
+        buildLoader(store);
+        resolveArchitecture();
+        buildSpecFile(store);
+        buildContext(store);
+        buildTypegrp(store);
+        buildCommentDB(store);
+        buildStringManager(store);
+        buildConstantPool(store);
+        buildDatabase(store);
+        restoreFromSpec(store);
+        buildCoreTypes(store);
+        print->initializeFromArchitecture();
+        symboltab->adjustCaches();
+        buildSymbols(store);
+        readLoaderSymbols("::");
+        postSpecFile();
+        buildInstructions(store);
+        fillinReadOnlyFromLoader();
+    }
 };
 
 } // namespace ghidra
@@ -174,7 +200,7 @@ const char* decompile_pcode(const uint8_t* sla_data, int sla_size,
         WasmArchitecture *glb = new WasmArchitecture("wasm_image", "default",
                                                    sla_data, sla_size,
                                                    pspec_content, cspec_content);
-        glb->init(store);
+        glb->initWasm(store);
 
         Funcdata *fd = NULL;
         fd = glb->symboltab->getGlobalScope()->queryFunction(func_name);
@@ -211,8 +237,12 @@ const char* decompile_pcode(const uint8_t* sla_data, int sla_size,
         delete glb;
     } catch (LowlevelError &e) {
         result = "Lowlevel Error: " + e.explain;
+    } catch (DecoderError &e) {
+        result = "Decoder Error: " + e.explain;
     } catch (std::exception &e) {
         result = "Standard Exception: " + std::string(e.what());
+    } catch (const char* e) {
+        result = "Literal Error: " + std::string(e);
     } catch (...) {
         result = "Unknown error occurred during decompilation.";
     }
