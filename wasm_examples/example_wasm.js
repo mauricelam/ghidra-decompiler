@@ -104,8 +104,11 @@ function bytesToHex(bytes) {
     const hex = [];
     for (let i = 0; i < bytes.length; i++) {
         hex.push(bytes[i].toString(16).padStart(2, '0'));
-        if (i % 20 === 19) hex.push('\n');
+        if (i % 32 === 31) hex.push('\n');
     }
+    // Add some zero-padding at the end of the image to prevent decompiler "out-of-bounds" errors 
+    // when reading slightly past the end of instructions
+    for (let i = 0; i < 32; i++) hex.push('00');
     return hex.join('');
 }
 
@@ -156,7 +159,7 @@ async function runDecompiler() {
 
         output.textContent = 'Preparing specifications...';
         let slaData, pspecContent, cspecContent;
-        let archId = "wasm:le:32:default";
+        let archId = null;
 
         if (procIdx !== "") {
             const proc = processors[procIdx];
@@ -180,9 +183,10 @@ async function runDecompiler() {
             return;
         }
 
+        const baseAddr = document.getElementById('baseAddr').value || "0x0";
         const imageXml = `
 <binaryimage arch="${archId}">
-  <bytechunk space="ram" offset="0x1000">
+  <bytechunk space="ram" offset="${baseAddr}">
     ${bytesToHex(binData)}
   </bytechunk>
 </binaryimage>`;
@@ -210,7 +214,7 @@ async function runDecompiler() {
         }
     } catch (e) {
         output.textContent = 'Error during decompilation: ' + e.message;
-        console.error(e);
+        console.error("ERROR", e);
     }
 }
 

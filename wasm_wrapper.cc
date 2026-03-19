@@ -190,6 +190,8 @@ const char* decompile_pcode(const uint8_t* sla_data, int sla_size,
         }
     } catch (LowlevelError &e) {
         result = "Lowlevel Error: " + e.explain;
+    } catch (DecoderError &e) {
+        result = "Decoder Error: " + e.explain;
     } catch (std::exception &e) {
         result = "Standard Exception: " + std::string(e.what());
     } catch (const char* e) {
