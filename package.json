@@ -1,6 +1,6 @@
 {
-  "name": "ghidra-decompiler-wasm",
-  "version": "1.0.0",
+  "name": "@mauricelam/ghidra-decompiler-wasm",
+  "version": "0.0.1",
   "description": "Ghidra C++ Decompiler built for WebAssembly",
   "main": "ghidra_decompiler.js",
   "files": [
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NationalSecurityAgency/ghidra.git"
+    "url": "git+https://github.com/mauricelam/ghidra-decompiler.git"
   },
   "keywords": [
     "ghidra",
@@ -21,6 +21,6 @@
     "webassembly",
     "reverse-engineering"
   ],
-  "author": "National Security Agency",
+  "author": "Maurice Lam",
   "license": "Apache-2.0"
 }
