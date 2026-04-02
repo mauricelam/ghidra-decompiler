@@ -1,0 +1,26 @@
+{
+  "name": "ghidra-decompiler-wasm",
+  "version": "1.0.0",
+  "description": "Ghidra C++ Decompiler built for WebAssembly",
+  "main": "ghidra_decompiler.js",
+  "files": [
+    "ghidra_decompiler.js",
+    "ghidra_decompiler.wasm"
+  ],
+  "scripts": {
+    "build": "make -f Makefile.wasm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NationalSecurityAgency/ghidra.git"
+  },
+  "keywords": [
+    "ghidra",
+    "decompiler",
+    "wasm",
+    "webassembly",
+    "reverse-engineering"
+  ],
+  "author": "National Security Agency",
+  "license": "Apache-2.0"
+}
