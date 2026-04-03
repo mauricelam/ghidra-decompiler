@@ -1,0 +1,42 @@
+name: Build WASM Decompiler
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential zlib1g-dev
+
+      - name: Set up Emscripten
+        uses: mymindstorm/setup-emsdk@v12
+        with:
+          version: 'latest'
+
+      - name: Verify emcc
+        run: emcc --version
+
+      - name: Build WASM decompiler
+        run: make -f Makefile.wasm
+
+      - name: Build native decompiler (Standalone)
+        run: make -f Makefile.standalone
+
+      - name: Run native verification
+        run: bash verify_native.sh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ghidra-decompiler-wasm
+          path: |
+            ghidra_decompiler.js
+            ghidra_decompiler.wasm
