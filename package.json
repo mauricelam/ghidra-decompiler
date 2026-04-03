@@ -2,10 +2,9 @@
   "name": "@mauricelam/ghidra-decompiler-wasm",
   "version": "0.0.1",
   "description": "Ghidra C++ Decompiler built for WebAssembly",
-  "main": "ghidra_decompiler.js",
+  "main": "dist/ghidra_decompiler.js",
   "files": [
-    "ghidra_decompiler.js",
-    "ghidra_decompiler.wasm"
+    "dist/"
   ],
   "scripts": {
     "build": "make -f Makefile.wasm"
