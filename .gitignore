@@ -20,10 +20,7 @@ sla_opt
 # MODIFICATION IN THIS FORK: Built artifacts for standalone and WASM builds
 decomp_standalone
 wasm_obj/
-ghidra_decompiler.js
-ghidra_decompiler.wasm
-ghidra_decompiler.wasm.map
-ghidra_decompiler.worker.js
+dist/
 wasm_examples/ghidra_decompiler.js
 wasm_examples/ghidra_decompiler.wasm
 wasm_examples/ghidra_decompiler.worker.js

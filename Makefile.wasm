@@ -21,6 +21,8 @@ LIBDECOMP_NAMES=$(CORE) $(DECCORE) $(EXTRA) $(SLEIGH) libdecomp
 
 OBJS=$(LIBDECOMP_NAMES:%=wasm_obj/%.o) wasm_obj/wasm_wrapper.o
 
+DIST_DIR=dist
+
 # Exported functions for JS access
 EXPORTED_FUNCTIONS=['_init_decompiler', '_decompile_pcode', '_detect_architecture', '_free_string', '_malloc', '_free']
 EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'HEAPU8', 'UTF8ToString', 'stringToUTF8']
@@ -29,14 +31,15 @@ wasm_obj/%.o: %.cc
 	@mkdir -p wasm_obj
 	$(CXX) -c $(OPT_CXXFLAGS) $< -o $@
 
-ghidra_decompiler.js: $(OBJS)
-	$(CXX) $(OPT_CXXFLAGS) $(OBJS) -o ghidra_decompiler.js \
+$(DIST_DIR)/ghidra_decompiler.js: $(OBJS)
+	@mkdir -p $(DIST_DIR)
+	$(CXX) $(OPT_CXXFLAGS) $(OBJS) -o $(DIST_DIR)/ghidra_decompiler.js \
 		-s EXPORTED_FUNCTIONS="$(EXPORTED_FUNCTIONS)" \
 		-s EXPORTED_RUNTIME_METHODS="$(EXPORTED_RUNTIME_METHODS)" \
 		-s MODULARIZE=1 -s EXPORT_NAME="GhidraDecompiler" \
 		-s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=64MB -s STACK_SIZE=16MB -s USE_ZLIB=1
 
-all: ghidra_decompiler.js
+all: $(DIST_DIR)/ghidra_decompiler.js
 
 clean:
-	rm -rf wasm_obj ghidra_decompiler.js ghidra_decompiler.wasm
+	rm -rf wasm_obj $(DIST_DIR)
