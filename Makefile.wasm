@@ -38,6 +38,9 @@ $(DIST_DIR)/ghidra_decompiler.js: $(OBJS)
 		-s EXPORTED_RUNTIME_METHODS="$(EXPORTED_RUNTIME_METHODS)" \
 		-s MODULARIZE=1 -s EXPORT_NAME="GhidraDecompiler" \
 		-s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=64MB -s STACK_SIZE=16MB -s USE_ZLIB=1
+	@mkdir -p $(DIST_DIR)/processors
+	(cd Processors && find . \( -name "*.sla" -o -name "*.pspec" -o -name "*.cspec" \) -exec cp --parents {} ../$(DIST_DIR)/processors \;)
+	sed 's/Processors\//processors\//g' wasm_examples/processors.json > $(DIST_DIR)/processors.json
 
 all: $(DIST_DIR)/ghidra_decompiler.js
 
